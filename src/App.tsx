@@ -1,5 +1,4 @@
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import PageLayout from "./layouts/PageLayout";
 import { HeroSection } from "./components/sections/HeroSection";
 import { AboutSection } from "./components/sections/AboutSection";
@@ -18,13 +17,11 @@ const LandingPage = () => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<PageLayout />}>
-          <Route path="/" element={<LandingPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route element={<PageLayout />}>
+        <Route path="/" element={<LandingPage />} />
+      </Route>
+    </Routes>
   );
 }
 
