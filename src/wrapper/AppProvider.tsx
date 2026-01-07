@@ -11,6 +11,7 @@ const AppProvider = ({
   children: ReactNode;
 }): React.ReactNode => {
   return (
+    // wraper for query client and error boundry
     <QueryClientProvider client={queryClient}>
       <ErrorBoundry fallback={<ErrorFallback />}>{children}</ErrorBoundry>
     </QueryClientProvider>
