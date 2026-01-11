@@ -7,13 +7,14 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
+        // background colors 
         'primary': '#171717',       
         'secondary': '#212121',     
         'accent-light': '#3B82F6',  
         'accent-dark': '#1D4ED8',  
         
         // button colors 
-        'btn-primary': '#3571F0',
+        'btn-primary': '#3571F0', // bg-
         'btn-primary-hover':'#184EBF',
         'btn-secondary': '#02369E',
         'btn-secondary-hover':'#12306C',
@@ -22,6 +23,10 @@ export default {
         'glow-primary':'#0956F9',
         'glow-secondary':'#597DC4',
         'glow-tertiary':'#02369B',
+      },
+      fontFamily:{
+        sans: ['"Mona Sans"', 'sans-serif'],
+        hubot: ['"Hubot Sans"', 'sans-serif'],
       },
       textColor: {
         'success':'#10B981', 

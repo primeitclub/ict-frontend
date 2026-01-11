@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.12",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.11.0",
-    "yarn": "^1.22.22",
+    "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
