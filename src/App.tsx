@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import ClientRouter from "./routes/ClientRouter";
+import ClientRouter from "./shared/routes/ClientRouter";
 
 function App() {
   return (

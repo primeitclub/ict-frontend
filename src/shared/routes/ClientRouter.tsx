@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import PageLayout from "../client/layouts/PageLayout";
-import { AboutPage, ContactPage, HomePage } from "../client/pages";
+import PageLayout from "../../client/layouts/PageLayout";
+import { AboutPage, ContactPage, HomePage } from "../../client/pages";
 
 export default function ClientRouter() {
   //fetch versions (to dynamic routing)

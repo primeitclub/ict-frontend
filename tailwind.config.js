@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
+        // background colors 
         'primary': '#171717',       
         'secondary': '#212121',     
         'accent-light': '#3B82F6',  
@@ -25,6 +26,7 @@ export default {
       },
       fontFamily:{
         sans: ['"Mona Sans"', 'sans-serif'],
+        hubot: ['"Hubot Sans"', 'sans-serif'],
       },
       textColor: {
         'success':'#10B981', 

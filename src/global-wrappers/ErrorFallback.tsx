@@ -1,16 +1,14 @@
+import { Header } from "../client/layouts/Header";
+import { Footer } from "../client/layouts/Footer";
+
 const ErrorFallback = () => {
   return (
-    <div
-      style={{
-        padding: "2rem",
-        textAlign: "center",
-        backgroundColor: "#ffeeee",
-        color: "#990000",
-        borderRadius: "8px",
-        fontFamily: "sans-serif",
-      }}
-    >
-      <h2>Oops! Something went wrong.</h2>
+    <div>
+      <Header />
+      <h2 className="text-2xl font-bold text-center">
+        Oops! Something went wrong.
+      </h2>
+      <Footer />
     </div>
   );
 };
