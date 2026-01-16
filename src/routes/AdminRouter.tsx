@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import PageLayout from "../../client/layouts/PageLayout";
-import { AboutPage, ContactPage, HomePage } from "../../client/pages";
+import { AboutPage, ContactPage, HomePage } from "../client/pages";
+import PageLayout from "../client/layouts/PageLayout";
 
-export default function ClientRouter() {
+export default function AdminRouter() {
   //fetch versions (to dynamic routing)
   const versions = [
     { id: 1, name: "version-1", current: true },

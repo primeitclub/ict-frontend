@@ -1,14 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import ClientRouter from "./shared/routes/ClientRouter";
+import { Routes, Route, useParams } from "react-router-dom";
+import ClientRouter from "./routes/ClientRouter";
+import AdminRouter from "./routes/AdminRouter";
+import { VersionConifg } from "./routes/utils/route-type";
+
+function VersionedClientRouter() {
+  const { version } = useParams<{ version: string }>();
+  return <ClientRouter version={version || VersionConifg.latest} />;
+}
 
 function App() {
   return (
     <Routes>
-      {/* client side routes */}
-      <Route path="/*" element={<ClientRouter />} />
-
-      {/* client side route */}
-      {/* <Route path="/admin/*" element={<AdminRouter />} /> */}
+      <Route
+        path="/*"
+        element={<ClientRouter version={VersionConifg.latest} />}
+      />
+      <Route path="/:version/*" element={<VersionedClientRouter />} />
+      <Route path="/admin/*" element={<AdminRouter />} />
     </Routes>
   );
 }

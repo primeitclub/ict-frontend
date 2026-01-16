@@ -15,6 +15,10 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
+    // rules:{
+    //   'no-unused-vars': 'error',
+    //   'no-console': 'error', 
+    // },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
