@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  a {
+    @apply text-nav-default hover:text-nav-hover active:text-nav-active;
+  }
+  body {
+    @apply bg-primary text-primary font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-btn-primary hover:bg-btn-primary-hover
+  }
+}
+
+
+
