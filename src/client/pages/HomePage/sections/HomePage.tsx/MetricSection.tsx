@@ -18,9 +18,9 @@ const MetricSection = () => {
 
 <div className="flex flex-col items-center justify-center gap-6 text-center md:items-stretch md:flex-row">
 
-          <div className="absolute  bottom-[10%]  blur-[7px] sm:bottom-1 sm:blur-[15px] md:blur-[18px] md:bottom-1 lg:bottom-3 lg:blur-[25px]  xl:bottom-5  xl:blur-[35px]  left-0 w-full h-[10px] sm:h-[20%] bg-[#020E0F] z-[100] "></div>
+          
      <div>
-       <h1 className=" relative z-[1] bg-slate-950  font-sans font-bold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[rgba(2, 54, 155, 0.08) 74.51%)] bg-clip-text text-transparent md:text-6xl text-4xl"> 100K +</h1>
+       <h1 className="  bg-slate-950  font-sans font-bold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[rgba(2, 54, 155, 0.08) 74.51%)] bg-clip-text text-transparent md:text-6xl text-4xl"> 100K +</h1>
        <p className="font-sans">Social Media Reach</p>
        
      </div>
