@@ -9,6 +9,7 @@ export default function ClientRouter({ version }: { version: string }) {
       <Routes>
         <Route element={<PageLayout />}>
           <Route index element={<HomePage />} />
+          
           <Route path="about" element={<AboutPage />} />
         </Route>
       </Routes>
