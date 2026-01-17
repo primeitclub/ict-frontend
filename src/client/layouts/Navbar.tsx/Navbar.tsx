@@ -10,19 +10,19 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto  sm:px-8 ">
       <Logo2 />
-      <div className="relative sm:hidden">
+      <div className=" sm:hidden">
         <button onClick={() => setToggle(!toggle)} className="bg-secondary p-1">
           {toggle ? <X /> : <Menu />}
         </button>
         {toggle && (
           
-          <div className="absolute right-0 top-12 bg-white  rounded-xl py-6 px-10  ">
-            <nav className="flex flex-col text-2xl text-black gap-5 ">
-              <NavLink to={buildPath("")}>HomePage</NavLink>
-              <NavLink to={buildPath("event")}>Events</NavLink>
-              <NavLink to={buildPath("teams")}>Teams</NavLink>
-              <NavLink to={buildPath("sponsors")}>Sponsors</NavLink>
-            </nav>
+          <div className="fixed inset-6 top-[10%] bottom-[50%] bg-white  rounded-xl py-6 px-10  ">
+            <div className="flex flex-col text-xl  items-center gap-10 font-medium">
+              <NavLink to={buildPath("")} className="text-black">HomePage</NavLink>
+              <NavLink to={buildPath("event")} className="text-black">Events</NavLink>
+              <NavLink to={buildPath("teams")} className="text-black">Teams</NavLink>
+              <NavLink to={buildPath("sponsors")} className="text-black">Sponsors</NavLink>
+            </div>
           </div>
         )}
       </div>
