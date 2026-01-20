@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { ContactPage, HomePage } from "../client/pages";
+import { HomePage } from "../client/pages";
 import PageLayout from "../client/layouts/PageLayout";
 
 export default function AdminRouter() {
@@ -19,7 +19,6 @@ export default function AdminRouter() {
           element={<PageLayout />}
         >
           <Route index element={<HomePage />} />
-          <Route path="contact" element={<ContactPage />} />
         </Route>
       ))}
     </Routes>

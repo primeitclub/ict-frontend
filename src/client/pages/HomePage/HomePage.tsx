@@ -1,6 +1,6 @@
-import LandingSection from "./LandingSection";
-import AboutSection from "./AboutSection";
-import MetricSection from "./MetricSection";
+import LandingSection from "./sections/LandingSection";
+import AboutSection from "./sections/AboutSection";
+import MetricSection from "./sections/MetricSection";
 
 // Home page main component
 export default function HomePage() {

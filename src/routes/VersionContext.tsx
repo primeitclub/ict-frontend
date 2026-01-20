@@ -64,6 +64,7 @@ export function VersionProvider({ version, children }: ProviderProps) {
   );
 }
 
+/* eslint-disable */
 export function useVersion() {
   const context = useContext(VersionContext);
   if (!context) {
