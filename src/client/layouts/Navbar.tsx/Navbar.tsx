@@ -5,7 +5,7 @@ import { useState } from "react";
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 const Navbar = () => {
-  const { buildPath } = useVersion();
+  const { getPath } = useVersion();
   const [toggle, setToggle] = useState(false);
   return (
     <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto  sm:px-8 ">
@@ -15,25 +15,30 @@ const Navbar = () => {
           {toggle ? <X /> : <Menu />}
         </button>
         {toggle && (
-          
           <div className="fixed inset-6 top-[10%] bottom-[50%] bg-white  rounded-xl py-6 px-10  ">
             <div className="flex flex-col text-xl  items-center gap-10 font-medium">
-              <NavLink to={buildPath("")} className="text-black">HomePage</NavLink>
-              <NavLink to={buildPath("event")} className="text-black">Events</NavLink>
-              <NavLink to={buildPath("teams")} className="text-black">Teams</NavLink>
-              <NavLink to={buildPath("sponsors")} className="text-black">Sponsors</NavLink>
+              <NavLink to={buildPath("")} className="text-black">
+                HomePage
+              </NavLink>
+              <NavLink to={buildPath("event")} className="text-black">
+                Events
+              </NavLink>
+              <NavLink to={buildPath("teams")} className="text-black">
+                Teams
+              </NavLink>
+              <NavLink to={buildPath("sponsors")} className="text-black">
+                Sponsors
+              </NavLink>
             </div>
           </div>
         )}
       </div>
+      {/* this is the one i am using right now */}
       <nav className="hidden sm:flex  gap-8 text-xl  ">
-        <NavLink to={buildPath("")}>Home</NavLink>
-        <NavLink to={buildPath("event")}>Events</NavLink>
+        <NavLink to={buildPath("/")}>Home</NavLink>
+        <NavLink to={buildPath("events")}>Events</NavLink>
         <NavLink to={buildPath("teams")}>Teams</NavLink>
         <NavLink to={buildPath("sponsors")}>Sponsors</NavLink>
-    
-        
-        
       </nav>
     </div>
   );

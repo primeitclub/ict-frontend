@@ -1,80 +1,73 @@
-import React, { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { isLatestVersion, VersionConifg } from "./utils/route-type";
+// routes/VersionContext.tsx
+import { createContext, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { LATEST_VERSION } from "./utils/route-type";
 
-interface VersionControlInterface {
+interface VersionContextType {
   version: string;
   isLatest: boolean;
-  changeVersion: (newVersion: string) => void;
-  buildPath: (path: string) => string;
-  allVersion: string[];
+  getPath: (path: string) => string;
+  navigateToVersion: (newVersion: string) => void;
 }
 
-interface ProviderInterface {
-  children: React.ReactNode;
+const VersionContext = createContext<VersionContextType | null>(null);
+
+interface ProviderProps {
   version: string;
+  children: React.ReactNode;
 }
 
-const VersionContext = React.createContext<VersionControlInterface | undefined>(
-  undefined
-);
-
-export const VersionProvider = ({ children, version }: ProviderInterface) => {
+export function VersionProvider({ version, children }: ProviderProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isLatest = isLatestVersion(version);
+  const isLatest = version === LATEST_VERSION;
 
-  const allVersion = VersionConifg.availabel;
+  // Generate correct path based on version
+  const getPath = (path: string): string => {
+    const cleanPath = path.startsWith("/") ? path : `/${path}`;
 
-  // check route guard
-  const nowVersion = location.pathname.split("/");
+    if (isLatest) {
+      return cleanPath; // /events
+    }
+    return `/${version}${cleanPath}`; // /v6/events
+  };
 
-  const isValid = VersionConifg.availabel.includes(nowVersion[1]);
-
-  const changeVersion = (newVersion: string): void => {
+  // Switch to different version (keeps current page)
+  const navigateToVersion = (newVersion: string): void => {
+    // Get current page path (without version prefix)
     let currentPage = location.pathname;
 
-    // remove the leading version
-    VersionConifg.availabel.forEach((item) => {
-      if (currentPage.startsWith(`/${item}`)) {
-        currentPage = currentPage.replace(`${item}`, "") || "";
-      }
-    });
+    // Remove version prefix if exists
+    if (!isLatest && currentPage.startsWith(`/${version}`)) {
+      currentPage = currentPage.slice(version.length + 1) || "/";
+    }
 
-    if (isLatestVersion(newVersion)) {
+    // Navigate to same page in new version
+    if (newVersion === LATEST_VERSION) {
       navigate(currentPage);
     } else {
-      navigate(`${newVersion}/${currentPage}`);
+      navigate(`/${newVersion}${currentPage}`);
     }
   };
 
-  const buildPath = (path: string): string => {
-    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-    return isLatest ? cleanPath : `/${version}/${cleanPath}`;
-  };
-
-  /* eslint-disable */
-  const memoized = useMemo<VersionControlInterface>(() => {
-    return {
-      version,
-      isLatest,
-      changeVersion,
-      buildPath,
-      allVersion,
-    };
-  }, [version, isLatest]);
-
   return (
-    <VersionContext.Provider value={memoized}>
+    <VersionContext.Provider
+      value={{
+        version,
+        isLatest,
+        getPath,
+        navigateToVersion,
+      }}
+    >
       {children}
     </VersionContext.Provider>
   );
-};
+}
 
-export const useVersion = (): VersionControlInterface => {
-  const context = React.useContext(VersionContext);
+export function useVersion() {
+  const context = useContext(VersionContext);
   if (!context) {
-    throw new Error("useVersion must be used within a VersionProvider");
+    throw new Error("useVersion must be used within VersionProvider");
   }
   return context;
-};
+}
