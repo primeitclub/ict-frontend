@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import ClientRouter from "./app/routes/ClientRouter";
 import AdminRouter from "./app/routes/AdminRouter";
+import { AboutSection } from "./components/sections/AboutSection/index";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
 
       {/* client side route */}
       <Route path="/admin/*" element={<AdminRouter />} />
+      <Route path="/about" element={<AboutSection />} />
     </Routes>
   );
 }
