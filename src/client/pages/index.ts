@@ -1,5 +1,5 @@
-export * from './HomePage'
-export * from "./EventPage";
-export * from "./Sponsors"
-export * from "./Teams"
+export * from './home'
+export * from "./event";
+export * from "./sponsors"
+export * from "./teams"
 
