@@ -1,6 +1,6 @@
 // routes/ClientRouter.tsx
 import { Routes, Route } from "react-router-dom";
-import { EventsPage, HomePage, Sponsors, Teams } from "../client/pages";
+import { EventsPage, HomePage } from "../client/pages";
 import PageLayout from "../client/layouts/PageLayout";
 import { VersionProvider } from "./VersionContext";
 
@@ -15,8 +15,6 @@ export default function ClientRouter({ version }: ClientRouterProps) {
         <Route element={<PageLayout />}>
           <Route index element={<HomePage />} />
           <Route path="events" element={<EventsPage />} />
-          <Route path="teams" element={<Teams />} />
-          <Route path="sponsors" element={<Sponsors />} />
         </Route>
       </Routes>
     </VersionProvider>
