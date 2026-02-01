@@ -1,5 +1,5 @@
-import LandingSection from "./sections/landing-section/LandingSection";
 import AboutSection from "./sections/about-section/AboutSection";
+import { LandingSection } from "./sections/landing-section/LandingSection";
 import MetricSection from "./sections/metric-section/MetricSection";
 
 // Home page main component
