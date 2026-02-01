@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import AdminLayout from "../client/layouts/AdminLayout";
 
-import { Dashboard, CreatePage } from "../admin/pages";
+import { Dashboard } from "../admin/pages";
 
 export default function AdminRouter() {
   return (
@@ -13,7 +13,7 @@ export default function AdminRouter() {
             path="setting"
             element={<Dashboard value="this is from the route" />}
           />
-          <Route path="events" element={<CreatePage />} />
+          {/* <Route path="events" element={<CreatePage />} /> */}
         </Route>
       </Routes>
     </>
