@@ -1,11 +1,18 @@
+import { ChevronRight } from "lucide-react";
 import React from "react";
 import { cn } from "../../utils/cn";
 
-type ButtonVariant = "filled" | "outlined";
+type ButtonVariant = "filled" | "outlined" | "glass" | "solid-white";
 
-type ButtonSize = "base" | "small" | "large";
+type ButtonSize = "base" | "small" | "large" | "xl";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Label text for the button.
+   * If provided, it overrides children.
+   */
+  label?: string;
+
   /**
    * Visual style variant of the button
    * @default 'filled'
@@ -37,18 +44,18 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
   /**
    * Icon to display after the button text
+   * Values:
+   * - ReactNode: Custom icon
+   * - undefined: Default ChevronRight icon
+   * - null / false: No icon
    */
-  rightIcon?: React.ReactNode;
-
-  /**
-   * Button content
-   */
-  children?: React.ReactNode;
+  rightIcon?: React.ReactNode | boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      label,
       variant = "filled",
       size = "base",
       fullWidth = false,
@@ -60,25 +67,30 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     // Base styles - consistent across all buttons
     const baseStyles =
-      "font-sans font-medium rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary disabled:opacity-50 disabled:cursor-not-allowed";
+      "group font-sans font-medium rounded-full transition-all duration-300 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0";
 
     // Variant styles
     const variantStyles: Record<ButtonVariant, string> = {
       filled:
-        "bg-btn-primary hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg focus:ring-btn-primary",
+        "bg-btn-primary hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg focus:ring-btn-primary border border-transparent",
       outlined:
-        "bg-btn-secondary hover:bg-btn-secondary-hover text-white shadow-md hover:shadow-lg focus:ring-btn-secondary",
+        "bg-btn-secondary hover:bg-btn-secondary-hover text-white shadow-md hover:shadow-lg focus:ring-btn-secondary border border-transparent",
+      glass:
+        "bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white/20 shadow-lg hover:shadow-xl",
+      "solid-white":
+        "bg-white text-black hover:bg-white/90 shadow-lg hover:shadow-xl border border-transparent",
     };
 
     // Size styles - controls height, padding, and font-size
     const sizeStyles: Record<ButtonSize, string> = {
-      small: "h-8 px-3 text-sm",
-      base: "h-10 px-4 text-base",
-      large: "h-12 px-6 text-lg",
+      small: "h-8 px-4 text-xs",
+      base: "h-10 px-5 text-sm",
+      large: "h-12 px-8 text-base",
+      xl: "h-14 px-10 text-lg",
     };
 
     // Width styles
@@ -90,8 +102,24 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variantStyles[variant],
       sizeStyles[size],
       widthStyles,
-      className
+      className,
     );
+
+    // Determine the icon to show
+    const renderRightIcon = () => {
+      // If explictly set to null/false, show nothing
+      if (rightIcon === null || rightIcon === false) return null;
+
+      // If a valid React Node is passed, show it
+      if (React.isValidElement(rightIcon)) {
+        return <span className="inline-flex">{rightIcon}</span>;
+      }
+
+      // Default: Show ChevronRight with animation
+      return (
+        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      );
+    };
 
     return (
       <button
@@ -128,13 +156,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
             {leftIcon && <span className="inline-flex">{leftIcon}</span>}
-            {children}
-            {rightIcon && <span className="inline-flex">{rightIcon}</span>}
+            {label}
+            {renderRightIcon()}
           </>
         )}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

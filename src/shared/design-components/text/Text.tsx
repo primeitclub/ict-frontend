@@ -15,8 +15,7 @@ type TextSize = "xs" | "sm" | "base" | "lg" | "xl";
 
 type TextWeight = "light" | "regular" | "medium" | "semibold" | "bold";
 
-interface TextProps
-  extends React.HTMLAttributes<HTMLParagraphElement | HTMLSpanElement> {
+interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   /**
    * Visual variant of the text
    * @default 'body'
@@ -42,12 +41,6 @@ interface TextProps
   align?: "left" | "center" | "right" | "justify";
 
   /**
-   * Whether to render as inline element (span) instead of block (p)
-   * @default false
-   */
-  inline?: boolean;
-
-  /**
    * Whether to truncate text with ellipsis
    * @default false
    */
@@ -65,17 +58,13 @@ interface TextProps
   children: React.ReactNode;
 }
 
-const Text = React.forwardRef<
-  HTMLParagraphElement | HTMLSpanElement,
-  TextProps
->(
+const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
   (
     {
       variant = "body",
       size = "base",
       weight = "regular",
       align = "left",
-      inline = false,
       truncate = false,
       lineClamp,
       children,
@@ -146,12 +135,11 @@ const Text = React.forwardRef<
     );
 
     // Create the appropriate element
-    const Component = inline ? "span" : "p";
 
     return (
-      <Component ref={ref as any} className={combinedClassName} {...props}>
+      <p ref={ref} className={combinedClassName} {...props}>
         {children}
-      </Component>
+      </p>
     );
   }
 );

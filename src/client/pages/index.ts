@@ -1,3 +1,6 @@
-export * from './HomePage';
-export * from './AboutPage';
-export * from './ContactPage';
+export * from './home'
+export * from "./event";
+export * from "./teams"
+export * from "./sponsors"
+
+

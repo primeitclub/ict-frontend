@@ -1,3 +1,5 @@
+import { transform } from 'typescript';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,7 +10,9 @@ export default {
     extend: {
       backgroundColor: {
         // background colors 
-        'primary': '#171717',       
+        'primary': '#0a0e27',
+        'primary-cyan':'#00d4ff',
+        'primary-cyan-dark':'#0099cc',       
         'secondary': '#212121',     
         'accent-light': '#3B82F6',  
         'accent-dark': '#1D4ED8',  
@@ -51,6 +55,22 @@ export default {
         bold: '700',
         extrabold: '800',
       },
+      animation:{
+        'pulse-slow':'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'shine': 'shine 8s ease-in-out infinite',
+        
+      },
+      keyframes:{
+        float:{
+          '0%, 100%':{transform:'translateY(0)'},
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        shine: {
+          '0%, 100%': { transform: 'translateX(-100%) skewX(12deg)' },
+          '50%, 100%': { transform: 'translateX(200%) skewX(12deg)' },
+        }
+      }
     },
   },
   plugins: [],

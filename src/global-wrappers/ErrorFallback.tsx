@@ -1,10 +1,10 @@
-import { Header } from "../client/layouts/Header";
-import { Footer } from "../client/layouts/Footer";
+import Navbar from "../client/components/navigate/Navbar";
+import { Footer } from "../client/components/footer/Footer";
 
 const ErrorFallback = () => {
   return (
     <div>
-      <Header />
+      <Navbar />
       <h2 className="text-2xl font-bold text-center">
         Oops! Something went wrong.
       </h2>
