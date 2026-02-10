@@ -1,4 +1,4 @@
-import MetricCard from './components/MetricCard';
+import MetricCard from './Components/MetricCard';
 
 const metrics = [
    { value: "2K +", label: "Students Participated" },
