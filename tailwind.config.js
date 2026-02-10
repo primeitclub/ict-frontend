@@ -10,7 +10,7 @@ export default {
     extend: {
       backgroundColor: {
         // background colors 
-        'primary': '#0a0e27',
+        'primary': '#020919',
         'primary-cyan':'#00d4ff',
         'primary-cyan-dark':'#0099cc',       
         'secondary': '#212121',     
@@ -18,7 +18,7 @@ export default {
         'accent-dark': '#1D4ED8',  
         
         // button colors 
-        'btn-primary': '#3571F0', // bg-
+        'btn-primary': '#3571F0', 
         'btn-primary-hover':'#184EBF',
         'btn-secondary': '#02369E',
         'btn-secondary-hover':'#12306C',

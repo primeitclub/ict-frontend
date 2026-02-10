@@ -1,14 +1,16 @@
 import AboutSection from "./sections/about-section/AboutSection";
+import GallerySection from "./sections/gallery-section/GallerySection";
 import { LandingSection } from "./sections/landing-section/LandingSection";
 import MetricSection from "./sections/metric-section/MetricSection";
 
 // Home page main component
 export default function HomePage() {
   return (
-    <div className="p-8 space-y-12 bg-primary">
+    <main className="space-y-12">
       <LandingSection />
       <AboutSection />
       <MetricSection />
-    </div>
+      <GallerySection />
+    </main>
   );
 }
