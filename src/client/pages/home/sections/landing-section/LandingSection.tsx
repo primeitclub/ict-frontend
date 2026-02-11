@@ -1,11 +1,12 @@
 import Button from "../../../../../shared/design-components/button/Button";
+import { PageLayout } from "../../../../../shared/layouts";
 import { SwiperContent } from "./component/swiper-content";
 
 export function LandingSection() {
   return (
-    <div className="landing_section space-y-10">
+    <PageLayout as="section" className="landing_section space-y-10">
       {/* Light Beam Background */}
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="text-center">
         {/* Date Badge */}
         <div className="inline-block px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm italic mb-6 text-white/90">
           Jan 12-14
@@ -31,6 +32,6 @@ export function LandingSection() {
       <div className="landing_swiper_section">
         <SwiperContent />
       </div>
-    </div>
+    </PageLayout>
   );
 }

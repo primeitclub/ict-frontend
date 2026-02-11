@@ -7,9 +7,7 @@ import VersionNavigate from "../components/version-navigate/VersionNavigate";
 export default function PageLayout() {
   return (
     <div className="app-layout">
-      <header>
-        <Navbar />
-      </header>
+      <Navbar />
       <main>
         <VersionNavigate />
         <Outlet />

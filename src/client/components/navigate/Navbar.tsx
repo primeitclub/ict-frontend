@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
+import { PageLayout } from "../../../shared/layouts";
 const Navbar = () => {
   const { getPath } = useVersion();
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
     <header>
-      <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto  sm:px-8 ">
+      <PageLayout className="flex justify-between items-center py-4 px-6 ">
         <div onClick={() => navigate(getPath("/"))}>
           <Logo2 />
         </div>
@@ -55,7 +56,7 @@ const Navbar = () => {
               </NavLink>
             ))}
         </nav>
-      </div>
+      </PageLayout>
     </header>
   );
 };
