@@ -1,0 +1,35 @@
+name: ICT Meetup Dev Website CI/CD
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build static site
+        run: yarn build
+        env:
+          CI: false
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.primeitclub.com
+          username: ${{ secrets.FTP_DEV_USERNAME }}
+          password: ${{ secrets.FTP_DEV_PASSWORD }}
+          local-dir: ./out/
