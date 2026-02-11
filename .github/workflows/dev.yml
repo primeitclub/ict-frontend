@@ -32,4 +32,4 @@ jobs:
           server: ftp.primeitclub.com
           username: ${{ secrets.FTP_DEV_USERNAME }}
           password: ${{ secrets.FTP_DEV_PASSWORD }}
-          local-dir: ./out/
+          local-dir: ./dist/
