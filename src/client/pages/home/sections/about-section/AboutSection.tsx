@@ -11,7 +11,7 @@ export const AboutSection = () => {
     >
       {/* Glow layer */}
       <img src={glow} alt="glow" className="w-full absolute z-0" />
-\
+
       {/* Content layer */}
       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-14 md:mx-12 lg:gap-16 xl:gap-20 my-[200px]">
         {/* Mobile Title */}
