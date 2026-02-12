@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Calendar, Clock, MapPin, Banknote, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-
+import { GradientText } from "./GradientText";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -114,12 +114,8 @@ export default function HighlightSection() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16  text-white">
-      <h2 className="text-center text-5xl font-bold mb-12">
-        <span className="bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
-          Major
-        </span>{" "}
-        Highlights
-      </h2>
+      <GradientText grad={"Major"} norm="Highlights"/>
+      
 
       <div className="flex  gap-20 text-lg font-semibold mb-16  border-gray-800 pb-4">
         {tabs.map((tab, index) => (
