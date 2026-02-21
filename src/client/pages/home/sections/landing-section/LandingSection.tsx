@@ -1,5 +1,5 @@
 import Button from "../../../../../shared/design-components/button/Button";
-import { SwiperContent } from "./component/swiper-content";
+import { PageLayout } from "../../../../../shared/layouts";
 
 export function LandingSection() {
   return (
