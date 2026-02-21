@@ -4,9 +4,17 @@ import insta from "../../../../../assets/insta.png";
 
 export const AboutSection = () => {
   return (
-    <section className="mx-6 sm:mx-12 md:mx-16 lg:mx-24 justify-center">
-      <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-4 xl:ml-16">
-        
+    <div
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: "#020919",
+      }}
+    >
+      {/* Glow layer */}
+      <img src={glow} alt="glow" className="w-full absolute z-0" />
+
+      {/* Content layer */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-14 md:mx-12 lg:gap-16 xl:gap-20 my-[200px]">
         {/* Mobile Title */}
         <h2 className="block md:hidden text-white font-bold text-[28px] self-start">
           About Us
