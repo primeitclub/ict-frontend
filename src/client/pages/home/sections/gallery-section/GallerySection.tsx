@@ -55,6 +55,8 @@ const GallerySection = () => {
         const zOffset = ((size * 0.5) / Math.sin(halfAngle)) * factor - depth;
         const rotateY = progress * rotation;
 
+        if (!element) return;
+
         element.style.transform = `translateX(${
           coord + xOffset
         }px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;

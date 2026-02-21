@@ -6,7 +6,8 @@ import {
   Banknote,
   ChevronRight,
   CircleArrowRight,
-  ArrowLeft, ArrowRight
+  ArrowLeft,
+  ArrowRight,
 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -105,19 +106,95 @@ export default function HighlightSection() {
     },
     {
       title: "Workshops",
-      content: [],
+      content: [
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+      ],
     },
     {
       title: "Session",
-      content: [],
+      content: [
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+      ],
     },
     {
       title: "Hackaverse",
-      content: [],
+      content: [
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+      ],
     },
     {
       title: "Musical Nights",
-      content: [],
+      content: [
+        {
+          image: "/src/assets/download.jpg",
+          title: "Computational Theory",
+          speaker: "with Hattori Hanzo, kemuzou Kemuma",
+          avatar: ["/src/assets/saugat.png", "/src/assets/saugat.png"],
+          date: "10 Feb, 2026",
+          price: 500,
+          time: "10 A.M - 12 P.M",
+          place: "Prime College",
+          seats: 12,
+          totalSeats: 20,
+        },
+      ],
     },
   ];
 
@@ -133,34 +210,32 @@ export default function HighlightSection() {
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`transition-colors duration-200 flex gap-3 items-center whitespace-nowrap ${activeTab === index
-                ? "text-[#3571F0]"
-                : "text-black"
-                }`}
+              className={`transition-colors duration-200 flex gap-3 items-center whitespace-nowrap ${
+                activeTab === index ? "text-[#3571F0]" : "text-black"
+              }`}
             >
               {activeTab === index ? (
                 <CircleArrowRight size={24} className="text-[#3571F0]" />
               ) : (
-                <CircleArrowRight
-                  size={24}
-                  className="-rotate-45 text-black"
-                />
+                <CircleArrowRight size={24} className="-rotate-45 text-black" />
               )}
               {tab.title}
             </button>
           ))}
         </div>
         <div className="relative group/nav">
-
-
-          <button className="swiper-button-prev-custom hidden md:flex absolute xl:-left-20 lg:-left-12 top-1/2 
+          <button
+            className="swiper-button-prev-custom hidden md:flex absolute xl:-left-20 lg:-left-12 top-1/2 
           -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-          bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30">
+          bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+          >
             <ArrowLeft size={24} />
           </button>
-          <button className="swiper-button-next-custom hidden md:flex absolute xl:-right-20 lg:-right-12 top-1/2
+          <button
+            className="swiper-button-next-custom hidden md:flex absolute xl:-right-20 lg:-right-12 top-1/2
            -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-           bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30">
+           bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+          >
             <ArrowRight size={24} />
           </button>
 
@@ -244,8 +319,10 @@ export default function HighlightSection() {
                       </div>
                     </div>
 
-                    <button className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-3 rounded-2xl 
-                    font-bold flex items-center justify-center transition-colors group">
+                    <button
+                      className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-3 rounded-2xl 
+                    font-bold flex items-center justify-center transition-colors group"
+                    >
                       Register Now
                       <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -255,14 +332,17 @@ export default function HighlightSection() {
             ))}
           </Swiper>
 
-   
           <div className="flex md:hidden justify-center items-center gap-6 mt-12 pb-8">
-            <button className="swiper-button-prev-custom w-12 h-12 rounded-full flex items-center 
-            justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md">
+            <button
+              className="swiper-button-prev-custom w-12 h-12 rounded-full flex items-center 
+            justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
+            >
               <ArrowLeft size={24} />
             </button>
-            <button className="swiper-button-next-custom w-12 h-12 rounded-full flex items-center
-             justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md">
+            <button
+              className="swiper-button-next-custom w-12 h-12 rounded-full flex items-center
+             justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
+            >
               <ArrowRight size={24} />
             </button>
           </div>
