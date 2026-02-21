@@ -42,7 +42,7 @@ export function LandingSection() {
          </div>
          <div className="flex flex-col  max-w-xl text-center mx-auto relative ">
          
-          <div className="flex text-[64px] font-[600] leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">Fusion Of Tech Talent & Creativity</div>
+          <div className="flex text-[37px] md:text-[64px] font-[600] leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">Fusion Of Tech Talent & Creativity</div>
           <div className="flex text-[16px] px-9 font-[400]  leading-[16px] my-3 tracking-[0.3px]">ICT Meetup, designed to inspire collaboration, encourage learning beyond classrooms, and transform ideas into real-world impact.</div>
          </div>
          <div className="flex gap-10 items-center justify-center mt-[65px]">
