@@ -1,5 +1,4 @@
 import Button from "../../../../../shared/design-components/button/Button";
-import { PageLayout } from "../../../../../shared/layouts";
 
 export function LandingSection() {
   return (
