@@ -1,7 +1,5 @@
 import { PageLayout } from "../../../../../shared/layouts";
 import { Button } from "../../../../../shared/design-components";
-// import { Heading } from "../../../../../shared/design-components";
-// import Text from "../../../../../shared/design-components";
 
 // Images for sponsor logo
 const dummyImages = [
