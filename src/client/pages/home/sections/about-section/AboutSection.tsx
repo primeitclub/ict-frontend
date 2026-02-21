@@ -1,5 +1,6 @@
-import AboutLogo from "../../../../../assets/logo.png";
-import glow from "../../../../../assets/glow.png";
+import AboutLogo from "../../../../../assets/about-img.png";
+import fb from "../../../../../assets/fb.png";
+import insta from "../../../../../assets/insta.png";
 
 export const AboutSection = () => {
   return (
@@ -15,42 +16,51 @@ export const AboutSection = () => {
       {/* Content layer */}
       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-14 md:mx-12 lg:gap-16 xl:gap-20 my-[200px]">
         {/* Mobile Title */}
-        <h2 className="block md:hidden text-white font-bold text-[28px]">
+        <h2 className="block md:hidden text-white font-bold text-[28px] self-start">
           About Us
         </h2>
 
-        {/* Image */}
-        <div className="w-full md:w-1/2">
+        {/* Content — 1/3 width */}
+        <div className="w-full md:w-1/3 text-center md:text-left">
+          <h2 className="hidden md:block text-white font-bold mb-2 text-2xl lg:text-3xl xl:text-6xl xl:my-8">
+            <span className="bg-gradient-to-b from-[#DBF5FF] to-[#007AFF] text-transparent bg-clip-text">
+              This Year’s 
+            </span>
+            &nbsp; Focus
+          </h2>
+
+          <p className="my-2 text-justify font-light text-[#DFDFDF] text-sm md:text-[10px] lg:text-xs xl:text-xl ">
+            ICT V8 focuses on the growing gap between the academia and industry.
+            This event will bridge this. John doe loves apple and so do John Mo.
+          </p>
+
+          <p className="my-2 text-justify font-light text-[#DFDFDF] text-sm md:text-[10px] lg:text-xs xl:text-xl">
+            ICT V8 focuses on the growing gap between the academia and industry.
+            This event will bridge this. John doe loves apple and so do John Mo.
+          </p>
+
+          <div className="flex gap-4 mt-6 md:justify-start">
+            <a href="https://www.facebook.com/primeitclub" target="_blank" rel="noopener noreferrer">
+              <img src={fb} alt="Facebook" className="w-7 h-7 xl:w-9 xl:h-9 cursor-pointer" />
+            </a>
+            <a href="https://www.instagram.com/primeitclub" target="_blank" rel="noopener noreferrer">
+              <img src={insta} alt="Instagram" className="w-7 h-7 xl:w-9 xl:h-9 cursor-pointer" />
+            </a>
+          </div>
+        </div>
+
+        {/* Image — 2/3 width */}
+        <div className="w-full md:w-2/3 flex justify-center">
           <img
-            className="w-full max-w-[320px] md:max-w-[360px] lg:max-w-[420px] xl:max-w-[480px] h-auto mx-auto object-contain"
+            className="w-full max-w-[280px] sm:max-w-[360px] md:max-w-full lg:max-w-[560px] xl:max-w-[680px] h-auto object-contain"
             src={AboutLogo}
             alt="About"
           />
         </div>
 
-        {/* Content */}
-        <div className="w-full md:w-1/2 text-center md:text-left">
-          <h2 className="hidden md:block text-white font-bold text-5xl mb-2 lg:text-3xl md:text-2xl xl:my-8 xl:text-4xl">
-            <span className="bg-gradient-to-b from-[#DBF5FF] to-[#007AFF] text-transparent bg-clip-text">
-              About
-            </span>
-            &nbsp; This Year's ICT
-          </h2>
-
-          <p className="my-2 text-justify font-medium text-white text-base md:text-xs lg:text-sm xl:text-lg">
-            Prime IT Club is a student-led technical community at Prime College
-            that encourages learning beyond the classroom through hands-on
-            projects, workshops, and collaborative activities.
-          </p>
-
-          <p className="my-2 text-justify font-medium text-white text-base md:text-xs lg:text-sm xl:text-lg">
-            The club provides a platform for students to develop practical
-            skills in technology, design, and innovation while fostering
-            teamwork, leadership, and real-world problem-solving.
-          </p>
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
+
 export default AboutSection;

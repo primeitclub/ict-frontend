@@ -1,6 +1,5 @@
 import Button from "../../../../../shared/design-components/button/Button";
 import { PageLayout } from "../../../../../shared/layouts";
-import { SwiperContent } from "./component/swiper-content";
 
 export function LandingSection() {
   return (
@@ -28,9 +27,6 @@ export function LandingSection() {
 
           <Button variant="solid-white" size="large" label="Be a Sponsor" />
         </div>
-      </div>
-      <div className="landing_swiper_section">
-        <SwiperContent />
       </div>
     </PageLayout>
   );
