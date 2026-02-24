@@ -1,6 +1,7 @@
 import AboutSection from "./sections/about-section/AboutSection";
 import { LandingSection } from "./sections/landing-section/LandingSection";
-import HighlightSection from "./sections/highlight-section/HighlightSection";
+import MetricSection from "./sections/metrics-section/MetricSection";
+import SpeakerSection from "./sections/speaker-section/SpeakerSection";
 
 // Home page main component
 export default function HomePage() {
@@ -8,7 +9,9 @@ export default function HomePage() {
     <main className="space-y-12">
       <LandingSection />
       <AboutSection />
-      <HighlightSection />
+      <MetricSection />
+      <GallerySection />
+      <SpeakerSection />
     </main>
   );
 }
