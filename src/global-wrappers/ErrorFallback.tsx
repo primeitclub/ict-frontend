@@ -1,5 +1,5 @@
-import Navbar from "../client/components/navigate/Navbar";
-import { Footer } from "../client/components/footer/Footer";
+import Navbar from "../client/layouts/headers/Navbar";
+import { Footer } from "../client/layouts/footer/Footer";
 
 const ErrorFallback = () => {
   return (

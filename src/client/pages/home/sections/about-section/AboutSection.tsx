@@ -1,11 +1,11 @@
 import AboutLogo from "../../../../../assets/about-img.png";
 import fb from "../../../../../assets/fb.png";
 import insta from "../../../../../assets/insta.png";
-import { PageLayout } from "../../../../../shared/layouts";
+import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 
 export const AboutSection = () => {
   return (
-    <PageLayout>
+    <SectionContainer>
       <div
         className="relative overflow-hidden "
         style={{
@@ -79,7 +79,7 @@ export const AboutSection = () => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </SectionContainer>
   );
 };
 

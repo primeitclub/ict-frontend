@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
-import { PageLayout } from "../../../shared/layouts";
+import SectionContainer from "../../../shared/layouts/sectionContainer";
 const Navbar = () => {
   // const { getPath } = useVersion();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
     <header>
-      <PageLayout className="flex justify-between items-center py-4 px-6 ">
+      <SectionContainer className="flex justify-between items-center py-4 px-6 ">
         <div onClick={() => navigate("/")}>
           <Logo2 />
         </div>
@@ -56,7 +56,7 @@ const Navbar = () => {
               </NavLink>
             ))}
         </nav>
-      </PageLayout>
+      </SectionContainer>
     </header>
   );
 };

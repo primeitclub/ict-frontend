@@ -1,4 +1,3 @@
-import { ChevronRight } from "lucide-react";
 import React from "react";
 import { cn } from "../../utils/cn";
 
@@ -62,7 +61,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       leftIcon,
       rightIcon,
-      children,
       className = "",
       disabled,
       ...props
@@ -105,21 +103,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
     );
 
-    // Determine the icon to show
-    const renderRightIcon = () => {
-      // If explictly set to null/false, show nothing
-      if (rightIcon === null || rightIcon === false) return null;
-
-      // If a valid React Node is passed, show it
-      if (React.isValidElement(rightIcon)) {
-        return <span className="inline-flex">{rightIcon}</span>;
-      }
-
-      // Default: Show ChevronRight with animation
+    if (variant === "glass") {
       return (
-        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        <button
+          ref={ref}
+          type="button"
+          disabled={disabled || isLoading}
+          className="glass-container"
+        >
+          <div className="glass-specular"></div>
+          <div className="glass-content">
+            {label} {rightIcon}
+          </div>
+        </button>
       );
-    };
+    }
 
     return (
       <button
@@ -157,7 +155,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <>
             {leftIcon && <span className="inline-flex">{leftIcon}</span>}
             {label}
-            {renderRightIcon()}
+            {rightIcon && <span className="inline-flex">{rightIcon}</span>}
           </>
         )}
       </button>
