@@ -16,6 +16,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 
 import "swiper/css/navigation";
+import SectionHeader from "../../../../components/sectionHeader";
 
 type ContentType = {
   image: string;
@@ -201,9 +202,11 @@ export default function HighlightSection() {
   return (
     <div className=" bg-[#F2F5FA] text-black">
       <div className="mx-auto max-w-7xl px-4 py-16">
-        <h2 className="text-black text-5xl font-bold mb-12">
-          Major <span className="text-[#3571F0]">Highlights</span>
-        </h2>
+        <SectionHeader
+          titleNormal="Event"
+          titleHighlight="Overview"
+          varient="secondary"
+        />
 
         <div className="grid grid-cols-2 md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
           {tabs.map((tab, index) => (

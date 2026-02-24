@@ -1,6 +1,6 @@
 import { Snap } from "vevet";
 import { useEffect, useRef } from "react";
-import { PageLayout } from "../../../../../shared/layouts";
+import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 
 //image
 import image1 from "../../../../../assets/images/img1.svg";
@@ -75,7 +75,7 @@ const GallerySection = () => {
   }, []);
 
   return (
-    <PageLayout
+    <SectionContainer
       as="section"
       className="h-[100vh] flex items-center"
       width="full"
@@ -106,7 +106,7 @@ const GallerySection = () => {
           ))}
         </div>
       </div>
-    </PageLayout>
+    </SectionContainer>
   );
 };
 

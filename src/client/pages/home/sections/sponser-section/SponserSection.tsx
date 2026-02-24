@@ -1,5 +1,6 @@
-import { PageLayout } from "../../../../../shared/layouts";
 import { Button } from "../../../../../shared/design-components";
+import SectionContainer from "../../../../../shared/layouts/sectionContainer";
+import SectionHeader from "../../../../components/sectionHeader";
 
 // Images for sponsor logo
 const dummyImages = [
@@ -14,12 +15,16 @@ const images = Array(3).fill(dummyImages).flat();
 
 export default function SponserSection() {
   return (
-    <PageLayout as="section" width="full">
+    <SectionContainer as="section" width="full">
       <div className="flex justify-center items-center min-h-screen w-full">
         <div className="w-[80%] md:w-[80%] lg:w-[60%] 2xl:w-full">
           <span className=" flex flex-col justify-center items-center my-10">
             {/* <Heading level="h2" align="center" children></Heading> */}
-            <h2 className="text-4xl 2xl:text-8xl">Our Sponsers</h2>
+            <SectionHeader
+              titleNormal="Our"
+              titleHighlight="Partners"
+              align="center"
+            />
             <p className="lg:text-xl xl:text-2xl my-10">
               “Powering ICT Meet v8 with innovation and collaboration”
             </p>
@@ -48,6 +53,6 @@ export default function SponserSection() {
           </span>
         </div>
       </div>
-    </PageLayout>
+    </SectionContainer>
   );
 }

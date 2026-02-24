@@ -7,7 +7,7 @@ interface PageLayoutProps {
   children: React.ReactNode;
 }
 
-const PageLayout = ({
+const SectionContainer = ({
   as = "div",
   width = "container",
   className,
@@ -26,7 +26,9 @@ const PageLayout = ({
     }
   }
 
-  return <Tag className={cn(getWidth(width), className)}>{children}</Tag>;
+  return (
+    <Tag className={cn("py-32", getWidth(width), className)}>{children}</Tag>
+  );
 };
 
-export default PageLayout;
+export default SectionContainer;

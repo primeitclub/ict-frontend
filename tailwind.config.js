@@ -11,7 +11,7 @@ export default {
       backgroundColor: {
         // background colors 
         'primary': '#020919',
-        'primary-cyan':'#00d4ff',
+        'primary-cyan':'#3571F0',
         'primary-cyan-dark':'#0099cc',       
         'secondary': '#212121',     
         'accent-light': '#3B82F6',  

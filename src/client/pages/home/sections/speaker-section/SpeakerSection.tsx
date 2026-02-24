@@ -1,15 +1,17 @@
-import React from 'react'
-import SpeakerCard from './SpeakerCard'
+import SpeakerCard from "./SpeakerCard";
+import SectionHeader from "../../../../components/sectionHeader";
+import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 
 const SpeakerSection = () => {
   return (
-    <div className="mx-auto text-center max-w-[1200px] px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-semibold mb-8 sm:mb-10 md:mb-12 xl:mb-24">
-        Joining Us This{" "}
-        <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
-          Edition
-        </span>
-      </h2>
+    <SectionContainer className="mx-auto text-center max-w-[1200px] px-4 sm:px-6 ">
+      <SectionHeader
+        titleNormal="Joining Us This"
+        titleHighlight="Edition"
+        varient="primary"
+        align="center"
+        className="mb-4"
+      />
 
       {/* Grid for Speaker Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-14 justify-items-center">
@@ -22,8 +24,8 @@ const SpeakerSection = () => {
         <SpeakerCard />
         <SpeakerCard />
       </div>
-    </div>
-  )
-}
+    </SectionContainer>
+  );
+};
 
-export default SpeakerSection
+export default SpeakerSection;

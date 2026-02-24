@@ -1,4 +1,6 @@
 import Button from "../../../../../shared/design-components/button/Button";
+import "../../../../../App.css";
+import { ChevronRight } from "lucide-react";
 
 export function LandingSection() {
   return (
@@ -20,8 +22,16 @@ export function LandingSection() {
           </div>
         </div>
         <div className="flex sm:flex-row flex-col gap-2 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
-          <Button variant="glass" label="Register Now " />
-          <Button variant="glass" label="Be a sponsor" />
+          <Button
+            variant="glass"
+            rightIcon={<ChevronRight />}
+            label="Register Now "
+          />
+          <Button
+            variant="glass"
+            rightIcon={<ChevronRight />}
+            label="Be a sponsor"
+          />
         </div>
       </div>
 
