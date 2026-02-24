@@ -1,12 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useVersion } from "../../../routes/VersionContext";
 import { useState } from "react";
 
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 import { PageLayout } from "../../../shared/layouts";
 const Navbar = () => {
-  const { getPath } = useVersion();
+  // const { getPath } = useVersion();
   const navigate = useNavigate();
 
   const pages = [
@@ -20,7 +19,7 @@ const Navbar = () => {
   return (
     <header>
       <PageLayout className="flex justify-between items-center py-4 px-6 ">
-        <div onClick={() => navigate(getPath("/"))}>
+        <div onClick={() => navigate("/")}>
           <Logo2 />
         </div>
         <div className=" sm:hidden">
@@ -37,8 +36,9 @@ const Navbar = () => {
                   pages.map(({ label, path }) => (
                     <NavLink
                       key={`${label}-${path}`}
-                      to={getPath(path)}
+                      // to={getPath(path)}
                       className="text-black"
+                      to="ss"
                     >
                       {label}
                     </NavLink>
@@ -51,7 +51,7 @@ const Navbar = () => {
         <nav className="hidden sm:flex  gap-8 text-xl  ">
           {!!pages.length &&
             pages.map(({ label, path }) => (
-              <NavLink key={`${label}-${path}`} to={getPath(path)}>
+              <NavLink key={`${label}-${path}`} to={"Sd"}>
                 {label}
               </NavLink>
             ))}
