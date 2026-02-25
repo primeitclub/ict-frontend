@@ -1,4 +1,3 @@
-import React from "react";
 import Speaker from "./../../../../../assets/speaker.png";
 import Rightarrow from "./../../../../../assets/events_navigation.svg";
 import Instagram from "./../../../../../assets/Instagram.svg";
