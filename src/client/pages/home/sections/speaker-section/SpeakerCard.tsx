@@ -2,7 +2,7 @@ import Speaker from "./../../../../../assets/speaker.png";
 import Rightarrow from "./../../../../../assets/events_navigation.svg";
 import Instagram from "./../../../../../assets/Instagram.svg";
 import Github from "./../../../../../assets/Github.svg";
-import LinkedIn from "./../../../../../assets/linkedin.svg";
+import LinkedIn from "./../../../../../assets/Linkedin.svg";
 
 const SpeakerCard = () => {
   return (
