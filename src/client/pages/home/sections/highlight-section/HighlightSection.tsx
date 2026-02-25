@@ -213,15 +213,18 @@ export default function HighlightSection() {
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`transition-colors duration-200 flex gap-3 items-center whitespace-nowrap ${
+              className={`group transition-colors transition-transform duration-200 flex gap-3 items-center whitespace-nowrap hover:text-[#3571F0] ${
                 activeTab === index ? "text-[#3571F0]" : "text-black"
               }`}
             >
-              {activeTab === index ? (
-                <CircleArrowRight size={24} className="text-[#3571F0]" />
-              ) : (
-                <CircleArrowRight size={24} className="-rotate-45 text-black" />
-              )}
+              <CircleArrowRight
+                size={24}
+                className={`transition-transform duration-500 ${
+                  activeTab === index
+                    ? "text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                }`}
+              />
               {tab.title}
             </button>
           ))}
