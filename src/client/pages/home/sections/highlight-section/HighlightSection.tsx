@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Calendar,
   Clock,
@@ -39,6 +39,11 @@ type TabType = {
 
 export default function HighlightSection() {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = () => {
+    sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const tabs: TabType[] = [
     {
@@ -201,11 +206,13 @@ export default function HighlightSection() {
   ];
 
   return (
-    <div className=" bg-[#F2F5FA] text-black relative">
-      <a>
-
-      <img src={mouse} alt="Mouse" className="absolute -top-6 left-[50%] z-50 w-16 " />
-      </a>
+    <div ref={sectionRef} className=" bg-[#F2F5FA] text-black relative">
+      <img
+        src={mouse}
+        alt="Mouse"
+        onClick={scrollToSection}
+        className="absolute -top-6 left-[50%] z-50 w-16 cursor-pointer "
+      />
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
           titleNormal="Event"
@@ -218,17 +225,16 @@ export default function HighlightSection() {
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`group transition-colors transition-transform duration-200 flex gap-3 items-center whitespace-nowrap hover:text-[#3571F0] ${
-                activeTab === index ? "text-[#3571F0]" : "text-black"
-              }`}
+              className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
+                hover:text-[#3571F0] ${activeTab === index ? "text-[#3571F0]" : "text-black"
+                }`}
             >
               <CircleArrowRight
                 size={24}
-                className={`transition-transform duration-700 ${
-                  activeTab === index
-                    ? "text-[#3571F0]"
-                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
-                }`}
+                className={`transition-transform duration-700 ${activeTab === index
+                  ? "text-[#3571F0]"
+                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                  }`}
               />
               {tab.title}
             </button>
