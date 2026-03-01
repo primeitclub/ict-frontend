@@ -17,6 +17,7 @@ import "swiper/css";
 
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
+import mouse from "../../../../../assets/mouse.png";
 
 type ContentType = {
   image: string;
@@ -200,7 +201,11 @@ export default function HighlightSection() {
   ];
 
   return (
-    <div className=" bg-[#F2F5FA] text-black">
+    <div className=" bg-[#F2F5FA] text-black relative">
+      <a>
+
+      <img src={mouse} alt="Mouse" className="absolute -top-6 left-[50%] z-50 w-16 " />
+      </a>
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
           titleNormal="Event"
@@ -219,7 +224,7 @@ export default function HighlightSection() {
             >
               <CircleArrowRight
                 size={24}
-                className={`transition-transform duration-500 ${
+                className={`transition-transform duration-700 ${
                   activeTab === index
                     ? "text-[#3571F0]"
                     : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
@@ -235,14 +240,14 @@ export default function HighlightSection() {
           -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
           bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
           >
-            <ArrowLeft size={24} />
+            <ArrowLeft size={24} strokeWidth={3} />
           </button>
           <button
             className="swiper-button-next-custom hidden md:flex absolute xl:-right-20 lg:-right-12 top-1/2
            -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
            bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
           >
-            <ArrowRight size={24} />
+            <ArrowRight size={24} strokeWidth={3} />
           </button>
 
           <Swiper
@@ -265,7 +270,7 @@ export default function HighlightSection() {
           >
             {tabs[activeTab].content.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className=" rounded-3xl  bg-white p-3 group h-full">
+                <div className=" rounded-3xl  bg-white p-3 group h-full font-sans">
                   <div className="relative h-44 w-full rounded-2xl overflow-hidden">
                     <img
                       src={item.image}
@@ -279,7 +284,9 @@ export default function HighlightSection() {
 
                   {/* Content  */}
                   <div className="mt-3">
-                    <h3 className="text-2xl font-bold mb-1">{item.title}</h3>
+                    <h3 className="text-2xl font-semibold mb-1">
+                      {item.title}
+                    </h3>
                     <p className="text-sm mb-2">{item.speaker}</p>
 
                     {/* Avatar */}
@@ -298,39 +305,38 @@ export default function HighlightSection() {
                       ))}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-[11px]  mb-8">
+                    <div className="grid grid-cols-2 gap-y-4 gap-x-2  mb-8">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 " />
-                        <span className="text-sm font-semibold">
-                          {item.date}
-                        </span>
+                        <span className="text-sm font-medium">{item.date}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Banknote className="w-4 h-4  text-[#10B981] " />
-                        <span className="text-[#10B981] text-sm font-semibold">
+                        <span className="text-[#10B981] text-sm font-medium">
                           Rs. {item.price}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4  " />
-                        <span className="text-sm font-semibold">
-                          {item.time}
-                        </span>
+                        <span className="text-sm font-medium">{item.time}</span>
                       </div>
                       <div className="flex items-center gap-2 font-medium">
                         <MapPin className="w-4 h-4  " />
-                        <span className="text-sm font-semibold">
+                        <span className="text-sm font-medium">
                           {item.place}
                         </span>
                       </div>
                     </div>
 
                     <button
-                      className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-3 rounded-2xl 
+                      className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-1.5 rounded-2xl 
                     font-bold flex items-center justify-center transition-colors group"
                     >
                       Register Now
-                      <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight
+                        className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
+                        strokeWidth={4}
+                      />
                     </button>
                   </div>
                 </div>
@@ -357,3 +363,4 @@ export default function HighlightSection() {
     </div>
   );
 }
+
