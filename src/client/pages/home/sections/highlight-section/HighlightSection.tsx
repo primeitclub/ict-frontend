@@ -209,7 +209,7 @@ export default function HighlightSection() {
           titleNormal="Event"
           titleHighlight="Overview"
           varient="secondary"
-         className="justify-start"
+          className="justify-start"
         />
 
         <div className="sm:grid grid-cols-2 hidden md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
@@ -218,15 +218,17 @@ export default function HighlightSection() {
               key={index}
               onClick={() => setActiveTab(index)}
               className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
-                hover:text-[#3571F0] ${activeTab === index ? "text-[#3571F0]" : "text-black"
+                hover:text-[#3571F0] ${
+                  activeTab === index ? "text-[#3571F0]" : "text-black"
                 }`}
             >
               <CircleArrowRight
                 size={24}
-                className={`transition-transform duration-700 ${activeTab === index
+                className={`transition-transform duration-700 ${
+                  activeTab === index
                     ? "text-[#3571F0]"
                     : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
-                  }`}
+                }`}
               />
               {tab.title}
             </button>
@@ -254,18 +256,50 @@ export default function HighlightSection() {
         </div> */}
         <div className="relative group/nav">
           <button
-            className="swiper-button-prev-custom hidden md:flex absolute xl:-left-20 lg:-left-12 top-1/2 
-          -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-          bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+            className="
+              swiper-button-prev-custom
+              hidden sm:flex
+              absolute
+              left-2 sm:left-4 md:-left-6 lg:-left-10 xl:-left-16
+              top-1/2 -translate-y-1/2
+              z-20
+              text-[#3571F0]
+              border-2 border-[#3571F0]
+              w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12
+              rounded-full
+              items-center justify-center
+              bg-white
+              hover:bg-[#3571F0] hover:text-white
+              transition-all duration-300
+              disabled:opacity-30
+            "
           >
-            <ArrowLeft size={24} strokeWidth={3} />
+            <ArrowLeft size={25}   strokeWidth={3}/>
           </button>
           <button
-            className="swiper-button-next-custom hidden md:flex absolute xl:-right-20 lg:-right-12 top-1/2
-           -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-           bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+            className="
+              swiper-button-next-custom
+              hidden sm:flex
+              absolute
+              right-2 sm:right-4 md:-right-6 lg:-right-10 xl:-right-16
+              top-1/2 -translate-y-1/2
+              z-20
+              text-[#3571F0]
+              border border-[#3571F0]
+              w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12
+              rounded-full
+              items-center justify-center
+              bg-white
+              hover:bg-[#3571F0] hover:text-white
+              transition-all duration-300
+              disabled:opacity-30
+            "
           >
-            <ArrowRight size={24} strokeWidth={3} />
+            <ArrowRight
+              size={25}
+              strokeWidth={3}
+              
+            />
           </button>
 
           <Swiper
@@ -294,9 +328,17 @@ export default function HighlightSection() {
             ))}
           </Swiper>
           <div className="custom-pagination flex justify-center md:hidden mt-8 gap-2"></div>
+
+          <div className="  flex items-center justify-center gap-2 mt-16  font-medium sm:hidden">
+            View more
+            <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+              <ArrowRight size={15} strokeWidth={2} />
+            </div>
+          </div>
         </div>
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           .custom-pagination .swiper-pagination-bullet {
             width: 10px;
             height: 10px;
@@ -309,7 +351,9 @@ export default function HighlightSection() {
             background: #3571F0;
             border-radius: 5px;
           }
-        `}} />
+        `,
+          }}
+        />
       </div>
     </div>
   );
