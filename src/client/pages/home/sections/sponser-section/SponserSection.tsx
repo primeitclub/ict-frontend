@@ -1,5 +1,6 @@
 // import { Button } from "../../../../../shared/design-components";
 
+import { useEffect, useState } from "react";
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 import SectionHeader from "../../../../components/sectionHeader";
 
@@ -15,19 +16,34 @@ const dummyImages = [
 const images = Array(3).fill(dummyImages).flat();
 
 export default function SponserSection() {
+  const [visibleCount, setVisibleCount] = useState(15);
+
+  useEffect(() => {
+    const updateGridSize = () => {
+      const w = window.innerWidth;
+      setVisibleCount(w <= 426 ? 9 : 15);
+    };
+    updateGridSize();
+    window.addEventListener("resize", updateGridSize);
+    return () => window.addEventListener("resize", updateGridSize);
+  });
+
+  const visibleImages = images.slice(0, visibleCount);
+
   return (
     <SectionContainer as="section">
       <div className="flex justify-center items-center min-h-screen w-full">
-        <div className="w-[80%] md:w-[80%] lg:w-[60%] 2xl:w-full">
+        <div className="w-[80%] lg:w-[70%] 2xl:w-full">
           <SectionHeader
             titleNormal="Supporting"
             titleHighlight="This Meet"
             align="center"
+            className="sm:text-nowrap"
           />
 
           {/* Sponser grid */}
-          <div className="grid grid-cols-3 gap-1.5 md:grid-cols-5 md:gap-2 lg:gap-2">
-            {images.map((image, index) => (
+          <div className="grid grid-cols-3 gap-2 md:grid-cols-5">
+            {visibleImages.map((image, index) => (
               <div
                 key={index}
                 className="w-45 aspect-square rounded-lg md:rounded-2xl  overflow-hidden"
