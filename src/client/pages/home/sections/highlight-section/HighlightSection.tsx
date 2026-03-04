@@ -1,25 +1,16 @@
 import { useState, useRef } from "react";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Banknote,
-  ChevronRight,
-  CircleArrowRight,
-  ArrowLeft,
-  ArrowRight,
-} from "lucide-react";
+import { CircleArrowRight, ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // import { GradientText } from "./GradientText";
 // Import Swiper styles
 import "swiper/css";
-
+import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
 import mouse from "../../../../../assets/mouse.png";
-
-type ContentType = {
+import Card from "../../../../components/card";
+export type ContentType = {
   image: string;
   title: string;
   speaker: string;
@@ -218,9 +209,10 @@ export default function HighlightSection() {
           titleNormal="Event"
           titleHighlight="Overview"
           varient="secondary"
+         className="justify-start"
         />
 
-        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
+        <div className="sm:grid grid-cols-2 hidden md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
           {tabs.map((tab, index) => (
             <button
               key={index}
@@ -232,14 +224,34 @@ export default function HighlightSection() {
               <CircleArrowRight
                 size={24}
                 className={`transition-transform duration-700 ${activeTab === index
-                  ? "text-[#3571F0]"
-                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                    ? "text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
                   }`}
               />
               {tab.title}
             </button>
           ))}
         </div>
+
+        {/* Mobile Tab Pagination Dots */}
+        {/* <div className="flex justify-center gap-3 mb-10 sm:hidden">
+          {tabs.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTab(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${activeTab === index
+                  ? "bg-[#3571F0] w-8"
+                  : "bg-gray-300 hover:bg-gray-400"
+                }`}
+           
+            />
+          ))}
+        </div>
+        <div className="sm:hidden text-center mb-10">
+          <h3 className="text-2xl font-bold bg-[#3571F0] bg-clip-text text-transparent inline-block">
+            {tabs[activeTab].title}
+          </h3>
+        </div> */}
         <div className="relative group/nav">
           <button
             className="swiper-button-prev-custom hidden md:flex absolute xl:-left-20 lg:-left-12 top-1/2 
@@ -257,13 +269,14 @@ export default function HighlightSection() {
           </button>
 
           <Swiper
-            modules={[Navigation, Autoplay]}
+            modules={[Navigation, Autoplay, Pagination]}
             spaceBetween={20}
             slidesPerView={1}
             navigation={{
               prevEl: ".swiper-button-prev-custom",
               nextEl: ".swiper-button-next-custom",
             }}
+            pagination={{ clickable: true, el: ".custom-pagination" }}
             breakpoints={{
               640: {
                 slidesPerView: 2,
@@ -276,97 +289,28 @@ export default function HighlightSection() {
           >
             {tabs[activeTab].content.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className=" rounded-3xl  bg-white p-3 group h-full font-sans">
-                  <div className="relative h-44 w-full rounded-2xl overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-                      {item.seats} / {item.totalSeats} Seats
-                    </div>
-                  </div>
-
-                  {/* Content  */}
-                  <div className="mt-3">
-                    <h3 className="text-2xl font-semibold mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm mb-2">{item.speaker}</p>
-
-                    {/* Avatar */}
-                    <div className="flex -space-x-3 mb-6">
-                      {item.avatar.map((av, i) => (
-                        <div
-                          className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
-                        >
-                          <img
-                            key={i}
-                            src={av}
-                            alt="Speaker"
-                            className="w-8 h-8 rounded-full "
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-2  mb-8">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 " />
-                        <span className="text-sm font-medium">{item.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Banknote className="w-4 h-4  text-[#10B981] " />
-                        <span className="text-[#10B981] text-sm font-medium">
-                          Rs. {item.price}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4  " />
-                        <span className="text-sm font-medium">{item.time}</span>
-                      </div>
-                      <div className="flex items-center gap-2 font-medium">
-                        <MapPin className="w-4 h-4  " />
-                        <span className="text-sm font-medium">
-                          {item.place}
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-1.5 rounded-2xl 
-                    font-bold flex items-center justify-center transition-colors group"
-                    >
-                      Register Now
-                      <ChevronRight
-                        className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
-                        strokeWidth={4}
-                      />
-                    </button>
-                  </div>
-                </div>
+                <Card item={item} />
               </SwiperSlide>
             ))}
           </Swiper>
-
-          <div className="flex md:hidden justify-center items-center gap-6 mt-12 pb-8">
-            <button
-              className="swiper-button-prev-custom w-12 h-12 rounded-full flex items-center 
-            justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
-            >
-              <ArrowLeft size={24} />
-            </button>
-            <button
-              className="swiper-button-next-custom w-12 h-12 rounded-full flex items-center
-             justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
-            >
-              <ArrowRight size={24} />
-            </button>
-          </div>
+          <div className="custom-pagination flex justify-center md:hidden mt-8 gap-2"></div>
         </div>
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          .custom-pagination .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #D1D5DB;
+            opacity: 1;
+            transition: all 0.3s ease;
+            margin: 0 4px !important;
+          }
+          .custom-pagination .swiper-pagination-bullet-active {
+            background: #3571F0;
+            border-radius: 5px;
+          }
+        `}} />
       </div>
     </div>
   );
 }
-
