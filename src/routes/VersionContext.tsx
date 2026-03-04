@@ -29,7 +29,7 @@ export function VersionProvider({ version, children }: ProviderProps) {
     if (isLatest) {
       return cleanPath; // /events
     }
-    return `/${version}${cleanPath}`; // /v6/events
+    return `/${version}${cleanPath}`;
   };
 
   // Switch to different version (keeps current page)

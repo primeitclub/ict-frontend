@@ -4,8 +4,9 @@ import { useState } from "react";
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 import SectionContainer from "../../../shared/layouts/sectionContainer";
+import { useVersion } from "../../../routes/VersionContext";
 const Navbar = () => {
-  // const { getPath } = useVersion();
+  const { getPath } = useVersion();
   const navigate = useNavigate();
 
   const pages = [
@@ -51,7 +52,7 @@ const Navbar = () => {
         <nav className="hidden sm:flex  gap-8 text-xl  ">
           {!!pages.length &&
             pages.map(({ label, path }) => (
-              <NavLink key={`${label}-${path}`} to={"Sd"}>
+              <NavLink key={`${label}-${path}`} to={getPath(path)}>
                 {label}
               </NavLink>
             ))}
