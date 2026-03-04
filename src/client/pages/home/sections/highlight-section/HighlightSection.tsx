@@ -1,24 +1,16 @@
-import { useState } from "react";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Banknote,
-  ChevronRight,
-  CircleArrowRight,
-  ArrowLeft,
-  ArrowRight,
-} from "lucide-react";
+import { useState, useRef } from "react";
+import { CircleArrowRight, ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // import { GradientText } from "./GradientText";
 // Import Swiper styles
 import "swiper/css";
-
+import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
-
-type ContentType = {
+import mouse from "../../../../../assets/mouse.png";
+import Card from "../../../../components/card";
+export type ContentType = {
   image: string;
   title: string;
   speaker: string;
@@ -38,6 +30,11 @@ type TabType = {
 
 export default function HighlightSection() {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = () => {
+    sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const tabs: TabType[] = [
     {
@@ -200,56 +197,120 @@ export default function HighlightSection() {
   ];
 
   return (
-    <div className=" bg-[#F2F5FA] text-black">
+    <div ref={sectionRef} className=" bg-[#F2F5FA] text-black relative">
+      <img
+        src={mouse}
+        alt="Mouse"
+        onClick={scrollToSection}
+        className="absolute -top-6 left-[50%] z-50 w-16 cursor-pointer "
+      />
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
           titleNormal="Event"
           titleHighlight="Overview"
           varient="secondary"
+          className="justify-start"
         />
 
-        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
+        <div className="sm:grid grid-cols-2 hidden md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl font-bold mb-16 pb-4">
           {tabs.map((tab, index) => (
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`transition-colors duration-200 flex gap-3 items-center whitespace-nowrap ${
-                activeTab === index ? "text-[#3571F0]" : "text-black"
-              }`}
+              className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
+                hover:text-[#3571F0] ${
+                  activeTab === index ? "text-[#3571F0]" : "text-black"
+                }`}
             >
-              {activeTab === index ? (
-                <CircleArrowRight size={24} className="text-[#3571F0]" />
-              ) : (
-                <CircleArrowRight size={24} className="-rotate-45 text-black" />
-              )}
+              <CircleArrowRight
+                size={24}
+                className={`transition-transform duration-700 ${
+                  activeTab === index
+                    ? "text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                }`}
+              />
               {tab.title}
             </button>
           ))}
         </div>
+
+        {/* Mobile Tab Pagination Dots */}
+        {/* <div className="flex justify-center gap-3 mb-10 sm:hidden">
+          {tabs.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTab(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${activeTab === index
+                  ? "bg-[#3571F0] w-8"
+                  : "bg-gray-300 hover:bg-gray-400"
+                }`}
+           
+            />
+          ))}
+        </div>
+        <div className="sm:hidden text-center mb-10">
+          <h3 className="text-2xl font-bold bg-[#3571F0] bg-clip-text text-transparent inline-block">
+            {tabs[activeTab].title}
+          </h3>
+        </div> */}
         <div className="relative group/nav">
           <button
-            className="swiper-button-prev-custom hidden md:flex absolute xl:-left-20 lg:-left-12 top-1/2 
-          -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-          bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+            className="
+              swiper-button-prev-custom
+              hidden sm:flex
+              absolute
+              left-2 sm:left-4 md:-left-6 lg:-left-10 xl:-left-16
+              top-1/2 -translate-y-1/2
+              z-20
+              text-[#3571F0]
+              border-2 border-[#3571F0]
+              w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12
+              rounded-full
+              items-center justify-center
+              bg-white
+              hover:bg-[#3571F0] hover:text-white
+              transition-all duration-300
+              disabled:opacity-30
+            "
           >
-            <ArrowLeft size={24} />
+            <ArrowLeft size={25}   strokeWidth={3}/>
           </button>
           <button
-            className="swiper-button-next-custom hidden md:flex absolute xl:-right-20 lg:-right-12 top-1/2
-           -translate-y-1/2 z-20 text-[#3571F0] border-2 border-[#3571F0] w-12 h-12 rounded-full items-center justify-center 
-           bg-transparent hover:bg-[#3571F0] hover:text-white transition-all disabled:opacity-30"
+            className="
+              swiper-button-next-custom
+              hidden sm:flex
+              absolute
+              right-2 sm:right-4 md:-right-6 lg:-right-10 xl:-right-16
+              top-1/2 -translate-y-1/2
+              z-20
+              text-[#3571F0]
+              border border-[#3571F0]
+              w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12
+              rounded-full
+              items-center justify-center
+              bg-white
+              hover:bg-[#3571F0] hover:text-white
+              transition-all duration-300
+              disabled:opacity-30
+            "
           >
-            <ArrowRight size={24} />
+            <ArrowRight
+              size={25}
+              strokeWidth={3}
+              
+            />
           </button>
 
           <Swiper
-            modules={[Navigation, Autoplay]}
+            modules={[Navigation, Autoplay, Pagination]}
             spaceBetween={20}
             slidesPerView={1}
             navigation={{
               prevEl: ".swiper-button-prev-custom",
               nextEl: ".swiper-button-next-custom",
             }}
+            pagination={{ clickable: true, el: ".custom-pagination" }}
             breakpoints={{
               640: {
                 slidesPerView: 2,
@@ -262,94 +323,37 @@ export default function HighlightSection() {
           >
             {tabs[activeTab].content.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className=" rounded-3xl  bg-white p-3 group h-full">
-                  <div className="relative h-44 w-full rounded-2xl overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-                      {item.seats} / {item.totalSeats} Seats
-                    </div>
-                  </div>
-
-                  {/* Content  */}
-                  <div className="mt-3">
-                    <h3 className="text-2xl font-bold mb-1">{item.title}</h3>
-                    <p className="text-sm mb-2">{item.speaker}</p>
-
-                    {/* Avatar */}
-                    <div className="flex -space-x-3 mb-6">
-                      {item.avatar.map((av, i) => (
-                        <div
-                          className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
-                        >
-                          <img
-                            key={i}
-                            src={av}
-                            alt="Speaker"
-                            className="w-8 h-8 rounded-full "
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-[11px]  mb-8">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 " />
-                        <span className="text-sm font-semibold">
-                          {item.date}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Banknote className="w-4 h-4  text-[#10B981] " />
-                        <span className="text-[#10B981] text-sm font-semibold">
-                          Rs. {item.price}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4  " />
-                        <span className="text-sm font-semibold">
-                          {item.time}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 font-medium">
-                        <MapPin className="w-4 h-4  " />
-                        <span className="text-sm font-semibold">
-                          {item.place}
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-3 rounded-2xl 
-                    font-bold flex items-center justify-center transition-colors group"
-                    >
-                      Register Now
-                      <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
+                <Card item={item} />
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="custom-pagination flex justify-center md:hidden mt-8 gap-2"></div>
 
-          <div className="flex md:hidden justify-center items-center gap-6 mt-12 pb-8">
-            <button
-              className="swiper-button-prev-custom w-12 h-12 rounded-full flex items-center 
-            justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
-            >
-              <ArrowLeft size={24} />
-            </button>
-            <button
-              className="swiper-button-next-custom w-12 h-12 rounded-full flex items-center
-             justify-center bg-[#3571F0] text-white hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-md"
-            >
-              <ArrowRight size={24} />
-            </button>
+          <div className="  flex items-center justify-center gap-2 mt-16  font-medium sm:hidden">
+            View more
+            <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+              <ArrowRight size={15} strokeWidth={2} />
+            </div>
           </div>
         </div>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+          .custom-pagination .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #D1D5DB;
+            opacity: 1;
+            transition: all 0.3s ease;
+            margin: 0 4px !important;
+          }
+          .custom-pagination .swiper-pagination-bullet-active {
+            background: #3571F0;
+            border-radius: 5px;
+          }
+        `,
+          }}
+        />
       </div>
     </div>
   );

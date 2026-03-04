@@ -35,7 +35,7 @@ export default function SectionHeader({
     <div className={cn("w-full flex", alignStyles[align], className)}>
       <h2
         className={cn(
-          "text-[60px] font-[650] mb-12 tracking-[-2.4px] w-fit ",
+          " text-[40px] md:text-[60px] font-[650] mb-12 tracking-[-2.4px] w-fit ",
           varientStyles[varient || "primary"],
         )}
       >
