@@ -8,8 +8,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
-import mouse from "../../../../../assets/mouse.png";
+import svgIcon from "../../../../components/icon/svgIcon";
 import Card from "../../../../components/card";
+import SvgIcon from "../../../../components/icon/svgIcon";
 export type ContentType = {
   image: string;
   title: string;
@@ -198,12 +199,17 @@ export default function HighlightSection() {
 
   return (
     <div ref={sectionRef} className=" bg-[#F2F5FA] text-black relative">
-      <img
+      {/* <img
         src={mouse}
         alt="Mouse"
         onClick={scrollToSection}
         className="absolute -top-6 left-[50%] z-50 w-16 cursor-pointer "
-      />
+      /> */}
+      <div className="absolute -top-5 left-[50%] z-50  cursor-pointer  bg-white rounded-full p-2"
+             onClick={scrollToSection}>
+
+      <SvgIcon />
+      </div>
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
           titleNormal="Event"
