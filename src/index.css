@@ -7,13 +7,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
 }
 
 @layer base {
   a {
     @apply text-nav-default hover:text-nav-hover active:text-nav-active;
   }
+
   body {
     @apply bg-primary text-primary font-sans;
     overflow-x: hidden;
@@ -26,3 +27,50 @@
   }
 }
 
+/* In your CSS file */
+/* Ensure the swiper doesn't clip the scaled-up active slide */
+.events-swiper {
+  overflow: visible !important;
+}
+
+/* 1. Default state (Side slides) */
+.events-swiper .swiper-slide {
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.6s ease;
+  transform: scale(0.75) translateY(20px); /* Pushes side slides down and shrinks them */
+
+  z-index: 1;
+  
+}
+
+/* 2. Active state (Middle slide) */
+.events-swiper .swiper-slide-active {
+  transform: scale(1) translateY(0); /* Pops the center slide up and forward */
+  opacity: 1;
+  z-index: 10;
+  
+}
+
+/* 3. Smooth Scaling for the image inside */
+.triple-slide-card {
+  transition: transform 0.6s ease;
+}
+
+.events-swiper .swiper-slide-active .triple-slide-card {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* 4. Navigation Styling to match your image */
+.events-swiper .swiper-button-next,
+.events-swiper .swiper-button-prev {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1);
+ 
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 50%;
+}
+
+.events-swiper .swiper-pagination-bullet {
+  background: #3571F0;
+}

@@ -206,9 +206,9 @@ export default function HighlightSection() {
         className="absolute -top-6 left-[50%] z-50 w-16 cursor-pointer "
       /> */}
       <div className="absolute -top-5 left-[50%] z-50  cursor-pointer  bg-white rounded-full p-2"
-             onClick={scrollToSection}>
+        onClick={scrollToSection}>
 
-      <SvgIcon />
+        <SvgIcon />
       </div>
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
@@ -224,17 +224,15 @@ export default function HighlightSection() {
               key={index}
               onClick={() => setActiveTab(index)}
               className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
-                hover:text-[#3571F0] ${
-                  activeTab === index ? "text-[#3571F0]" : "text-black"
+                hover:text-[#3571F0] ${activeTab === index ? "text-[#3571F0]" : "text-black"
                 }`}
             >
               <CircleArrowRight
                 size={24}
-                className={`transition-transform duration-700 ${
-                  activeTab === index
-                    ? "text-[#3571F0]"
-                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
-                }`}
+                className={`transition-transform duration-700 ${activeTab === index
+                  ? "text-[#3571F0]"
+                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                  }`}
               />
               {tab.title}
             </button>
@@ -280,7 +278,7 @@ export default function HighlightSection() {
               disabled:opacity-30
             "
           >
-            <ArrowLeft size={25}   strokeWidth={3}/>
+            <ArrowLeft size={25} strokeWidth={3} />
           </button>
           <button
             className="
@@ -304,7 +302,7 @@ export default function HighlightSection() {
             <ArrowRight
               size={25}
               strokeWidth={3}
-              
+
             />
           </button>
 

@@ -13,7 +13,7 @@ interface CardProps {
 
 const Card = ({ item }: CardProps) => {
   return (
-    <div className=" rounded-3xl  bg-white p-3 group h-full font-sans">
+    <div className=" rounded-3xl  bg-[#FEFEFE] p-3 group h-full font-sans">
       <div className="relative h-44 w-full rounded-2xl overflow-hidden">
         <img
           src={item.image}

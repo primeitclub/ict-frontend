@@ -1369,7 +1369,7 @@ deep-is@^0.1.3:
 
 detect-browser@^5.3.0:
   version "5.3.0"
-  resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.3.0.tgz#9705ef2bddf46072d0f7265a1fe300e36fe7ceca"
+  resolved "https://registry.npmjs.org/detect-browser/-/detect-browser-5.3.0.tgz"
   integrity sha512-53rsFbGdwMwlF7qvCt0ypLM5V5/Mbl0szB7GPN8y9NCcbknYOeVVXdrXEq+90IwAfrrzt6Hd+u2E2ntakICU8w==
 
 detect-node-es@^1.1.0:
@@ -1389,7 +1389,7 @@ dlv@^1.1.3:
 
 easing-progress@^1.0.0:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/easing-progress/-/easing-progress-1.0.2.tgz#1ef67ac03d7b5077b172d20efa08f89cc435f025"
+  resolved "https://registry.npmjs.org/easing-progress/-/easing-progress-1.0.2.tgz"
   integrity sha512-aVTIuUzCsmB/6PK0ABRDdoGEQigvz8uQanuGL+uBsa+gAMkSJSLbiMLRbUi+3k57MdmaQ88wQQ1Q+UgKRbrIRg==
 
 electron-to-chromium@^1.5.263:
@@ -1639,7 +1639,7 @@ gensync@^1.0.0-beta.2:
 
 get-image-pos@^0.0.11:
   version "0.0.11"
-  resolved "https://registry.yarnpkg.com/get-image-pos/-/get-image-pos-0.0.11.tgz#df547022737013aab46dd68f25816c7b72768bef"
+  resolved "https://registry.npmjs.org/get-image-pos/-/get-image-pos-0.0.11.tgz"
   integrity sha512-wQNsmFTk74/lC1K6aYsG2aDMLJGDTjvan0JaKeMVo050r+oqgRrv0ZZDcU7wJ7Awz5cnzfsmps6cjpHfzK6DSA==
 
 get-nonce@^1.0.0:
@@ -1730,7 +1730,7 @@ imurmurhash@^0.1.4:
 
 inapp-spy@^5.0.8:
   version "5.0.8"
-  resolved "https://registry.yarnpkg.com/inapp-spy/-/inapp-spy-5.0.8.tgz#b8d490ac3c36b101a2858c10b3c5fd139ba1d22c"
+  resolved "https://registry.npmjs.org/inapp-spy/-/inapp-spy-5.0.8.tgz"
   integrity sha512-TiE3KL4FkQGHj80KJ1uF179VaW4m983gI6lGSNIMHDNbseDoPKs7OrSfCGKrBFrpnUN+kulvwKe2xAP1krqT6A==
 
 is-binary-path@~2.1.0:
@@ -1771,10 +1771,10 @@ isexe@^2.0.0:
 
 ismobilejs@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-1.1.1.tgz#c56ca0ae8e52b24ca0f22ba5ef3215a2ddbbaa0e"
+  resolved "https://registry.npmjs.org/ismobilejs/-/ismobilejs-1.1.1.tgz"
   integrity sha512-VaFW53yt8QO61k2WJui0dHf4SlL8lxBofUuUmwBo0ljPk0Drz2TiuDW4jo3wDcv41qy/SxrJ+VAzJ/qYqsmzRw==
 
-jiti@^1.21.7:
+jiti@*, jiti@^1.21.7, jiti@>=1.21.0:
   version "1.21.7"
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.21.7.tgz"
   integrity sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==
@@ -1855,7 +1855,7 @@ lodash.merge@^4.6.2:
 
 lodash.split@^4.4.2:
   version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.split/-/lodash.split-4.4.2.tgz#a7f7bd9f37968b9312428e2f3ac3fb3173c4c3c6"
+  resolved "https://registry.npmjs.org/lodash.split/-/lodash.split-4.4.2.tgz"
   integrity sha512-kn1IDX0aHfg0FsnPIyxCHTamZXt3YK3aExRH1LW8YhzP6+sCldTm8+E4aIg+nSmM6R4eqdWGrXWtfYI961bwIw==
 
 lru-cache@^5.1.1:
@@ -1947,7 +1947,7 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
 
 normalize-wheel@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+  resolved "https://registry.npmjs.org/normalize-wheel/-/normalize-wheel-1.0.1.tgz"
   integrity sha512-1OnlAPZ3zgrk8B91HyRj+eVv+kS5u+Z0SCsak6Xil/kmgEia50ga7zfkumayonZrImffAxPU/5WcyGhzetHNPA==
 
 object-assign@^4.0.1:
@@ -2354,10 +2354,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-swiper@^11.2.10:
-  version "11.2.10"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-11.2.10.tgz"
-  integrity sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==
+swiper@^12.1.2:
+  version "12.1.2"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-12.1.2.tgz"
+  integrity sha512-4gILrI3vXZqoZh71I1PALqukCFgk+gpOwe1tOvz5uE9kHtl2gTDzmYflYCwWvR4LOvCrJi6UEEU+gnuW5BtkgQ==
 
 tailwind-merge@^3.4.0:
   version "3.4.0"
@@ -2500,9 +2500,9 @@ util-deprecate@^1.0.2:
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
 vevet@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/vevet/-/vevet-5.6.0.tgz#5d83c9391f008edff988de10cf579d1df059b836"
-  integrity sha512-WxtimyvGN9uRwP05cnXb5A9wEaZSNQOJh6ysTK5ypsg/xC98733IA3JM/gPkbXo59yOUc6lYpfmUVOuP/tro6w==
+  version "5.8.0"
+  resolved "https://registry.npmjs.org/vevet/-/vevet-5.8.0.tgz"
+  integrity sha512-bw31ndl6Fs3A0sFIqrC3R3SQgNkeFqpE1oG/cisN0JPHvZFAXwQkP7m+F8ATV3iqwYHFySfEH8OtzXW4YHI6NQ==
   dependencies:
     detect-browser "^5.3.0"
     easing-progress "^1.0.0"
@@ -2512,10 +2512,8 @@ vevet@^5.6.0:
     lodash.split "^4.4.2"
     normalize-wheel "^1.0.1"
 
-vite@^7.2.4:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-7.3.1.tgz#7f6cfe8fb9074138605e822a75d9d30b814d6507"
-  integrity sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==
+"vite@^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0", vite@^7.2.4:
+  version "7.3.0"
   dependencies:
     esbuild "^0.27.0"
     fdir "^6.5.0"
