@@ -19,8 +19,11 @@ export const AboutSection = () => {
           gap-6 sm:gap-8 md:gap-10 lg:gap-14 xl:gap-20 my-10 sm:my-14 md:my-16 lg:my-20 xl:my-[100px] mx-6 sm:mx-auto "
         >
           {/* Mobile Title */}
-          <h2 className="block md:hidden text-white font-bold text-[28px] self-start">
-            About Us
+          <h2 className="block md:hidden text-white font-bold text-[30px] self-center text-center">
+            <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] text-transparent bg-clip-text">
+                This Year's
+              </span>
+              &nbsp; Focus
           </h2>
 
           {/* Content — 1/3 width */}
