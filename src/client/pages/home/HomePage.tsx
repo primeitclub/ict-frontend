@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <main>
       <LandingSection />
-      <AboutSection />
+      <AboutSection />s
       <HighlightSection />
       {/* <GallerySection /> */}
       <SpeakerSection />

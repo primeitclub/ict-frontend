@@ -113,7 +113,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         >
           <div className="glass-specular"></div>
           <div className="glass-content">
-            {label} {rightIcon}
+            {leftIcon} {label} {rightIcon}
           </div>
         </button>
       );
