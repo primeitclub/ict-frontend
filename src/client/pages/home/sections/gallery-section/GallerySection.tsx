@@ -1,113 +1,67 @@
-import { Snap } from "vevet";
-import { useEffect, useRef } from "react";
-import SectionContainer from "../../../../../shared/layouts/sectionContainer";
-
-//image
-import image1 from "../../../../../assets/images/img1.svg";
-import image2 from "../../../../../assets/images/img2.svg";
-import image3 from "../../../../../assets/images/img3.svg";
-import image4 from "../../../../../assets/images/img4.svg";
-import image5 from "../../../../../assets/images/img5.svg";
-import image6 from "../../../../../assets/images/img6.svg";
-import image7 from "../../../../../assets/images/img7.svg";
-import image8 from "../../../../../assets/images/img8.svg";
+import React from 'react'
+import SectionContainer from '../../../../../shared/layouts/sectionContainer'
+import SectionHeader from '../../../../components/sectionHeader'
+import GalleryCard from './GalleryCard'
+import image1 from '../../../../../assets/images/image1.webp'
+import image2 from '../../../../../assets/images/image2.webp'
+import image3 from '../../../../../assets/images/image3.webp'
+import image4 from '../../../../../assets/images/image4.webp'
+import image5 from '../../../../../assets/images/image5.webp'
+import { Button } from '../../../../../shared/design-components'
+import { ArrowDownLeft, ChevronRight } from 'lucide-react'
 
 const GallerySection = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const carouselRef = useRef<Snap | null>(null);
-
-  const size = "40vh";
-
-  const images = [
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-  ];
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Initialize carousel
-    const carousel = new Snap({
-      container: containerRef.current,
-      direction: "horizontal",
-      grabCursor: true,
-      centered: true,
-      loop: true,
-      gap: 0,
-      freemode: true,
-    });
-
-    carousel.on("update", () => {
-      const depth = 150;
-      const rotation = 15;
-      const scale = 1 / (180 / rotation);
-      const halfAngle = (rotation * Math.PI) / 180 / 2;
-
-      carousel.slides.forEach(({ element, coord, progress, size }) => {
-        const factor = 1 - Math.cos(progress * scale * Math.PI);
-        const xOffset = progress * (size / 3) * factor;
-        const zOffset = ((size * 0.5) / Math.sin(halfAngle)) * factor - depth;
-        const rotateY = progress * rotation;
-
-        if (!element) return;
-
-        element.style.transform = `translateX(${
-          coord + xOffset
-        }px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;
-      });
-    });
-
-    // Add ready class to container
-    containerRef.current.classList.add("ready");
-
-    // Store carousel instance for cleanup
-    carouselRef.current = carousel;
-
-    return () => {
-      carousel.destroy();
-    };
-  }, []);
-
+    const images=[
+        // '../../../../../assets/images/image1.webp',
+        {img:  image1,rotate:"-rotate-12 translate-y-6 z-0"},
+        {img:  image2,rotate:'-rotate-6 translate-y-2 z-9'},
+        {img:  image3,rotate:'rotate-0 scale-110 z-10'},
+        {img:  image4,rotate:'rotate-6 translate-y-2 z-1'},
+        {img:  image5,rotate:'rotate-12 translate-y-6 -z-1'},
+    //   ,image2,image3,image4 , image5
+        
+    ]
   return (
-    <SectionContainer
-      as="section"
-      className="h-[100vh] flex items-center"
-      width="full"
-    >
-      <h2 className="text-3xl font-bold mb-6 text-center">Gallery</h2>
-      <div className=" relative w-full">
-        <div
-          ref={containerRef}
-          style={{
-            height: size,
-            width: "90vw",
-            perspective: "300px",
-            transformStyle: "preserve-3d",
-          }}
-        >
-          {images.map((item) => (
-            <div
-              key={item}
-              className="carousel-slide absolute px-1"
-              style={{ width: "calc(100vw/6)", height: 295 }}
-            >
-              <img
-                src={item}
-                alt={`${item}`}
-                className="w-full h-full object-contain rounded-lg"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </SectionContainer>
-  );
-};
+   <SectionContainer 
+   as='section'
+   width='full'
+   
+    className='bg-white'
 
-export default GallerySection;
+       >
+        <SectionHeader
+         titleNormal="Through"
+        titleHighlight="The Lens"
+        varient="secondary"
+        align="center"
+        className="mb-4"
+        />
+
+        <div className="flex w-[70%] mx-auto transition-transform ease-in-out duration-75  mt-10 items-center justify-center -gap-20">
+
+           {images.map((item,index)=>(
+            <GalleryCard key={index} imgUrl={item.img} rotate={item.rotate} />
+           ))}
+        </div>
+        <div className="flex items-center m-10 justify-center">
+          {/* <Button variant="filled"  label={`View more `} />
+          
+          <ChevronRight color='black'/> */}
+          <button
+          className=" bg-[#3571F0] px-5 hover:bg-blue-700 text-white py-2 rounded-full 
+                    font-bold flex text-sm items-center justify-center transition-colors group"
+        >
+          View More
+          <ChevronRight
+            className="w-5 h-5 1 group-hover:translate-x-1 transition-transform"
+            strokeWidth={3}
+          />
+        </button>
+          
+        </div>
+
+   </SectionContainer>
+  )
+}
+
+export default GallerySection

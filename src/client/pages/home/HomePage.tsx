@@ -1,4 +1,6 @@
 import AboutSection from "./sections/about-section/AboutSection";
+import GallerySection from "./sections/gallery-section/GallerySection";
+
 import HighlightSection from "./sections/highlight-section/HighlightSection";
 import { LandingSection } from "./sections/landing-section/LandingSection";
 import SpeakerSection from "./sections/speaker-section/SpeakerSection";
@@ -11,8 +13,8 @@ export default function HomePage() {
       <LandingSection />
       <AboutSection />
       <HighlightSection />
-      {/* <GallerySection /> */}
       <SpeakerSection />
+      <GallerySection/>
       <SponserSection />
     </main>
   );
