@@ -1,6 +1,6 @@
 import Button from "../../../../../shared/design-components/button/Button";
 import "../../../../../App.css";
-import {  ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 export function LandingSection() {
   return (
@@ -9,7 +9,9 @@ export function LandingSection() {
         <div className="items-center flex justify-center text-center bg-red">
           <div className="flex items-center gap-2 border-1 bg-red p-2 rounded-full  bg-white/5 backdrop-blur-lg border border-white/10">
             <Button variant="filled" size="small" label="Event on" />
-            <div className="flex text-xs items-center gap-1">12-13 January, 2025 <ArrowRight size={20} /> </div>{" "}
+            <div className="flex text-xs items-center gap-1">
+              12-13 January, 2025 <ArrowRight size={20} />{" "}
+            </div>{" "}
           </div>
         </div>
         <div className="flex flex-col gap-2 w-[100%] px-[1%]  sm:px-0 sm:w-[80%] md:w-[75%] lg:w-[70%] xl:w-[60%] 2xl:w-[52%] text-center mx-auto  ">
