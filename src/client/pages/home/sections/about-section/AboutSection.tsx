@@ -37,8 +37,8 @@ export const AboutSection = () => {
 
             <div className="my-1 md:my-2 xl:my-2">
               <p
-                className="my-1 md:my-2 lg:my-3 xl:my-6 text-justify font-light text-[#DFDFDF] 
-        text-xs md:text-xs lg:text-sm xl:text-base"
+                className="my-2 md:my-2 lg:my-3 xl:my-6 text-left sm:text-justify font-light text-[#DFDFDF] 
+        text-[12.5px] md:text-xs lg:text-sm xl:text-base"
               >
                 ICT V8 focuses on the growing gap between the academia and
                 industry. This event will bridge this. John doe loves apple and
@@ -46,8 +46,8 @@ export const AboutSection = () => {
               </p>
 
               <p
-                className="my-1 md:my-2 lg:my-3 xl:my-4 text-justify font-light text-[#DFDFDF] 
-        text-xs md:text-xs lg:text-sm xl:text-base"
+                className="my-2 md:my-2 lg:my-3 xl:my-4 text-left sm:text-justify font-light text-[#DFDFDF] 
+        text-[12.5px] md:text-xs lg:text-sm xl:text-base"
               >
                 ICT V8 focuses on the growing gap between the academia and
                 industry. This event will bridge this. John doe loves apple and
@@ -113,7 +113,7 @@ export const AboutSection = () => {
           <div className="w-full md:w-2/3 flex justify-center items-center">
             <img
               className="w-full 
-        max-w-[260px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[560px] xl:max-w-[680px] 
+        max-w-[425px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[560px] xl:max-w-[680px] 
         h-auto object-contain"
               src={AboutLogo}
               alt="About"
