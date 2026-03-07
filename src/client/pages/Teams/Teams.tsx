@@ -33,24 +33,44 @@ const roles: Role[] = [
   "Public Relations",
   "General Member",
 ];
-
+// Dummy Team Data
 const teamData = [
-  { name: "Saugat KC", role: "Social Media" },
-  { name: "Saugat KC", role: "HR" },
-  { name: "Saugat KC", role: "Finance" },
-  { name: "Saugat KC", role: "Officers" },
-  { name: "Saugat KC", role: "Outreach" },
-  { name: "Saugat KC", role: "Organizer" },
-  { name: "Saugat KC", role: "Executive" },
-  { name: "Saugat KC", role: "Public Relations" },
-  { name: "Saugat KC", role: "General Member" },
-  { name: "Saugat KC", role: "Finance" },
-  { name: "Saugat KC", role: "Officers" },
-  { name: "Saugat KC", role: "Organizer" },
-  { name: "Saugat KC", role: "Organizer" },
-  { name: "Saugat KC", role: "Executive" },
-  { name: "Saugat KC", role: "Public Relations" },
-  { name: "Saugat KC", role: "General Member" },
+  {
+    name: "Saugat KC",
+    role: "Social Media",
+    socialLinks: { instagram: "#" },
+  },
+  { name: "Saugat KC", role: "HR", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Finance", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Officers", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Outreach", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Executive", socialLinks: { instagram: "#" } },
+  {
+    name: "Saugat KC",
+    role: "Public Relations",
+    socialLinks: { instagram: "#" },
+  },
+  {
+    name: "Saugat KC",
+    role: "General Member",
+    socialLinks: { instagram: "#" },
+  },
+  { name: "Saugat KC", role: "Finance", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Officers", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
+  { name: "Saugat KC", role: "Executive", socialLinks: { instagram: "#" } },
+  {
+    name: "Saugat KC",
+    role: "Public Relations",
+    socialLinks: { instagram: "#" },
+  },
+  {
+    name: "Saugat KC",
+    role: "General Member",
+    socialLinks: { instagram: "#" },
+  },
 ];
 
 export default function Teams() {
@@ -94,7 +114,12 @@ export default function Teams() {
         {/* Team members */}
         <div className="scroll-bar md:max-h-screen gap-x-[42px]  w-fit grid justify-between grid-cols-2 lg:grid-cols-3 h-fit md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
           {filteredTeamData.map((member, index) => (
-            <TeamCard key={index} name={member.name} role={member.role} />
+            <TeamCard
+              key={index}
+              name={member.name}
+              role={member.role}
+              socialLinks={member.socialLinks}
+            />
           ))}
         </div>
       </div>

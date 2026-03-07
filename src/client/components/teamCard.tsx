@@ -5,9 +5,14 @@ interface TeamCardProps {
   id?: string;
   name: string;
   role: string;
+  socialLinks: {
+    instagram?: string;
+    linkedin?: string;
+    portfolio?: string;
+  };
 }
 
-export default function TeamCard({ name, role }: TeamCardProps) {
+export default function TeamCard({ name, role, socialLinks }: TeamCardProps) {
   return (
     <div className="grid">
       <div className="relative w-full h-fit max-w-[210px]">
@@ -15,9 +20,15 @@ export default function TeamCard({ name, role }: TeamCardProps) {
         <img src={ref1} alt="team-image" />
         {/* Icons on Image */}
         <div className="grid gap-2 absolute top-[12.96px] right-2">
-          <Instagram className="w-[14px] h-[14px] text-white cursor-pointer" />
-          <LinkedIn className="w-[14px] h-[14px] text-white cursor-pointer" />
-          <Globe className="w-[14px] h-[14px] text-white cursor-pointer" />
+          <a href={socialLinks.instagram}>
+            <Instagram className="w-[14px] h-[14px] text-white cursor-pointer" />
+          </a>
+          <a href={socialLinks.linkedin}>
+            <LinkedIn className="w-[14px] h-[14px] text-white cursor-pointer" />
+          </a>
+          <a href={socialLinks.portfolio}>
+            <Globe className="w-[14px] h-[14px] text-white cursor-pointer" />
+          </a>
         </div>
       </div>
       <span className="text-base font-sans font-bold leading-[32px] m-auto bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
