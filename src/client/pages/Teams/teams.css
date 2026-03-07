@@ -1,0 +1,36 @@
+.glass-specular {
+  box-shadow:
+    inset 2px 2px 2px #4e81ef,
+    inset -2px -2px 2px #4e81ef;
+}
+
+.glass-content {
+  font-family: sans;
+  padding: 5.81px 11.62px;
+  gap: 8.72px;
+}
+/* remove default scrollBar */
+html::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ScrollBar  */
+.scroll-bar {
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-right: -10px;
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  background: #dbf5ff;
+  border-radius: 20px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: #3571f0;
+  border-radius: 20px;
+}

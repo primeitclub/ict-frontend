@@ -34,7 +34,7 @@ export default function SponserSection() {
               >
                 <img
                   src={image}
-                  className=" w-full h-full object-cover md:rounded-2xl"
+                  className=" w-[180px] object-cover md:rounded-2xl"
                 />
               </div>
             ))}
