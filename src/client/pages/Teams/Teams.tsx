@@ -1,11 +1,9 @@
-// import SectionHeader from "../../components/sectionHeader";
 import SectionContainer from "../../../shared/layouts/sectionContainer";
 import { Button } from "../../../shared/design-components";
 import ArrowSVG from "./icons/arrowSVG";
-// import "../../../App.css";
 import "./teams.css";
-
 import TeamCard from "../../components/teamCard";
+import { useState } from "react";
 
 type Role =
   | "All"
@@ -56,12 +54,18 @@ const teamData = [
 ];
 
 export default function Teams() {
+  const [activeRole, setActiveRole] = useState<Role>("All");
+  const filteredTeamData =
+    activeRole === "All"
+      ? teamData
+      : teamData.filter((member) => member.role === activeRole);
+
   return (
-    <SectionContainer as="section" className="py-10">
+    <SectionContainer as="section" className=" py-10">
       <div className="gap-10 md:flex ">
-        <div className="md:w-[40%] md:sticky md:top-[2rem]  md:h-fit lg-w-[30%]">
+        <div className="md:w-[40%] md:sticky md:top-[2rem]  md:h-fit ">
           {/* Heading */}
-          <div className="text-center text-[32px] font-bold mb-20  md:text-left md:text-[48px] 2xl:text-[80px] leading-[37px] px-3 md:leading-[73px] bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent -tracking-[1px] ">
+          <div className="text-center text-[32px] font-bold mb-20  md:text-left md:text-[48px] xl:text-[61px] 2xl:text-[80px] leading-[37px] md:leading-[73px] 2xl:leading-[90px] lg:mr-20 bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent -tracking-[1px] ">
             Meet the Team
           </div>
 
@@ -70,17 +74,26 @@ export default function Teams() {
             {roles.map((role, index) => (
               <Button
                 key={index}
-                variant="glass"
-                leftIcon={<ArrowSVG />}
+                variant={activeRole === role ? "filled" : "glass"}
+                leftIcon={
+                  <ArrowSVG
+                    useSolidStroke={activeRole === role} // toggle stroke
+                    solidStrokeColor="#DBF5FF" // set solid color
+                    className={activeRole === role ? "rotate-[38deg]" : ""}
+                  />
+                }
+                onClick={() => setActiveRole(role)}
                 label={role}
+                size="base"
+                className="px-[5.81px] gap-[8.42px] h-auto"
               />
             ))}
           </div>
         </div>
 
         {/* Team members */}
-        <div className="scroll-bar gap-x-[42px] md:h-screen w-fit grid justify-between grid-cols-2 lg:grid-cols-3 h-fit md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
-          {teamData.map((member, index) => (
+        <div className="scroll-bar md:max-h-screen gap-x-[42px]  w-fit grid justify-between grid-cols-2 lg:grid-cols-3 h-fit md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
+          {filteredTeamData.map((member, index) => (
             <TeamCard key={index} name={member.name} role={member.role} />
           ))}
         </div>
