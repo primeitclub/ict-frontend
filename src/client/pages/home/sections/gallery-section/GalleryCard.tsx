@@ -1,32 +1,55 @@
-// import React from 'react'
-import gsap from "gsap"
 import { useRef } from "react"
+import gsap from "gsap"
 
-type cardProps ={
-    imgUrl:string,
-    rotate?:string
+type CardProps = {
+  imgUrl: string
+  x: number
+  y: number
+  rotate: number
+  scale?: number
+  z?: number
 }
-const GalleryCard = (props:cardProps) => {
-    const boxRef = useRef<HTMLDivElement>(null);
-    const mouseEnter=()=>{
-        gsap.to(boxRef.current,{
-            scale:1.2,
-            duration:0.3
-        })
-    }
-    const mouseLeave=()=>{
-        gsap.to(boxRef.current,{
-            scale:1,
-            duration:0.3
-        })
-    }
-    gsap.to('#glImage',{
-    
+
+const GalleryCard = ({ imgUrl, x, y, rotate, scale = 1, z = 1 }: CardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const enter = () => {
+    gsap.to(cardRef.current, {
+      y: y - 40,
+      scale: scale + 0.1,
+      rotate: 0,
+      duration: 0.35,
+      ease: "power3.out",
+      zIndex: 50
     })
- console.log(props.rotate, props.imgUrl)
+  }
+
+  const leave = () => {
+    gsap.to(cardRef.current, {
+      y,
+      scale,
+      rotate,
+      duration: 0.35,
+      ease: "power3.out",
+      zIndex: z
+    })
+  }
+
   return (
-    <div id='glImage' onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} ref={boxRef} className={`w-[280px]  h-[280px] rounded-[36px] shadow-black hover:-translate-y-7 hover:z-50 shadow-sm     ${props.rotate}  `}>
-      <img className='w-full h-full rounded-[36px]  object-cover'  src={props.imgUrl} alt={'random text'} />
+    <div
+      ref={cardRef}
+      onMouseEnter={enter}
+      onMouseLeave={leave}
+      style={{
+        transform: `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`,
+        zIndex: z
+      }}
+      className="absolute w-[260px] h-[260px] rounded-[32px] overflow-hidden shadow-xl"
+    >
+      <img
+        src={imgUrl}
+        className="w-full h-full object-cover"
+      />
     </div>
   )
 }

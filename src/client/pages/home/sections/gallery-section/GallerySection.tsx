@@ -1,66 +1,59 @@
-import React from 'react'
-import SectionContainer from '../../../../../shared/layouts/sectionContainer'
-import SectionHeader from '../../../../components/sectionHeader'
-import GalleryCard from './GalleryCard'
-import image1 from '../../../../../assets/images/image1.webp'
-import image2 from '../../../../../assets/images/image2.webp'
-import image3 from '../../../../../assets/images/image3.webp'
-import image4 from '../../../../../assets/images/image4.webp'
-import image5 from '../../../../../assets/images/image5.webp'
-import { Button } from '../../../../../shared/design-components'
-import { ArrowDownLeft, ChevronRight } from 'lucide-react'
+import GalleryCard from "./GalleryCard"
+
+import image1 from "../../../../../assets/images/image1.webp"
+import image2 from "../../../../../assets/images/image2.webp"
+import image3 from "../../../../../assets/images/image3.webp"
+import image4 from "../../../../../assets/images/image4.webp"
+import image5 from "../../../../../assets/images/image5.webp"
+import SectionHeader from "../../../../components/sectionHeader"
 
 const GallerySection = () => {
-    const images=[
-        // '../../../../../assets/images/image1.webp',
-        {img:  image1,rotate:"-rotate-12 translate-y-6 z-0"},
-        {img:  image2,rotate:'-rotate-6 translate-y-2 z-9'},
-        {img:  image3,rotate:'rotate-0 scale-110 z-10'},
-        {img:  image4,rotate:'rotate-6 translate-y-2 z-1'},
-        {img:  image5,rotate:'rotate-12 translate-y-6 -z-1'},
-    //   ,image2,image3,image4 , image5
-        
-    ]
+
+  const cards = [
+    { img: image1, x: -320, y: 120, rotate: -22, scale: 0.75, z: 1 },
+    { img: image2, x: -200, y: 40, rotate: -10, scale: 0.9, z: 3 },
+    { img: image3, x: 0, y: 0, rotate: 0, scale: 1.05, z: 10 },
+    { img: image4, x: 200, y: 40, rotate: 10, scale: 0.9, z: 3 },
+    { img: image5, x: 320, y: 120, rotate: 22, scale: 0.75, z: 1 }
+  ]
+
   return (
-   <SectionContainer 
-   as='section'
-   width='full'
-   
-    className='bg-white'
+    <section className="w-full py-28 bg-white">
 
-       >
-        <SectionHeader
-         titleNormal="Through"
-        titleHighlight="The Lens"
-        varient="secondary"
-        align="center"
-        className="mb-4"
-        />
+      <div className="w-full">
+        
+            <SectionHeader
+             titleNormal="Through"
+             titleHighlight="The Lens"
+             varient="secondary"
+             className="justify-center"
+           />
 
-        <div className="flex w-[70%] mx-auto transition-transform ease-in-out duration-75  mt-10 items-center justify-center -gap-20">
+      </div>
 
-           {images.map((item,index)=>(
-            <GalleryCard key={index} imgUrl={item.img} rotate={item.rotate} />
-           ))}
-        </div>
-        <div className="flex items-center m-10 justify-center">
-          {/* <Button variant="filled"  label={`View more `} />
-          
-          <ChevronRight color='black'/> */}
-          <button
-          className=" bg-[#3571F0] px-5 hover:bg-blue-700 text-white py-2 rounded-full 
-                    font-bold flex text-sm items-center justify-center transition-colors group"
-        >
-          View More
-          <ChevronRight
-            className="w-5 h-5 1 group-hover:translate-x-1 transition-transform"
-            strokeWidth={3}
+      <div className="relative flex justify-center w-[900px] h-[400px] mx-auto">
+
+        {cards.map((card, i) => (
+          <GalleryCard
+            key={i}
+            imgUrl={card.img}
+            x={card.x}
+            y={card.y}
+            rotate={card.rotate}
+            scale={card.scale}
+            z={card.z}
           />
-        </button>
-          
-        </div>
+        ))}
 
-   </SectionContainer>
+      </div>
+
+      <div className="flex justify-center mt-16">
+        <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
+          View More →
+        </button>
+      </div>
+
+    </section>
   )
 }
 
