@@ -6,6 +6,7 @@ import image3 from "../../../../../assets/images/image3.webp"
 import image4 from "../../../../../assets/images/image4.webp"
 import image5 from "../../../../../assets/images/image5.webp"
 import SectionHeader from "../../../../components/sectionHeader"
+import { ChevronRight } from "lucide-react"
 
 const GallerySection = () => {
 
@@ -48,8 +49,8 @@ const GallerySection = () => {
       </div>
 
       <div className="flex justify-center mt-16">
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
-          View More →
+        <button className=" flex bg-blue-600 text-white px-5 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
+          View More<ChevronRight />
         </button>
       </div>
 

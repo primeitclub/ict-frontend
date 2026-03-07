@@ -20,7 +20,7 @@ const GalleryCard = ({ imgUrl, x, y, rotate, scale = 1, z = 1 }: CardProps) => {
       rotate: 0,
       duration: 0.35,
       ease: "power3.out",
-      zIndex: 50
+    //   zIndex: 50
     })
   }
 
@@ -44,7 +44,7 @@ const GalleryCard = ({ imgUrl, x, y, rotate, scale = 1, z = 1 }: CardProps) => {
         transform: `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`,
         zIndex: z
       }}
-      className="absolute w-[260px] h-[260px] rounded-[32px] overflow-hidden shadow-xl"
+      className="absolute w-[150px] h-[150px] lg:w-[260px] lg:h-[260px] rounded-[32px] overflow-hidden shadow-xl"
     >
       <img
         src={imgUrl}

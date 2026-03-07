@@ -51,7 +51,7 @@ const Navbar = () => {
         <nav className="hidden sm:flex  gap-8 text-xl  ">
           {!!pages.length &&
             pages.map(({ label, path }) => (
-              <NavLink key={`${label}-${path}`} to={"Sd"}>
+              <NavLink key={`${label}-${path}`} to={path}>
                 {label}
               </NavLink>
             ))}
