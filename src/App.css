@@ -5,10 +5,7 @@
 :root {
   --lg-highlight: rgba(255, 255, 255, 0.75);
   --lg-text: #ffffff;
-  
 }
-
-
 
 .glass-container {
   position: relative;
@@ -24,7 +21,8 @@
   inset: -2.1px;
   border-radius: inherit;
   z-index: 2;
-  box-shadow: inset 3px 2px 2px  var(--lg-highlight),
+  box-shadow:
+    inset 3px 2px 2px var(--lg-highlight),
     inset -3px -2.2px 1px var(--lg-highlight);
 }
 
