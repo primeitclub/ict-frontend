@@ -5,7 +5,12 @@ import { useState } from "react";
 
 // import Swiper and modules styles
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Controller } from "swiper/modules";
+import {
+  Navigation,
+  Pagination,
+  Controller,
+  EffectCoverflow,
+} from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css";
@@ -201,31 +206,32 @@ const tabs: TabType[] = [
 ];
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState<number>(0);
-  // Array of your images to loop through
+
   const sliderImages = [mo, moun, trek];
   return (
-    <div className="overflow-hidden">
-      {/* Increased height to accommodate the "pop-out" effect of the triple slider */}
-      <div className="bg-gradient-to-t from-[#3571F0] to-[#020919] h-[450px] pt-10 relative">
-        
-        <div className="triple-slider-wrapper max-w-6xl mx-auto h-full relative">
+    <div className="overflow-x-hidden">
+     
+      <div className="bg-gradient-to-t from-[#3571F0] to-[#020919] h-[350px] md:h-[450px] pt-10 relative">
+        <div className="triple-slider-wrapper w-full mx-auto h-full relative">
           <Swiper
-            modules={[ Pagination]}
-            slidesPerView={3} 
+            modules={[Pagination]}
+            slidesPerView={3}
             centeredSlides={true}
             loop={true}
-          spaceBetween={-100}
-            pagination={{ clickable: true }}
-         
-            className="events-swiper !absolute -bottom-32 left-0 right-0 h-[400px]"
+            spaceBetween={-100}
+            pagination={{ clickable: true, dynamicBullets: false }}
+            className="events-swiper -bottom-32 left-0 right-0 h-full"
           >
             {sliderImages.map((img, i) => (
-              <SwiperSlide key={i} className="flex items-center justify-center transition-all duration-500">
-                <div className="triple-slide-card w-full h-full rounded-[40px] overflow-hidden shadow-2xl">
-                  <img 
-                    src={img} 
-                    alt="Event" 
-                    className="w-full h-full object-cover"
+              <SwiperSlide
+                key={i}
+                className="flex items-center justify-center transition-all duration-500"
+              >
+                <div className="triple-slide-card w-full h-full rounded-[40px] overflow-hin shadow-2xl">
+                  <img
+                    src={img}
+                    alt="Event"
+                    className=""
                   />
                 </div>
               </SwiperSlide>
@@ -235,7 +241,7 @@ export default function EventsPage() {
       </div>
       <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 py-16 ">
-          <div className="sm:grid grid-cols-2 hidden md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-16 pb-4 mt-60">
+          <div className="flex flex-wrap md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-12 pb-4 mt-28">
             {tabs.map((tab, index) => (
               <button
                 key={index}
