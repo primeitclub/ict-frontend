@@ -8,8 +8,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
-import mouse from "../../../../../assets/mouse.png";
 import Card from "../../../../components/card";
+import SvgIcon from "../../../../components/icon/svgIcon";
 export type ContentType = {
   image: string;
   title: string;
@@ -198,12 +198,17 @@ export default function HighlightSection() {
 
   return (
     <div ref={sectionRef} className=" bg-[#F2F5FA] text-black relative">
-      <img
+      {/* <img
         src={mouse}
         alt="Mouse"
         onClick={scrollToSection}
         className="absolute -top-6 left-[50%] z-50 w-16 cursor-pointer "
-      />
+      /> */}
+      <div className="absolute -top-5 left-[50%] z-50  cursor-pointer  bg-white rounded-full p-2"
+        onClick={scrollToSection}>
+
+        <SvgIcon />
+      </div>
       <div className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
           titleNormal="Event"
@@ -218,17 +223,15 @@ export default function HighlightSection() {
               key={index}
               onClick={() => setActiveTab(index)}
               className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
-                hover:text-[#3571F0] ${
-                  activeTab === index ? "text-[#3571F0]" : "text-black"
+                hover:text-[#3571F0] ${activeTab === index ? "text-[#3571F0]" : "text-black"
                 }`}
             >
               <CircleArrowRight
                 size={24}
-                className={`transition-transform duration-700 ${
-                  activeTab === index
+                className={`transition-transform duration-700 ${activeTab === index
                     ? "text-[#3571F0]"
                     : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
-                }`}
+                  }`}
               />
               {tab.title}
             </button>
@@ -274,7 +277,7 @@ export default function HighlightSection() {
               disabled:opacity-30
             "
           >
-            <ArrowLeft size={25}   strokeWidth={3}/>
+            <ArrowLeft size={25} strokeWidth={3} />
           </button>
           <button
             className="
@@ -298,7 +301,7 @@ export default function HighlightSection() {
             <ArrowRight
               size={25}
               strokeWidth={3}
-              
+
             />
           </button>
 

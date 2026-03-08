@@ -110,10 +110,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           type="button"
           disabled={disabled || isLoading}
           className="glass-container"
+          {...props}
         >
           <div className="glass-specular"></div>
           <div className="glass-content">
-            {label} {rightIcon}
+            {leftIcon} {label} {rightIcon}
           </div>
         </button>
       );
