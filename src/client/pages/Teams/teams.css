@@ -1,14 +1,3 @@
-.glass-specular {
-  box-shadow:
-    inset 2px 2px 2px #4e81ef,
-    inset -2px -2px 2px #4e81ef;
-}
-
-.glass-content {
-  font-family: sans;
-  padding: 5.81px 11.62px;
-  gap: 8.72px;
-}
 /* remove default scrollBar */
 html::-webkit-scrollbar {
   width: 0;

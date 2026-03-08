@@ -18,7 +18,7 @@ export default function SponserSection() {
   return (
     <SectionContainer as="section">
       <div className="flex justify-center items-center min-h-screen w-full">
-        <div className="w-[80%] lg:w-[70%] 2xl:w-full">
+        <div className="w-[80%] 2xl:w-full">
           <SectionHeader
             titleNormal="Supporting"
             titleHighlight="This Meet"
@@ -26,15 +26,15 @@ export default function SponserSection() {
             className="sm:text-nowrap"
           />
           {/* Sponser grid */}
-          <div className="grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-5">
+          <div className="grid grid-cols-3 gap-2 md:[grid-template-columns:repeat(auto-fill,180px)] 2xl:grid-cols-5 ">
             {images.map((image, index) => (
               <div
                 key={index}
-                className="w-45 aspect-square rounded-lg md:rounded-2xl  overflow-hidden"
+                className=" aspect-square rounded-lg md:rounded-2xl  overflow-hidden"
               >
                 <img
                   src={image}
-                  className=" w-[180px] object-cover md:rounded-2xl"
+                  className="w-full h-full object-cover md:rounded-2xl"
                 />
               </div>
             ))}

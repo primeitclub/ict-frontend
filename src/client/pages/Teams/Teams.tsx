@@ -1,8 +1,8 @@
 import SectionContainer from "../../../shared/layouts/sectionContainer";
-import { Button } from "../../../shared/design-components";
+import FilterButton from "./components/TeamButton";
 import ArrowSVG from "./icons/arrowSVG";
 import "./teams.css";
-import TeamCard from "../../components/teamCard";
+import TeamCard from "./components/teamCard";
 import { useState } from "react";
 
 type Role =
@@ -83,18 +83,18 @@ export default function Teams() {
   return (
     <SectionContainer as="section" className=" py-10">
       <div className="gap-10 md:flex ">
-        <div className="md:w-[40%] md:sticky md:top-[2rem]  md:h-fit ">
+        <div className="md:w-[40%] md:sticky md:top-[2rem] md:pr-10 md:h-fit ">
           {/* Heading */}
-          <div className="text-center text-[32px] font-bold mb-20  md:text-left md:text-[48px] xl:text-[61px] 2xl:text-[80px] leading-[37px] md:leading-[73px] 2xl:leading-[90px] lg:mr-20 bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent -tracking-[1px] ">
+          <div className="text-center text-[32px] font-bold mb-20 md:text-left md:text-[48px] xl:text-[60px] 2xl:text-[80px] leading-[37px] md:leading-[72px] 2xl:leading-[90px] lg:mr-10 bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent -tracking-[1px] ">
             Meet the Team
           </div>
 
           {/* filter options */}
-          <div className="flex flex-wrap gap-x-[19px] gap-y-[14px] mb-10">
+          <div className="flex flex-wrap gap-[12px] mb-10">
             {roles.map((role, index) => (
-              <Button
+              <FilterButton
                 key={index}
-                variant={activeRole === role ? "filled" : "glass"}
+                variant={activeRole === role ? "active" : "inactive"}
                 leftIcon={
                   <ArrowSVG
                     useSolidStroke={activeRole === role} // toggle stroke
@@ -104,15 +104,14 @@ export default function Teams() {
                 }
                 onClick={() => setActiveRole(role)}
                 label={role}
-                size="base"
-                className="px-[5.81px] gap-[8.42px] h-auto"
+                className=" gap-[8.42px] h-fit"
               />
             ))}
           </div>
         </div>
 
         {/* Team members */}
-        <div className="scroll-bar md:max-h-screen gap-x-[42px]  w-fit grid justify-between grid-cols-2 lg:grid-cols-3 h-fit md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
+        <div className="scroll-bar font-base md:max-h-screen gap-x-[42px] w-fit grid justify-between grid-cols-2 lg:grid-cols-3 h-fit md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
           {filteredTeamData.map((member, index) => (
             <TeamCard
               key={index}
