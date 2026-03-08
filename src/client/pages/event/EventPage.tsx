@@ -5,12 +5,7 @@ import { useState } from "react";
 
 // import Swiper and modules styles
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Controller,
-  EffectCoverflow,
-} from "swiper/modules";
+import { Pagination, EffectCoverflow } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css";
@@ -19,7 +14,6 @@ import "swiper/css/effect-coverflow";
 import mo from "../../../assets/mo.png";
 import moun from "../../../assets/moun.png";
 import trek from "../../../assets/trek.png";
-import download from "../../../assets/download.jpg";
 export type ContentType = {
   image: string;
   title: string;
@@ -208,14 +202,13 @@ const tabs: TabType[] = [
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const sliderImages = [mo, moun, trek,moun];
+  const sliderImages = [mo, moun, trek, moun];
   return (
     <div className="overflow-x-hidden">
-     
       <div className="bg-gradient-to-t from-[#3571F0] to-[#020919] h-[250px] md:h-[300px]  pt-10 relative">
-        <div className="triple-slider-wrapper w-full max-w-4xl mx-auto h-full relative  overflow-hidden ">
+        {/* <div className="triple-slider-wrapper w-full max-w-4xl mx-auto h-full relative  overflow-hidden ">
           <Swiper
-            modules={[Pagination,EffectCoverflow]}
+            modules={[Pagination, EffectCoverflow]}
             slidesPerView={3}
             centeredSlides={true}
             loop={true}
@@ -229,16 +222,12 @@ export default function EventsPage() {
                 className="flex items-center justify-center "
               >
                 <div className=" w-full h-full rounded-[40px] overflow-hidden object-cover">
-                  <img
-                    src={img}
-                    alt="Event"
-                    className=""
-                  />
+                  <img src={img} alt="Event" className="" />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </div> */}
       </div>
       <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 py-16 ">

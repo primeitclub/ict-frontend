@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FAQItem from "./FaqIteams";
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 import SectionHeader from "../../../../components/sectionHeader";
@@ -31,6 +32,12 @@ const faqs = [
 ];
 
 const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
     <SectionContainer className="mx-auto px-4 sm:px-6">
       {/* Mobile: short title */}
@@ -63,6 +70,8 @@ const FAQSection = () => {
             index={i + 1}
             question={faq.question}
             answer={faq.answer}
+            isOpen={openIndex === i}
+            onToggle={() => handleToggle(i)}
           />
         ))}
       </div>

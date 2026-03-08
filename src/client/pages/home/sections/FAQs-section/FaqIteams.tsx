@@ -1,24 +1,29 @@
-import { useState } from "react";
-
 interface FAQItemProps {
   index: number;
   question: string;
   answer: string;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-const FAQItem = ({ index, question, answer }: FAQItemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const FAQItem = ({
+  index,
+  question,
+  answer,
+  isOpen,
+  onToggle,
+}: FAQItemProps) => {
   const num = String(index).padStart(2, "0");
 
   return (
     <div
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={onToggle}
       style={{
         boxShadow: isOpen
           ? "inset 1px 1px 0px rgba(255,255,255,0.12), inset -1px -1px 0px rgba(255,255,255,0.03)"
           : "none",
-        transition: "background 0.3s ease, box-shadow 0.3s ease",
+        transition:
+          "background 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
       className={`
         w-full rounded-2xl px-6 py-5 cursor-pointer select-none
@@ -59,7 +64,9 @@ const FAQItem = ({ index, question, answer }: FAQItemProps) => {
         style={{
           maxHeight: isOpen ? "400px" : "0px",
           opacity: isOpen ? 1 : 0,
-          transition: "max-height 0.35s ease, opacity 0.3s ease",
+          transition: isOpen
+            ? "max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.05s"
+            : "max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           overflow: "hidden",
         }}
       >
