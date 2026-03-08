@@ -8,7 +8,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SectionHeader from "../../../../components/sectionHeader";
-import svgIcon from "../../../../components/icon/svgIcon";
 import Card from "../../../../components/card";
 import SvgIcon from "../../../../components/icon/svgIcon";
 export type ContentType = {
@@ -230,8 +229,8 @@ export default function HighlightSection() {
               <CircleArrowRight
                 size={24}
                 className={`transition-transform duration-700 ${activeTab === index
-                  ? "text-[#3571F0]"
-                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                    ? "text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
                   }`}
               />
               {tab.title}
