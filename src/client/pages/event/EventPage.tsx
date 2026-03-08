@@ -19,6 +19,7 @@ import "swiper/css/effect-coverflow";
 import mo from "../../../assets/mo.png";
 import moun from "../../../assets/moun.png";
 import trek from "../../../assets/trek.png";
+import download from "../../../assets/download.jpg";
 export type ContentType = {
   image: string;
   title: string;
@@ -207,27 +208,27 @@ const tabs: TabType[] = [
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const sliderImages = [mo, moun, trek];
+  const sliderImages = [mo, moun, trek,moun];
   return (
     <div className="overflow-x-hidden">
      
-      <div className="bg-gradient-to-t from-[#3571F0] to-[#020919] h-[350px] md:h-[450px] pt-10 relative">
-        <div className="triple-slider-wrapper w-full mx-auto h-full relative">
+      <div className="bg-gradient-to-t from-[#3571F0] to-[#020919] h-[250px] md:h-[300px]  pt-10 relative">
+        <div className="triple-slider-wrapper w-full max-w-4xl mx-auto h-full relative  overflow-hidden ">
           <Swiper
-            modules={[Pagination]}
+            modules={[Pagination,EffectCoverflow]}
             slidesPerView={3}
             centeredSlides={true}
             loop={true}
-            spaceBetween={-100}
+            spaceBetween={-350}
             pagination={{ clickable: true, dynamicBullets: false }}
-            className="events-swiper -bottom-32 left-0 right-0 h-full"
+            className="events-swiper"
           >
             {sliderImages.map((img, i) => (
               <SwiperSlide
                 key={i}
-                className="flex items-center justify-center transition-all duration-500"
+                className="flex items-center justify-center "
               >
-                <div className="triple-slide-card w-full h-full rounded-[40px] overflow-hin shadow-2xl">
+                <div className=" w-full h-full rounded-[40px] overflow-hidden object-cover">
                   <img
                     src={img}
                     alt="Event"
@@ -241,7 +242,7 @@ export default function EventsPage() {
       </div>
       <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 py-16 ">
-          <div className="flex flex-wrap md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-12 pb-4 mt-28">
+          <div className="flex flex-wrap md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-12 pb-4 mt-52">
             {tabs.map((tab, index) => (
               <button
                 key={index}
