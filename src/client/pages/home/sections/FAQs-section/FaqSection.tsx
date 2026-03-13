@@ -39,7 +39,7 @@ const FAQSection = () => {
   };
 
   return (
-    <SectionContainer className="mx-auto px-4 sm:px-6">
+    <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12">
       {/* Mobile: short title */}
       <div className="block sm:hidden">
         <SectionHeader

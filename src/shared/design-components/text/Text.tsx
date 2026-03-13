@@ -71,7 +71,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       className = "",
       ...props
     },
-    ref
+    ref,
   ) => {
     // Base styles
     const baseStyles = "font-hubot leading-relaxed";
@@ -131,7 +131,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       weightStyles[weight],
       alignmentStyles[align],
       truncationStyles,
-      className
+      className,
     );
 
     // Create the appropriate element
@@ -141,7 +141,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
         {children}
       </p>
     );
-  }
+  },
 );
 
 Text.displayName = "Text";

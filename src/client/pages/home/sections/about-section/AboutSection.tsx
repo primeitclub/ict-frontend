@@ -1,5 +1,7 @@
 import AboutLogo from "../../../../../assets/about-img.png";
+import { Heading, Text } from "../../../../../shared/design-components";
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
+import SectionHeader from "../../../../components/sectionHeader";
 
 export const AboutSection = () => {
   return (
@@ -10,46 +12,39 @@ export const AboutSection = () => {
           backgroundColor: "#020919",
         }}
       >
-        {/* Glow layer */}
-        {/* <img src={glow} alt="glow" className="w-full absolute z-0" /> */}
-
         {/* Content layer */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-14  lg:gap-16 xl:gap-20 my-[200px]">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 md:gap-6  lg:gap-16 xl:gap-20 my-[200px]">
           {/* Mobile Title */}
-          <h2 className="block md:hidden text-white font-bold text-[30px] self-center text-center">
-            <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] text-transparent bg-clip-text">
-              This Year's
-            </span>
-            &nbsp; Focus
-          </h2>
+          <SectionHeader
+            titleHighlight="This Year's"
+            titleNormal="Focus"
+            align="center"
+            className="block lg:hidden"
+            reversePosition
+          />
 
           {/* Content — 1/3 width */}
-          <div className="w-full md:w-1/3 text-center md:text-left flex flex-col justify-center">
-            <h2 className="hidden md:block text-white font-bold text-xl md:text-3xl lg:text-5xl xl:text-6xl md:my-3 lg:my-5 xl:my-8">
-              <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] text-transparent bg-clip-text">
-                This Year's
-              </span>
-              &nbsp; Focus
-            </h2>
+          <div className="w-full lg:w-1/3 text-center  md:text-left flex flex-col justify-center">
+            <div className="lg:space-y-12">
+              <Heading className="hidden lg:block font-semibold">
+                <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] text-transparent bg-clip-text">
+                  This Year's
+                </span>
+                &nbsp; Focus
+              </Heading>
 
-            <div className="my-1 md:my-2 xl:my-2">
-              <p
-                className="my-2 md:my-2 lg:my-3 xl:my-6 text-left sm:text-justify font-light text-[#DFDFDF] 
-        text-[12.5px] md:text-xs lg:text-sm xl:text-base"
-              >
-                ICT V8 focuses on the growing gap between the academia and
-                industry. This event will bridge this. John doe loves apple and
-                so do John Mo.
-              </p>
-
-              <p
-                className="my-2 md:my-2 lg:my-3 xl:my-4 text-left sm:text-justify font-light text-[#DFDFDF] 
-        text-[12.5px] md:text-xs lg:text-sm xl:text-base"
-              >
-                ICT V8 focuses on the growing gap between the academia and
-                industry. This event will bridge this. John doe loves apple and
-                so do John Mo.
-              </p>
+              <div className="my-1 md:my-2 xl:my-2 space-y-4 ">
+                <Text className="text-[#DFDFDF]">
+                  ICT V8 focuses on the growing gap between the academia and
+                  industry. This event will bridge this. John doe loves apple
+                  and so do John Mo.
+                </Text>
+                <Text className="text-[#DFDFDF]">
+                  ICT V8 focuses on the growing gap between the academia and
+                  industry. This event will bridge this. John doe loves apple
+                  and so do John Mo.
+                </Text>
+              </div>
             </div>
 
             <div

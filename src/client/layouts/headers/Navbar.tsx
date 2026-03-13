@@ -18,47 +18,45 @@ const Navbar = () => {
 
   const [toggle, setToggle] = useState(false);
   return (
-    <header>
-      <SectionContainer className="flex justify-between items-center py-4 px-6 ">
-        <div onClick={() => navigate("/")}>
-          <Logo2 />
-        </div>
-        <div className=" sm:hidden">
-          <button
-            onClick={() => setToggle(!toggle)}
-            className="bg-secondary p-1"
-          >
-            {toggle ? <X /> : <Menu />}
-          </button>
-          {toggle && (
-            <div className="fixed inset-6 top-[10%] bottom-[50%] bg-white  rounded-xl py-6 px-10  ">
-              <div className="flex flex-col text-xl  items-center gap-10 font-medium">
-                {!!pages.length &&
-                  pages.map(({ label, path }) => (
-                    <NavLink
-                      key={`${label}-${path}`}
-                      // to={getPath(path)}
-                      className="text-black"
-                      to="ss"
-                    >
-                      {label}
-                    </NavLink>
-                  ))}
-              </div>
+    <SectionContainer
+      as="header"
+      className="flex justify-between items-center py-4"
+    >
+      <div onClick={() => navigate("/")}>
+        <Logo2 />
+      </div>
+      <div className=" sm:hidden">
+        <button onClick={() => setToggle(!toggle)} className="bg-secondary p-1">
+          {toggle ? <X /> : <Menu />}
+        </button>
+        {toggle && (
+          <div className="fixed inset-6 top-[10%] bottom-[50%] bg-white  rounded-xl py-6 px-10 z-20 ">
+            <div className="flex flex-col text-xl  items-center gap-10 font-medium">
+              {!!pages.length &&
+                pages.map(({ label, path }) => (
+                  <NavLink
+                    key={`${label}-${path}`}
+                    // to={getPath(path)}
+                    className="text-black"
+                    to="ss"
+                  >
+                    {label}
+                  </NavLink>
+                ))}
             </div>
-          )}
-        </div>
-        {/* this is the one i am using right now */}
-        <nav className="hidden sm:flex  gap-8 text-xl  ">
-          {!!pages.length &&
-            pages.map(({ label, path }) => (
-              <NavLink key={`${label}-${path}`} to={getPath(path)}>
-                {label}
-              </NavLink>
-            ))}
-        </nav>
-      </SectionContainer>
-    </header>
+          </div>
+        )}
+      </div>
+      {/* this is the one i am using right now */}
+      <nav className="hidden sm:flex  gap-8 text-xl  ">
+        {!!pages.length &&
+          pages.map(({ label, path }) => (
+            <NavLink key={`${label}-${path}`} to={getPath(path)}>
+              {label}
+            </NavLink>
+          ))}
+      </nav>
+    </SectionContainer>
   );
 };
 

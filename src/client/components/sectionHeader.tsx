@@ -6,6 +6,7 @@ interface SectionHeaderProps {
   className?: string;
   align?: "left" | "center" | "right";
   varient?: "primary" | "secondary";
+  reversePosition?: boolean;
 }
 
 export default function SectionHeader({
@@ -14,6 +15,7 @@ export default function SectionHeader({
   align = "left",
   className,
   varient = "primary",
+  reversePosition = false,
 }: SectionHeaderProps) {
   const varientStyles = {
     primary: "text-white",
@@ -35,11 +37,13 @@ export default function SectionHeader({
     <div className={cn("w-full flex", alignStyles[align], className)}>
       <h2
         className={cn(
-          " text-[40px] md:text-[60px] font-[650] mb-12 tracking-[-2.4px] w-fit ",
+          " text-[40px] md:text-[60px] font-[650] tracking-[-2.4px] w-fit ",
+          reversePosition ? "flex gap-2 flex-row-reverse" : "",
           varientStyles[varient || "primary"],
         )}
       >
-        {titleNormal} <span className={highlightColor}>{titleHighlight}</span>
+        <span> {titleNormal}</span>{" "}
+        <span className={highlightColor}>{titleHighlight}</span>
       </h2>
     </div>
   );

@@ -39,7 +39,7 @@ const SpeakerSection = () => {
   };
 
   return (
-    <SectionContainer className="mx-auto text-center px-4 sm:px-6">
+    <SectionContainer className="mx-auto text-center px-4 sm:px-6 space-y-14">
       <SectionHeader
         titleNormal="Joining Us This"
         titleHighlight="Edition"
@@ -50,7 +50,6 @@ const SpeakerSection = () => {
 
       {/* Mobile Carousel */}
       <div className="flex sm:hidden flex-col items-center gap-6">
-
         {/* Swipeable card area */}
         <div
           className="w-full flex justify-center"
