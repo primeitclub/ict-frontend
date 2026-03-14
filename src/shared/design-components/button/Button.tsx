@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "../../utils/cn";
 
-type ButtonVariant = "filled" | "outlined" | "glass" | "solid-white";
+type ButtonVariant = "filled" | "outlined" | "glass" | "solid-white" | "ghost";
 
 type ButtonSize = "base" | "small" | "large" | "xl";
 
@@ -81,6 +81,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white/20 shadow-lg hover:shadow-xl",
       "solid-white":
         "bg-white text-black hover:bg-white/90 shadow-lg hover:shadow-xl border border-transparent",
+      ghost:
+        "bg-transparent text-black hover:bg-black/10 shadow-none border border-transparent",
     };
 
     // Size styles - controls height, padding, and font-size
@@ -110,10 +112,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           type="button"
           disabled={disabled || isLoading}
           className="glass-container"
+          {...props}
         >
           <div className="glass-specular"></div>
           <div className="glass-content">
-            {label} {rightIcon}
+            {leftIcon} {label} {rightIcon}
           </div>
         </button>
       );
