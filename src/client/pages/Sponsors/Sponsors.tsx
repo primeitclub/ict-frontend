@@ -5,7 +5,7 @@ import { Button } from '../../../shared/design-components'
 import image1 from '../../../assets/images/image8.webp'
 import SponsorTitle from './SponsorTitle.tsx'
 const Sponsors = () => {
-  const [sponsorlist,setList] =useState(true)
+  const [sponsorlist,setList] =useState(false)
 return(
 
   <SectionContainer >
