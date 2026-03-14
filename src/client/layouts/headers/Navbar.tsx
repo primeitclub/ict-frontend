@@ -16,6 +16,7 @@ const Navbar = () => {
   ];
 
   const [toggle, setToggle] = useState(false);
+
   return (
     <header>
       <SectionContainer className="flex justify-between items-center py-4 px-6 ">
