@@ -1,20 +1,31 @@
 "use client";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import Logo2 from "../headers/Logo/Logo2";
 import PrimeITClub from "../../../assets/PrimeITClub.svg";
 import PrimeCollege from "../../../assets/PrimeCollege.svg";
 import SectionContainer from "../../../shared/layouts/sectionContainer";
+import { useVersion } from "../../../routes/VersionContext";
 
 export const Footer = () => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
+
+  const pages = [
+    { path: "/", label: "Home" },
+    { path: "/events", label: "Events" },
+    { path: "/teams", label: "Teams" },
+    { path: "/sponsors", label: "Sponsors" },
+    { path: "/contributors", label: "Contributors" },
+  ];
+
   return (
     <SectionContainer className="px-4 sm:px-6 !pt-20" as="footer">
       <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:items-start md:gap-0">
         <div className="relative w-full md:w-auto">
           <div
             className="flex flex-col items-center cursor-pointer md:items-start"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(getPath("/"))}
           >
             <div className="flex flex-col items-center md:items-start w-[144px]">
               <Logo2 />
@@ -176,11 +187,17 @@ export const Footer = () => {
 
       <div className="flex flex-col items-center w-full gap-6 md:flex-row md:justify-between mt-9 md:gap-0">
         <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-sm font-semibold md:justify-start md:gap-8 md:text-base md:w-auto">
-          <a href="">Home</a>
-          <a href="">Events</a>
-          <a href="">Teams</a>
-          <a href="">Sponsors</a>
-          <a href="">Contributors</a>
+          {pages.map(({ label, path }) => (
+            <NavLink
+              key={`${label}-${path}`}
+              to={getPath(path)}
+              className={({ isActive }) =>
+                isActive ? "text-blue-400" : "hover:text-blue-400"
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
         </nav>
 
         <button
@@ -204,7 +221,7 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
               <path
                 d="M8.2599 2.58691L8.2599 21.2298M8.2599 2.58691L15.251 8.32318M8.2599 2.58691L1.26883 8.32318"
                 stroke="white"
-                stroke-width="4"
+                strokeWidth="4"
               />
             </svg>
           </span>

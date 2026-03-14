@@ -17,12 +17,13 @@ const Navbar = () => {
   ];
 
   const [toggle, setToggle] = useState(false);
+
   return (
     <SectionContainer
       as="header"
       className="flex justify-between items-center py-4"
     >
-      <div onClick={() => navigate("/")}>
+      <div className="hover:cursor-pointer" onClick={() => navigate("/")}>
         <Logo2 />
       </div>
       <div className=" sm:hidden">
@@ -38,7 +39,7 @@ const Navbar = () => {
                     key={`${label}-${path}`}
                     // to={getPath(path)}
                     className="text-black"
-                    to="ss"
+                    to={getPath(path)}
                   >
                     {label}
                   </NavLink>
@@ -47,7 +48,6 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      {/* this is the one i am using right now */}
       <nav className="hidden sm:flex  gap-8 text-xl  ">
         {!!pages.length &&
           pages.map(({ label, path }) => (
