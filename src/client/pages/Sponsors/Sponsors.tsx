@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import SectionContainer from '../../../shared/layouts/sectionContainer'
 import { Button } from '../../../shared/design-components'
 
-import image1 from '../../../assets/images/image8.webp'
-import SponsorTitle from './SponsorTitle.tsx'
+import image1 from '../../../../public/ICT Meet/hamro patro.svg'
+import SponsorData from './SponsorData.tsx'
 const Sponsors = () => {
-  const [sponsorlist,setList] =useState(false)
+  const [sponsorlist,setList] =useState(true)
 return(
 
   <SectionContainer >
@@ -41,10 +41,11 @@ to  learn,  build,  and  innovate.</p>
   
   </div>
   :
-   <div className='w-full flex flex-col gap-10'>
-      <SponsorTitle title='Title Sponsor' imgUrl={image1} />
-      <SponsorTitle title='Title Sponsor' imgUrl={image1} />
-      <SponsorTitle title='Title Sponsor' imgUrl={image1} />
+   <div className='w-full flex flex-col gap-20'>
+      {/* <SponsorTitle title='Title Sponsor' imgUrl={image1} /> */}
+      <SponsorData  title='Title Sponsor' altdata='Sponsor img' big={true} imgUrl={[image1]} /> 
+      <SponsorData  title='Platinum Sponsor' altdata='Sponsor img' big={false} imgUrl={[image1,image1]} /> 
+      <SponsorData  title='Gold Sponsor' altdata='Sponsor img' big={false} imgUrl={[image1,image1,image1]} /> 
       
    </div>
    
