@@ -48,11 +48,13 @@
 }
 
 
-.events-swiper .swiper-slide-active {
-
+.events-swiper .swiper-slide {
   opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.events-swiper .swiper-slide-active {
   z-index: 10;
-  
 }
 .events-swiper .swiper-slide div {
   height: 80%;
