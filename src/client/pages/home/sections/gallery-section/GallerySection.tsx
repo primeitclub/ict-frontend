@@ -42,24 +42,24 @@ const GallerySection = () => {
   const getPositions = () => {
     if (screen === "mobile") {
       return [
-        { x: -120, y: 60, r: -24, w: 85, h: 130 },
-        { x: -80, y: 40, r: -16, w: 90, h: 140 },
-        { x: -40, y: 20, r: -8, w: 100, h: 155 },
-        { x: 0, y: 0, r: 0, w: 110, h: 170 },
-        { x: 40, y: 20, r: 8, w: 100, h: 155 },
-        { x: 80, y: 40, r: 16, w: 90, h: 140 },
-        { x: 120, y: 60, r: 24, w: 85, h: 130 },
+        { x: -140, y: 60, r: -24, w: 100, h: 100 },
+        { x: -100, y: 30, r: -16, w: 130, h: 130 },
+        { x: -50, y: 8, r: -8, w: 160, h: 160 },
+        { x: 0, y: 0, r: 0, w: 180, h: 180 },
+        { x: 50, y: 8, r: 8, w: 160, h: 160 },
+        { x: 100, y: 30, r: 16, w: 130, h: 130 },
+        { x: 140, y: 60, r: 24, w: 100, h: 100 },
       ];
     }
     if (screen === "tablet") {
       return [
-        { x: -300, y: 90, r: -24, w: 140, h: 185 },
-        { x: -200, y: 55, r: -16, w: 150, h: 200 },
-        { x: -100, y: 25, r: -8, w: 165, h: 220 },
-        { x: 0, y: 0, r: 0, w: 180, h: 240 },
-        { x: 100, y: 25, r: 8, w: 165, h: 220 },
-        { x: 200, y: 55, r: 16, w: 150, h: 200 },
-        { x: 300, y: 90, r: 24, w: 140, h: 185 },
+        { x: -330, y: 100, r: -24, w: 160, h: 160 },
+        { x: -220, y: 55, r: -16, w: 180, h: 180 },
+        { x: -110, y: 12, r: -8, w: 200, h: 200 },
+        { x: 0, y: 0, r: 0, w: 220, h: 220 },
+        { x: 110, y: 12, r: 8, w: 200, h: 200 },
+        { x: 220, y: 55, r: 16, w: 180, h: 180 },
+        { x: 330, y: 100, r: 24, w: 160, h: 160 },
       ];
     }
     return [
@@ -89,7 +89,7 @@ const GallerySection = () => {
         className="justify-center"
       />
 
-      <div className="relative flex justify-center items-center h-[400px] md:h-[500px] lg:h-[600px] mt-12 ">
+      <div className="relative flex justify-center items-center h-[300px] md:h-[400px] lg:h-[500px]">
         {images.map((img, i) => {
           const pos = positions[i];
           const isHovered = hovered === i;
