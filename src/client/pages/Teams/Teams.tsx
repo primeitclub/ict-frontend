@@ -1,10 +1,9 @@
 import SectionContainer from "../../../shared/layouts/sectionContainer";
 import FilterButton from "./components/TeamButton";
 import ArrowSVG from "./icons/arrowSVG";
-import "./teams.css";
 import TeamCard from "./components/teamCard";
-import { useState } from "react";
 import { Heading } from "../../../shared/design-components";
+import { useState } from "react";
 
 type Role =
   | "All"
