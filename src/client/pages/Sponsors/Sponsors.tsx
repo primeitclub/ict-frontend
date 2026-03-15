@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import SectionContainer from '../../../shared/layouts/sectionContainer'
-import { Button } from '../../../shared/design-components'
+import React, { useState } from "react";
+import SectionContainer from "../../../shared/layouts/sectionContainer.tsx";
+import { Button } from "../../../shared/design-components/index.ts";
 
-import image1 from '../../../../public/ICT Meet/hamro patro.svg'
-import SponsorData from './SponsorData.tsx'
+import image1 from "../../../../public/ICT Meet/hamro patro.svg";
+import SponsorData from "./SponsorData.tsx";
 const Sponsors = () => {
   const [sponsorlist,setList] =useState(true)
 return(
@@ -57,4 +57,4 @@ to  learn,  build,  and  innovate.</p>
 )
 }
 
-export default Sponsors
+export default Sponsors;
