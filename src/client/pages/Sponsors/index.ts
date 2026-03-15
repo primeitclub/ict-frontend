@@ -1,1 +1,1 @@
-// export {default as sponsors} from './Sponsors'
+export {default as Sponsors} from './Sponsors'
