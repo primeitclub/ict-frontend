@@ -1,10 +1,9 @@
 // routes/ClientRouter.tsx
 import { Routes, Route } from "react-router-dom";
-import { EventsPage, HomePage, Teams } from "../client/pages";
+import { EventsPage, HomePage, Teams, Sponsors } from "../client/pages";
 import PageLayout from "../client/layouts/PageLayout";
 
 import { VersionProvider } from "./VersionContext";
-import Sponsors from "../client/pages/sponsors/Sponsors";
 
 interface ClientRouterProps {
   version: string;
