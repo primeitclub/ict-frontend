@@ -1,4 +1,4 @@
-import FAQItem from "./FaqIteams";
+import FAQItem from "./FaqItems"; // ✅ fixed typo
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 import SectionHeader from "../../../../components/sectionHeader";
 
@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "Who can participate in the event?",
     answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations. Through our extensive network of tech companies and experts, students gain hands-on exposure to current trends, participate in practical workshops, and develop essential skills in professional environments. This isn't simulated work; it's genuine industry exposure that prepares you for your career from day one.",
+      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations. Through our extensive network of tech companies and experts, students gain hands-on exposure to current trends, participate in practical workshops, and develop essential skills in professional environments.",
   },
   {
     question: "Who can participate in the event?",
