@@ -41,12 +41,13 @@ to  learn,  build,  and  innovate.</p>
   
   </div>
   :
-   <div className='w-full flex flex-col gap-20'>
+   <div className='w-full flex flex-col gap-20 relative'>
       {/* <SponsorTitle title='Title Sponsor' imgUrl={image1} /> */}
-      <SponsorData  title='Title Sponsor' altdata='Sponsor img' big={true} imgUrl={[image1]} /> 
-      <SponsorData  title='Platinum Sponsor' altdata='Sponsor img' big={false} imgUrl={[image1,image1]} /> 
-      <SponsorData  title='Gold Sponsor' altdata='Sponsor img' big={false} imgUrl={[image1,image1,image1]} /> 
+      <SponsorData  title='Title Sponsor' altdata='Sponsor img' big={true} sponsortier={true} imgUrl={[image1]} /> 
+      <SponsorData  title='Platinum Sponsor' altdata='Sponsor img' big={false} sponsortier={true} imgUrl={[image1,image1]} /> 
+      <SponsorData  title='Gold Sponsor' altdata='Sponsor img' big={false} sponsortier={false}  imgUrl={[image1,image1,image1]} /> 
       
+    <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] top-[5%] "></div>
    </div>
    
   }
