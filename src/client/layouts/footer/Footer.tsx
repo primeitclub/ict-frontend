@@ -229,10 +229,10 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
       </div>
 
       <div className="relative mt-12 overflow-hidden text-center">
-        <h1 className="font-extrabold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B] bg-clip-text text-transparent text-5xl sm:text-7xl md:text-[170px] leading-tight">
+        <h1 className="font-extrabold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B]  bg-clip-text text-transparent text-5xl sm:text-7xl md:text-[170px] leading-tight">
           ICT MEETUP
         </h1>
-        <div className="absolute bottom-0 left-0 w-full h-24 sm:h-32 md:h-40 bg-gradient-to-t from-[#000206] to-transparent pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-[10%] sm:h-32 md:h-40 bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"></div>
       </div>
 
       <div className="mt-8 text-xs text-center text-gray-400 md:text-sm">
