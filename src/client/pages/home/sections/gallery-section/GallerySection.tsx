@@ -3,7 +3,7 @@ import { useState } from "react";
 import useWindowBreakPoints from "../../../../hooks/CheckResponsive";
 import { ChevronRight } from "lucide-react";
 
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 import GalleryCard from "./components/GalleryCard";
 
 import { GALLERY_IMAGES, GALLERY_POSITIONS } from "./data";

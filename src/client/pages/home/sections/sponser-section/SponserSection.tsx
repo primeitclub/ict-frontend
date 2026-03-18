@@ -1,7 +1,7 @@
 // import { Button } from "../../../../../shared/design-components";
 
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 
 // Images for sponsor logo
 const dummyImages = [

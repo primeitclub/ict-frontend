@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 import Card from "../../../../components/card";
 import SvgIcon from "../../../../components/icon/svgIcon";
 import { tabs } from "./data";
