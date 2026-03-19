@@ -1,0 +1,39 @@
+/* body {
+  max-width: 1280px;
+}  */
+
+:root {
+  --lg-highlight: rgba(255, 255, 255, 0.75);
+  --lg-text: #ffffff;
+}
+
+.glass-container {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  background: transparent;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.glass-specular {
+  position: absolute;
+  inset: -2.1px;
+  border-radius: inherit;
+  z-index: 2;
+  box-shadow:
+    inset 3px 2px 2px var(--lg-highlight),
+    inset -3px -2.2px 1px var(--lg-highlight);
+}
+
+.glass-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px 28px;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
