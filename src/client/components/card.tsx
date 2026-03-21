@@ -8,13 +8,13 @@ interface CardProps {
 const Card = ({ item }: CardProps) => {
   return (
     <div className=" rounded-3xl bg-[#FEFEFE] p-4 group h-full font-sans w-[320px] mx-auto sm:w-auto">
-      <div className="relative h-[180px] md:h-[155px] w-full rounded-2xl overflow-hidden">
+      <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
           src={item.image}
           alt={item.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute top-3 left-3 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
+        <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
           {item.seats} / {item.totalSeats} Seats
         </div>
       </div>
