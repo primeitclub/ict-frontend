@@ -8,7 +8,7 @@ interface CategoryTabsProps {
 
 const CategoryTabs = ({ activeTab, setActiveTab }: CategoryTabsProps) => {
   return (
-    <div className="flex flex-wrap md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-12 pb-4 mt-52">
+    <div className="flex flex-wrap md:flex md:flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold mb-12 pb-4 mt-20">
       {tabs.map((tab, index) => (
         <button
           key={index}

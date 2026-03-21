@@ -1,6 +1,6 @@
 // SpeakerSection.tsx
 import SpeakerCard from "./SpeakerCard";
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
 import { useState, useRef } from "react";
 

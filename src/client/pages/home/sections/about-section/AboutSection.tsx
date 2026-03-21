@@ -1,5 +1,5 @@
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 import AboutContent from "./components/AboutContent";
 import AboutImage from "./components/AboutImage";
 
