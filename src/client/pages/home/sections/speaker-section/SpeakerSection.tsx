@@ -39,7 +39,7 @@ const SpeakerSection = () => {
   };
 
   return (
-    <SectionContainer className="mx-auto text-center px-4 sm:px-6 space-y-14">
+    <SectionContainer className="mx-auto text-center px-4 sm:px-6 space-y-14 my-32">
       <SectionHeader
         titleNormal="Joining Us This"
         titleHighlight="Edition"
