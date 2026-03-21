@@ -228,14 +228,6 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
         </button>
       </div>
 
-<<<<<<< HEAD
-      <div className="relative mt-12 overflow-hidden text-center">
-        <h1 className="font-extrabold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B]  bg-clip-text text-transparent text-5xl sm:text-7xl md:text-[170px] leading-tight">
-          ICT MEETUP
-        </h1>
-        <div className="absolute bottom-0 left-0 w-full md:h-[10%]   bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"></div>
-      </div>
-=======
     <div className="relative mt-8 overflow-hidden text-center">
   <h1 className="font-extrabold whitespace-nowrap bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B] bg-clip-text text-transparent
                  text-4xl sm:text-5xl md:text-7xl lg:text-[170px] leading-tight">
@@ -247,7 +239,6 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
                bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"
   ></div>
 </div>
->>>>>>> 25e0adcbd67292a2a56acb3c9c881b05c31cf92a
 
       <div className="mb-8 m- text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
         <p>© 2025 ICT Meetup V8 | Prime IT Club, Prime College</p>

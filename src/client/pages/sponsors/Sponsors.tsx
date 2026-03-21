@@ -7,8 +7,9 @@ import SponsorData from "./SponsorData.tsx";
 const Sponsors = () => {
   const [sponsorlist] = useState(true);
   return (
-    <SectionContainer>
-      {!sponsorlist ? (
+    <SectionContainer >
+      
+            {!sponsorlist ? (
         <div className="w-full flex bg-[#3571F0] gap-10   rounded-lg">
           <div className="flex flex-col w-1/2 p-10 gap-5 ">
             <h1 className="text-[50px] -tracking-[2.4px]">Become A Sponsor</h1>
@@ -49,7 +50,7 @@ const Sponsors = () => {
             altdata="Sponsor img"
             big={false}
             sponsortier={true}
-            imgUrl={[image1, image1]}
+            imgUrl={[image1, image1,image1]}
           />
           <SponsorData
             title="Gold Sponsor"
@@ -85,7 +86,10 @@ const Sponsors = () => {
           <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] bottom-[0%] -z-10 "></div>
         </div>
       )}
-    </SectionContainer>
+      
+
+    </SectionContainer> 
+    
   );
 };
 
