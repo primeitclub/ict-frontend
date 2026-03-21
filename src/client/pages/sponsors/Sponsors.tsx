@@ -2,14 +2,14 @@ import { useState } from "react";
 import SectionContainer from "../../../shared/layouts/sectionContainer.tsx";
 import { Button } from "../../../shared/design-components/index.ts";
 
-import image1 from "../../../../public/ICT Meet/hamro patro.svg";
+import image1 from "/ICT Meet/hamro patro.svg";
 import SponsorData from "./SponsorData.tsx";
 const Sponsors = () => {
   const [sponsorlist] = useState(true);
   return (
     <SectionContainer>
       {!sponsorlist ? (
-        <div className="w-full flex bg-[#3571F0] gap-10  rounded-lg">
+        <div className="w-full flex bg-[#3571F0] gap-10   rounded-lg">
           <div className="flex flex-col w-1/2 p-10 gap-5 ">
             <h1 className="text-[50px] -tracking-[2.4px]">Become A Sponsor</h1>
             <p className="text-[20px] leading-[28px] font-[300]">
@@ -35,7 +35,7 @@ const Sponsors = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex flex-col gap-20 relative">
+        <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
           {/* <SponsorTitle title='Title Sponsor' imgUrl={image1} /> */}
           <SponsorData
             title="Title Sponsor"
@@ -55,11 +55,34 @@ const Sponsors = () => {
             title="Gold Sponsor"
             altdata="Sponsor img"
             big={false}
-            sponsortier={false}
+            sponsortier={true}
             imgUrl={[image1, image1, image1]}
           />
+          <SponsorData
+            title="Silver Sponsor"
+            altdata="Sponsor img"
+            big={false}
+            sponsortier={true}
+            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1]}
+          />
+          <SponsorData
+            title="Inkind Sponsor"
+            altdata="Sponsor img"
+            big={false}
+            sponsortier={false}
+            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1,image1, image1, image1,image1,image1,image1,image1]}
+          />
+          <SponsorData
+            title="Community Partner"
+            altdata="Sponsor img"
+            big={false}
+            sponsortier={false}
+            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1,image1, image1, image1,image1,image1,image1,image1]}
+          />
 
-          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] top-[5%] "></div>
+          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] top-[5%] -z-10 "></div>
+          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -right-[20%] top-[50%] -z-10 "></div>
+          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] bottom-[0%] -z-10 "></div>
         </div>
       )}
     </SectionContainer>
