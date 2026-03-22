@@ -4,13 +4,14 @@ import { Button } from "../../../shared/design-components/index.ts";
 
 import image1 from "/ICT Meet/hamro patro.svg";
 import SponsorData from "./SponsorData.tsx";
+import GlowCircle from "./GlowCircle.tsx";
 const Sponsors = () => {
   const [sponsorlist] = useState(true);
   return (
     <SectionContainer >
       
             {!sponsorlist ? (
-        <div className="w-full flex bg-[#3571F0] gap-10   rounded-lg">
+        <div className="w-full flex bg-[#3571F0] gap-10   rounded-lg ">
           <div className="flex flex-col w-1/2 p-10 gap-5 ">
             <h1 className="text-[50px] -tracking-[2.4px]">Become A Sponsor</h1>
             <p className="text-[20px] leading-[28px] font-[300]">
@@ -36,7 +37,7 @@ const Sponsors = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
+        <div className="w-full flex flex-col gap-20 mt-10 relative items-center  ">
           {/* <SponsorTitle title='Title Sponsor' imgUrl={image1} /> */}
           <SponsorData
             title="Title Sponsor"
@@ -81,9 +82,13 @@ const Sponsors = () => {
             imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1,image1, image1, image1,image1,image1,image1,image1]}
           />
 
-          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] top-[5%] -z-10 "></div>
-          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -right-[20%] top-[50%] -z-10 "></div>
-          <div className="flex bg-[#02369E66] w-[666px] h-[666px] rounded-full absolute blur-[200px] -left-[20%] bottom-[0%] -z-10 "></div>
+          <GlowCircle x="top-0" y="-left-[20%]" />
+          <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />
+          <GlowCircle x="bottom-0" y="-left-[20%]" />
+          
+          
+          {/* <div className="flex bg-[#02369E66] w-[282.06px] h-[283px] md:w-[666px] md:h-[666px] rounded-full absolute blur-[94px] md:blur-[200px] -right-[20%] top-[50%] -z-10 "></div> */}
+          {/* <div className="flex bg-[#02369E66] w-[282.06px] h-[283px] md:w-[666px] md:h-[666px] rounded-full absolute blur-[94px] md:blur-[200px] -left-[20%] bottom-[0%] -z-10 "></div> */}
         </div>
       )}
       
