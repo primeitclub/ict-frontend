@@ -2,6 +2,7 @@ import SectionContainer from "../../../shared/layouts/sectionContainer";
 import FilterButton from "./components/TeamButton";
 import ArrowSVG from "./icons/arrowSVG";
 import TeamCard from "./components/teamCard";
+import Dropdown from "./components/Dropdown";
 import { Heading } from "../../../shared/design-components";
 import { useState } from "react";
 
@@ -83,14 +84,14 @@ export default function Teams() {
   return (
     <SectionContainer as="section" className=" py-10">
       <div className="gap-10 md:flex items-start">
-        <div className="md:w-[40%] md:sticky md:top-10 md:pr-10 h-fit">
+        <div className="md:w-[40%] md:sticky md:top-10 h-fit">
           {/* Heading */}
-          <Heading className="font-semibold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
-            Meet the Team
+          <Heading className="text-center font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent md:text-left">
+            Meet the <br /> Team
           </Heading>
 
-          {/* filter options */}
-          <div className="flex flex-wrap gap-[12px] mb-10">
+          {/* filter options Desktop */}
+          <div className="hidden md:flex md:flex-wrap gap-[12px] mb-10">
             {roles.map((role, index) => (
               <FilterButton
                 key={index}
@@ -108,10 +109,19 @@ export default function Teams() {
               />
             ))}
           </div>
+
+          {/* Filter Option Mobile */}
+          <div className="md:hidden font-sans font-medium max-w-[248px] mx-auto mt-10 mb-20 text-[12px] text-black">
+            <Dropdown
+              options={roles}
+              value={activeRole}
+              onChange={(role) => setActiveRole(role as Role)}
+            />
+          </div>
         </div>
 
         {/* Team members */}
-        <div className="font-base gap-x-[42px] w-fit grid justify-between grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
+        <div className="font-base gap-x-[42px] w-fit mx-auto grid justify-between grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] lg:gap-x-[36px]">
           {filteredTeamData.map((member, index) => (
             <TeamCard
               key={index}

@@ -16,7 +16,7 @@ interface TeamCardProps {
 export default function TeamCard({ name, role, socialLinks }: TeamCardProps) {
   return (
     <div className="grid">
-      <div className="relative w-full h-fit max-w-[210px]">
+      <div className="relative min-w-[160px] w-full max-w-[210px] h-fit">
         {/* Team Member Image */}
         <img src={ref1} alt="team-image" className="rounded-2xl" />
         {/* Icons on Image */}
@@ -32,7 +32,7 @@ export default function TeamCard({ name, role, socialLinks }: TeamCardProps) {
           </a>
         </div>
       </div>
-      <span className="text-base font-sans font-bold leading-[32px] m-auto text-[#DBF5FF] bg-clip-text text-transparent">
+      <span className="text-base font-sans font-bold leading-[32px] m-auto text-[#DBF5FF] bg-clip-text  ">
         {name}
       </span>
       <span className="font-sans text-xs mx-auto mb-[36px]">{role}</span>
