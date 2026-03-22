@@ -3,32 +3,51 @@ type TitleProps = {
   imgUrl: string[];
   altdata: string;
   big: boolean;
-  sponsortier:boolean,
+  sponsortier: boolean;
 };
 
 const SponsorTitle = (props: TitleProps) => {
+  const { title, imgUrl, altdata, big, sponsortier } = props;
+
   return (
-    <div className=" w-full  text-4xl text-center items-center leading-3 flex  gap-16">
-      <div className=" flex flex-col md:flex-row md:flex w-full items-center gap-24 justify-start ">
+    <div className="w-full flex justify-center text-center">
+      <div className="flex flex-col md:flex-row w-full items-center gap-10 sm:gap-24">
+        {/* Title */}
         <div
-          className={`flex font-medium w-full md:w-[35%]  ${
-            props.big ? `text-[40px]` : `text-[32px]`
-          } text-[#DBF5FF]`}
+          className={`font-medium text-[#DBF5FF] w-full md:w-[45%] text-center md:text-left ${
+            big ? "text-[30px] md:text-[40px]" : "text-[26px] md:text-[30px]"
+          }`}
         >
-          {props.title}
+          {title}
         </div>
 
-        <div className={`w-full items-center ${ props.sponsortier ? 'grid grid-cols-1 sm:grid-cols-4 gap-10' :' grid-cols-2 grid sm:grid-cols-5 gap-5' } items-center `}>
-          {props.imgUrl.map((el, index) => (
-            <div className={`${ props.sponsortier ? 'w-[180px] h-[180px]  ' :'w-[127px] h-[127px] items-center  ' }`}>
-               <img
+        {/* Sponsor Images */}
+        <div
+          className={`w-full justify-center place-items-center ${
+            imgUrl.length === 1 ? "flex sm:grid" : "grid"
+          } ${
+            sponsortier
+              ? "grid-cols-3 lg:grid-cols-4 gap-y-4 lg:gap-y-2"
+              : "grid-cols-4 sm:grid-cols-5 gap-y-5 gap-x-10 lg:gap-y-3"
+          }`}
+        >
+          {imgUrl.map((el, index) => (
+            <div
               key={index}
-              className={`${ props.sponsortier ? 'rounded-3xl':'rounded-lg'} w-full h-full`}
-              src={el}
-              alt={props.altdata}
-            />
+              className={`flex items-center justify-center ${
+                sponsortier
+                  ? "w-[90px] h-[90px] sm:w-[130px] sm:h-[130px]  lg:w-[180px] lg:h-[180px]"
+                  : "w-[60px] h-[60px] sm:w-[90px] sm:h-[90px]  lg:w-[120px] lg:h-[120px]"
+              }`}
+            >
+              <img
+                src={el}
+                alt={altdata}
+                className={`w-full h-full object-contain ${
+                  sponsortier ? "rounded-xl" : "rounded-lg"
+                }`}
+              />
             </div>
-           
           ))}
         </div>
       </div>
