@@ -21,15 +21,15 @@ export const Footer = () => {
 
   return (
     <SectionContainer className="px-4 sm:px-6 !pt-20" as="footer">
-      <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:items-start md:gap-0">
-        <div className="relative w-full md:w-auto">
+      <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:items-start lg:gap-0">
+        <div className="relative w-full lg:w-auto">
           <div
-            className="flex flex-col items-center cursor-pointer md:items-start"
+            className="flex flex-col items-center cursor-pointer lg:items-start"
             onClick={() => navigate(getPath("/"))}
           >
-            <div className="flex flex-col items-center md:items-start w-[144px]">
+            <div className="flex flex-col items-center lg:items-start w-[144px]">
               <Logo2 />
-              <p className="mt-2 font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center md:text-left">
+              <p className="mt-2 font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
                 Fusion Of Tech Talent & Creativity
               </p>
             </div>
@@ -38,9 +38,9 @@ export const Footer = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className={`
         absolute right-4 top-1/2 -translate-y-1/2 
-        flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 
+        flex items-center justify-center w-10 h-10 
         rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF] 
-        md:hidden
+        lg:hidden
       `}
             aria-label="Back to top"
           >
@@ -60,24 +60,24 @@ export const Footer = () => {
           </button>
         </div>
 
-        <div className="text-center md:text-left">
+        <div className="text-center lg:text-left">
           <h1 className="text-[#50A6FE] font-sans font-bold">Contact Us</h1>
-          <ul className="md:mt-[16px] text-sm md:text-base">
+          <ul className="lg:mt-[16px] text-sm lg:text-base">
             <li>+123 45 6 789</li>
           </ul>
-          <ul className="md:mt-[16px] text-sm md:text-base">
+          <ul className="lg:mt-[16px] text-sm lg:text-base">
             <li>itclub.prime@prime.edu.np</li>
           </ul>
         </div>
-        <div className="text-center md:text-left">
+        <div className="text-center lg:text-left">
           <h1 className="text-[#50A6FE] font-sans font-bold">Connect</h1>
           <div>
-            <ul className="mt-[5px] flex flex-row sm:flex-row md:flex-col gap-6 md:gap-3 justify-center md:justify-start list-none p-0 m-0">
+            <ul className="mt-[5px] flex flex-row lg:flex-col gap-6 lg:gap-3 justify-center lg:justify-start list-none p-0 m-0">
               {" "}
               <li>
                 <a
                   href="#"
-                  className="md:mt-[17px] flex items-center gap-[10px]"
+                  className="lg:mt-[17px] flex items-center gap-[10px]"
                 >
                   <span>
                     <svg
@@ -102,13 +102,13 @@ export const Footer = () => {
                       </defs>
                     </svg>
                   </span>
-                  <span className="hidden sm:inline">Facebook</span>
+                  <span className="hidden lg:inline">Facebook</span>
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="md:mt-[5px] flex items-center gap-[12px] "
+                  className="lg:mt-[5px] flex items-center gap-[12px] "
                 >
                   <span>
                     <svg
@@ -127,13 +127,13 @@ export const Footer = () => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="hidden sm:inline">Instagram</span>
+                  <span className="hidden lg:inline">Instagram</span>
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="md:mt-[5px] flex   items-center gap-[12px] "
+                  className="lg:mt-[5px] flex items-center gap-[12px] "
                 >
                   <span>
                     <svg
@@ -150,7 +150,7 @@ export const Footer = () => {
                       />
                     </svg>{" "}
                   </span>{" "}
-                  <span className="hidden tracking-wide sm:inline">
+                  <span className="hidden tracking-wide lg:inline">
                     LinkedIn
                   </span>
                 </a>
@@ -159,25 +159,25 @@ export const Footer = () => {
           </div>{" "}
         </div>
 
-        <div className="text-center md:text-left">
-          <div className="flex  flex-row items-center md:items-center gap-2 md:gap-[18px]">
-            <p className="font-normal text-[14px] md:text-[16px]">
+        <div className="text-center lg:text-left">
+          <div className="flex flex-row items-center gap-2 lg:gap-[18px]">
+            <p className="font-normal text-[14px] lg:text-[16px]">
               Organized by:
             </p>
             <img
               src={PrimeITClub}
               alt="Prime IT Club Logo"
-              className="h-6 md:h-auto"
+              className="h-6 lg:h-auto"
             />
           </div>
-          <div className="flex flex-row items-center md:items-center gap-2 md:gap-[18px] mt-[27px]">
-            <p className="font-normal text-[14px] md:text-[16px]">
+          <div className="flex flex-row items-center gap-2 lg:gap-[18px] mt-[27px]">
+            <p className="font-normal text-[14px] lg:text-[16px]">
               Supported By:
             </p>
             <img
               src={PrimeCollege}
               alt="Prime College"
-              className="h-6 md:h-auto"
+              className="h-6 lg:h-auto"
             />
           </div>
         </div>
@@ -185,8 +185,8 @@ export const Footer = () => {
 
       <div className="mt-9 border-[0.8px] border-[#353535]"></div>
 
-      <div className="flex flex-col items-center w-full gap-6 md:flex-row md:justify-between mt-9 md:gap-0">
-        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-sm font-semibold md:justify-start md:gap-8 md:text-base md:w-auto">
+      <div className="flex flex-col items-center w-full gap-6 lg:flex-row lg:justify-between mt-9 lg:gap-0">
+        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-sm font-semibold lg:justify-start lg:gap-8 lg:text-base lg:w-auto">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}
@@ -202,13 +202,13 @@ export const Footer = () => {
 
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="items-center justify-center hidden w-full gap-2 text-sm font-semibold md:flex hover:text-blue-400 md:w-auto font-hubot"
+          className="items-center justify-center hidden w-full gap-2 text-sm font-semibold lg:flex hover:text-blue-400 lg:w-auto font-hubot"
           aria-label="Back to top"
         >
           Back to Top
           <span
             className="flex items-center justify-center 
-w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 
+w-10 h-10 lg:w-14 lg:h-14 
 rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
           >
             <svg
@@ -228,14 +228,19 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
         </button>
       </div>
 
-      <div className="relative mt-12 overflow-hidden text-center">
-        <h1 className="font-extrabold bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B] bg-clip-text text-transparent text-5xl sm:text-7xl md:text-[170px] leading-tight">
-          ICT MEETUP
-        </h1>
-        <div className="absolute bottom-0 left-0 w-full h-24 sm:h-32 md:h-40 bg-gradient-to-t from-[#000206] to-transparent pointer-events-none"></div>
-      </div>
+    <div className="relative mt-8 overflow-hidden text-center">
+  <h1 className="font-extrabold whitespace-nowrap bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B] bg-clip-text text-transparent
+                 text-4xl sm:text-5xl md:text-7xl lg:text-[170px] leading-tight">
+    ICT MEETUP
+  </h1>
+  <div
+    className="absolute bottom-0 left-0 w-full
+               h-[1.5em] sm:h-[2em] md:h-[3em] lg:h-[9em]
+               bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"
+  ></div>
+</div>
 
-      <div className="mt-8 text-xs text-center text-gray-400 md:text-sm">
+      <div className="mb-8 m- text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
         <p>© 2025 ICT Meetup V8 | Prime IT Club, Prime College</p>
       </div>
     </SectionContainer>
