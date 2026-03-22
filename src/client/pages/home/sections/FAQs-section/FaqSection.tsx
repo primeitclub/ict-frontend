@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FAQItem from "./FaqIteams";
 import SectionContainer from "../../../../../shared/layouts/sectionContainer";
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 
 const faqs = [
   {

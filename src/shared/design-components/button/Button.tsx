@@ -3,7 +3,7 @@ import { cn } from "../../utils/cn";
 
 type ButtonVariant = "filled" | "outlined" | "glass" | "solid-white" | "ghost";
 
-type ButtonSize = "base" | "small" | "large" | "xl";
+type ButtonSize = "base" | "small" | "large";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -69,7 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles - consistent across all buttons
     const baseStyles =
-      "group font-sans font-medium rounded-full transition-all duration-300 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0";
+      "group font-sans font-semibold rounded-full transition-all duration-300 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0";
 
     // Variant styles
     const variantStyles: Record<ButtonVariant, string> = {
@@ -88,9 +88,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Size styles - controls height, padding, and font-size
     const sizeStyles: Record<ButtonSize, string> = {
       small: "h-8 px-4 text-xs",
-      base: "h-10 px-5 text-sm",
-      large: "h-12 px-8 text-base",
-      xl: "h-14 px-10 text-lg",
+      base: "h-10 px-5 text-md",
+      large: "h-12 px-8 text-lg",
     };
 
     // Width styles
@@ -111,12 +110,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref}
           type="button"
           disabled={disabled || isLoading}
-          className="glass-container"
+          className={cn(
+            "glass-container group hover:bg-glow-secondary transition-colors duration-300 hover:text-black",
+            className,
+          )}
           {...props}
         >
           <div className="glass-specular"></div>
-          <div className="glass-content">
-            {leftIcon} {label} {rightIcon}
+          <div className="glass-content font-bold">
+            {leftIcon && <span className="inline-flex">{leftIcon}</span>}
+            {label}
+            {rightIcon && (
+              <span className="inline-flex  transition-transform duration-300 group-hover:translate-x-1">
+                {rightIcon}
+              </span>
+            )}
           </div>
         </button>
       );
@@ -158,7 +166,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <>
             {leftIcon && <span className="inline-flex">{leftIcon}</span>}
             {label}
-            {rightIcon && <span className="inline-flex">{rightIcon}</span>}
+            {rightIcon && (
+              <span className="inline-flex transition-transform duration-300 group-hover:translate-x-1">
+                {rightIcon}
+              </span>
+            )}
           </>
         )}
       </button>

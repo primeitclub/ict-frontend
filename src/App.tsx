@@ -8,7 +8,7 @@ import ScrollToTop from "./global-wrappers/ScrollToTop";
 function App() {
   return (
     <>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminRouter />} />
 

@@ -9,7 +9,7 @@ export default function EventsPage() {
   return (
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventSwiper />
-      <div className="bg-[#F2F5FA] text-black pt-[3vh] md:pt-[10vh]">
+      <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 py-16 ">
           <CategoryTabs activeTab={activeTab} setActiveTab={setActiveTab} />
           <EventGrid activeTab={activeTab} />

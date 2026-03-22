@@ -28,7 +28,6 @@ const SectionContainer = React.forwardRef<HTMLDivElement, PageLayoutProps>(
       <Tag
         ref={ref}
         className={cn(
-          "py-32",
           getWidth(width),
           className,
           as === "footer" ? "py-0" : "",

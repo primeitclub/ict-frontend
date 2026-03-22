@@ -1,36 +1,20 @@
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
+
+import useWindowBreakPoints from "../../../../hooks/CheckResponsive";
 import { ChevronRight } from "lucide-react";
 
-import SectionHeader from "../../../../components/sectionHeader";
+import SectionHeader from "../../../../components/section-header";
 import GalleryCard from "./components/GalleryCard";
+
 import { GALLERY_IMAGES, GALLERY_POSITIONS } from "./data";
 import type { ScreenSize } from "./types";
-
-const subscribe = (callback: () => void) => {
-  window.addEventListener("resize", callback);
-  return () => window.removeEventListener("resize", callback);
-};
-
-const getSnapshot = (): ScreenSize => {
-  const width = window.innerWidth;
-  if (width < 640) return "mobile";
-  if (width < 1024) return "tablet";
-  return "desktop";
-};
-
-const getServerSnapshot = (): ScreenSize => "desktop";
+import { Button } from "../../../../../shared/design-components";
 
 const GallerySection = () => {
   const [selected, setSelected] = useState<number | null>(null);
-
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const screen = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot,
-  );
-
+  const screen = useWindowBreakPoints() as ScreenSize;
   const positions = GALLERY_POSITIONS[screen];
   const activeIndex = hovered ?? selected;
 
@@ -71,9 +55,7 @@ const GallerySection = () => {
       </div>
 
       <div className="flex justify-center mt-16">
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
-          View More <ChevronRight size={18} />
-        </button>
+        <Button label="View More" rightIcon={<ChevronRight size={18} />} />
       </div>
     </section>
   );

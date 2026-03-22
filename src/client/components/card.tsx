@@ -1,5 +1,6 @@
 import { Calendar, Clock, MapPin, Banknote, ChevronRight } from "lucide-react";
 import type { ContentType } from "../pages/home/sections/highlight-section/types";
+import { Button } from "../../shared/design-components";
 
 interface CardProps {
   item: ContentType;
@@ -55,16 +56,16 @@ const Card = ({ item }: CardProps) => {
           </div>
         </div>
 
-        <button
-          className="w-full bg-[#3571F0] hover:bg-blue-700 text-white py-1.5 rounded-full 
-                    font-bold flex items-center justify-center transition-colors group"
-        >
-          Register Now
-          <ChevronRight
-            className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
-            strokeWidth={4}
-          />
-        </button>
+        <Button
+          label="Register Now"
+          fullWidth
+          rightIcon={
+            <ChevronRight
+              className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
+              strokeWidth={4}
+            />
+          }
+        />
       </div>
     </div>
   );
