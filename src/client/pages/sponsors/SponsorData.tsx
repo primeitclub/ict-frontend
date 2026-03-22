@@ -12,7 +12,6 @@ const SponsorTitle = (props: TitleProps) => {
   return (
     <div className="w-full flex justify-center text-center">
       <div className="flex flex-col md:flex-row w-full items-center gap-10 sm:gap-24">
-
         {/* Title */}
         <div
           className={`font-medium text-[#DBF5FF] w-full md:w-[45%] text-center md:text-left ${
@@ -24,10 +23,12 @@ const SponsorTitle = (props: TitleProps) => {
 
         {/* Sponsor Images */}
         <div
-          className={`grid justify-center place-items-center  w-full ${
+          className={`w-full justify-center place-items-center ${
+            imgUrl.length === 1 ? "flex sm:grid" : "grid"
+          } ${
             sponsortier
-              ? "grid-cols-3  lg:grid-cols-4 gap-y-4 lg:gap-y-2  lx:gap-x-0   "
-              : "grid-cols-4   sm:grid-cols-5 gap-y-5 gap-x-10 lg:gap-y-3"
+              ? "grid-cols-3 lg:grid-cols-4 gap-y-4 lg:gap-y-2"
+              : "grid-cols-4 sm:grid-cols-5 gap-y-5 gap-x-10 lg:gap-y-3"
           }`}
         >
           {imgUrl.map((el, index) => (
@@ -49,7 +50,6 @@ const SponsorTitle = (props: TitleProps) => {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );
