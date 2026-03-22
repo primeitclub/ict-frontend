@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
-import SectionContainer from "../../../shared/layouts/sectionContainer";
-import { useVersion } from "../../../routes/VersionContext";
+import SectionContainer from "../../components/sectionContainer";
+import { useVersion } from "../../routes/VersionContext";
 const Navbar = () => {
   const { getPath } = useVersion();
   const navigate = useNavigate();
@@ -38,7 +38,9 @@ const Navbar = () => {
                   <NavLink
                     key={`${label}-${path}`}
                     className={({ isActive }) =>
-                      isActive ? "text-blue-600" : "text-black hover:text-blue-600"
+                      isActive
+                        ? "text-blue-600"
+                        : "text-black hover:text-blue-600"
                     }
                     to={getPath(path)}
                     onClick={() => setToggle(false)}

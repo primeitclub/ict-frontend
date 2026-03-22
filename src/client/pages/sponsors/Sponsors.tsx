@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SectionContainer from "../../../shared/layouts/sectionContainer.tsx";
+import SectionContainer from "../../components/sectionContainer.tsx";
 import { Button } from "../../../shared/design-components/index.ts";
 
 import image1 from "../../../../public/ICT Meet/hamro patro.svg";

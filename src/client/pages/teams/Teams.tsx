@@ -1,4 +1,4 @@
-import SectionContainer from "../../../shared/layouts/sectionContainer";
+import SectionContainer from "../../components/sectionContainer";
 import FilterButton from "./components/TeamButton";
 import ArrowSVG from "./icons/arrowSVG";
 import TeamCard from "./components/teamCard";
