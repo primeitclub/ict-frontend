@@ -11,7 +11,7 @@ export function LandingSection() {
       <div className="flex flex-col  space-y-4 ">
         <div className="items-center flex justify-center text-center bg-red">
           <div className="flex items-center gap-2 border-1 bg-red p-2 rounded-full  bg-white/5  ">
-            <div className="flex rounded-full bg-[#3571F0] text-[14px] py-[2px] px-[14px]">
+            <div className="flex rounded-full bg-btn-primary text-[14px] py-[2px] px-[14px]">
               Event on
             </div>
             <div className="flex text-[14px] items-center gap-2 leading-3 font-normal -tracking-[0.598px]">
