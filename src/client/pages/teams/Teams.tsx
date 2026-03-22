@@ -121,7 +121,9 @@ export default function Teams() {
         </div>
 
         {/* Team members */}
-        <div className="font-base gap-x-[16px] lg:gap-x-[32px] w-full grid justify-items-center grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%]">
+        {/* <div className="font-base gap-x-[42px] w-fit mx-auto grid justify-between grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] lg:gap-x-[36px]"> */}
+
+        <div className="font-base gap-x-[16px] lg:gap-x-[20px] w-full grid justify-items-center grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%]">
           {" "}
           {filteredTeamData.map((member, index) => (
             <TeamCard
