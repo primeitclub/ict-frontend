@@ -15,21 +15,27 @@ import TopBgContent from "../../../components/bg-content";
 const EventSwiper = () => {
   return (
     <TopBgContent position="absolute">
-      <div className="max-w-[1200px] mx-auto px-4 min-h-[500px] flex items-center justify-center">
+      <div className="max-w-[1200px] mx-auto px-0 sm:px-4 pt-0 sm:pt-16 min-h-[500px] flex items-center justify-center">
         <Swiper
           modules={[Pagination, EffectCoverflow, Autoplay, Navigation]}
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={1.2}
+          slidesPerView={1}
           breakpoints={{
-            640: { slidesPerView: 1.5 },
-            1024: { slidesPerView: 1.4 },
+            640: {
+              slidesPerView: 1.5,
+              coverflowEffect: { depth: 200 }, // Cleaner transition for tablets
+            },
+            1024: {
+              slidesPerView: 1.4,
+              coverflowEffect: { depth: 350 },
+            },
           }}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
-            depth: 350,
+            depth: 100,
             modifier: 1,
             slideShadows: true,
           }}
@@ -47,7 +53,7 @@ const EventSwiper = () => {
           {sliderData.map((slide, i) => (
             <SwiperSlide
               key={i}
-              className="relative bg-white rounded-3xl overflow-hidden group shadow-xl"
+              className="relative bg-transparent rounded-t rounded-b-lg sm:rounded-3xl overflow-hidden group shadow-xl"
             >
               <div className="overflow-hidden h-[240px] md:h-[515px]">
                 <img

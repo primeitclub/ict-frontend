@@ -38,7 +38,9 @@ const Navbar = () => {
                   <NavLink
                     key={`${label}-${path}`}
                     className={({ isActive }) =>
-                      isActive ? "text-blue-600" : "text-black hover:text-blue-600"
+                      isActive
+                        ? "text-blue-600"
+                        : "text-black hover:text-blue-600"
                     }
                     to={getPath(path)}
                     onClick={() => setToggle(false)}
