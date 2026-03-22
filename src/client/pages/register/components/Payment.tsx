@@ -1,16 +1,23 @@
+import { useRef } from "react";
 import Upload from "../icons/Upload";
 
 export default function Payment() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBoxClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Title */}
-      <h2 className="">Payment Screenshot</h2>
+      <h2 className="font-medium mb-2">Payment Screenshot</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-        {/* Upload Box */}
-        <div className="border-2 border-dashed border-gray-300 rounded-lg h-64 flex flex-col items-center justify-center text-gray-500 cursor-pointer bg-[#E9F0FF] transition">
-          {/* Icon */}
-          <div className="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full mb-3">
+        <div
+          onClick={handleBoxClick}
+          className="border-2 border-dashed border-[#3571F0]/30 rounded-lg h-64 flex flex-col items-center justify-center text-gray-500 cursor-pointer bg-[#E9F0FF] transition-all hover:bg-[#dee9ff] hover:border-[#3571F0]"
+        >
+          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full mb-3 shadow-sm">
             <Upload />
           </div>
 
@@ -21,12 +28,15 @@ export default function Payment() {
             SVG, PNG, JPG or GIF (max. 5MB)
           </p>
 
-          <input type="file" className="hidden" />
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept="image/*"
+          />
         </div>
-
-        {/* QR Section */}
+    
         <div className="flex flex-col items-center text-center">
-          {/* QR Image */}
           <div className="border p-3 bg-white rounded-lg shadow-sm">
             <img
               src="/qr.png"
@@ -35,12 +45,12 @@ export default function Payment() {
             />
           </div>
 
-          {/* Payment Info */}
           <p className="text-sm text-gray-500 mt-3">
             Accepted via eSewa / Khalti / Bank Transfer
           </p>
-
-          <p className="text-[#3571F0] font-semibold mt-1">Amount: Rs. 500</p>
+          <p className="text-[#3571F0] font-semibold mt-1 text-lg">
+            Amount: Rs. 500
+          </p>
         </div>
       </div>
     </div>
