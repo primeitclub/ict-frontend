@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EventsOverview } from "./EventOverview";
 import { SpeakerOverview } from "./SpeakerOverview";
+import { CircleArrowRight } from "lucide-react";
 
 type TabId = "events" | "speaker";
 
@@ -17,31 +18,50 @@ export const EventDetailTabs = () => {
       {/* Tab Bar */}
       <div className="flex border-b border-gray-300">
         {TABS.map((tab) => {
-          const isActive = activeTab === tab.id;
           return (
+            // <button
+            //   key={tab.id}
+            //   onClick={() => setActiveTab(tab.id)}
+            //   className={`flex items-center gap-2 px-4 py-3 text-[15px] text-xl font-semibold transition-colors border-b-2 -mb-px ${
+            //     isActive
+            //       ? "text-[#3571F0] border-[#3571F0]"
+            //       : "text-gray-400 border-transparent hover:text-gray-800"
+            //   }`}
+            // >
+            //   <svg
+            //     viewBox="0 0 24 24"
+            //     className="w-5 h-5"
+            //     fill="none"
+            //     stroke="currentColor"
+            //     strokeWidth={2}
+            //   >
+            //     <circle cx="12" cy="12" r="10" />
+            //     <path
+            //       strokeLinecap="round"
+            //       strokeLinejoin="round"
+            //       d="M12 8l4 4-4 4M8 12h8"
+            //     />
+            //   </svg>
+            //   {tab.label}
+            // </button>
+
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-[15px] text-xl font-semibold transition-colors border-b-2 -mb-px ${
-                isActive
+              className={`group flex items-center gap-2 px-4 py-3 text-[15px] lg:text-xl font-semibold transition-colors border-b-2 -mb-px ${
+                activeTab === tab.id
                   ? "text-[#3571F0] border-[#3571F0]"
-                  : "text-gray-400 border-transparent hover:text-gray-800"
+                  : "text-gray-800 border-transparent"
               }`}
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 8l4 4-4 4M8 12h8"
-                />
-              </svg>
+              <CircleArrowRight
+                size={24}
+                className={`transition-transform duration-700 ${
+                  activeTab === tab.id
+                    ? "text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 hover:text-[#3571F0]"
+                }`}
+              />
               {tab.label}
             </button>
           );

@@ -8,7 +8,7 @@ export default function EventsDetail() {
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventDetailBanner />
 
-      <SectionContainer className="px-4 md:px-10 py-8 flex flex-col md:flex-row gap-8 items-start">
+      <SectionContainer className="px-4 md:px-10 py-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
         {/* Left — Tabs (full width on mobile, flex-1 on desktop) */}
         <EventDetailTabs />
 

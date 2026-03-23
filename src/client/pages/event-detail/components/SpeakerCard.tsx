@@ -9,30 +9,30 @@ export const SpeakerCard = ({
   socials,
 }: ISpeaker) => {
   return (
-    <div className="flex gap-6 py-6 border-b border-gray-200 last:border-none">
+    <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-6 py-8 px-6 border-b border-gray-200 last:border-none">
       {/* Avatar */}
       <img
         src={image}
         alt={name}
-        className="w-28 h-28 rounded-full object-cover flex-shrink-0"
+        className="w-36 h-36 sm:w-[200px] sm:h-[200px] rounded-full object-cover flex-shrink-0"
       />
 
       {/* Info */}
       <div className="flex flex-col gap-1">
-        <h3 className="text-lg font-bold text-[#3571F0]">{name}</h3>
-        <p className="text-sm font-semibold text-gray-900">{role}</p>
+        <h3 className="text-xl lg:text-2xl font-bold text-[#3571F0]">{name}</h3>
+        <p className="text-sm lg:text-base font-bold text-gray-900">{role}</p>
         <p className="text-sm text-gray-500">{company}</p>
         <p className="text-sm text-gray-600 mt-1 leading-relaxed">{bio}</p>
 
         {/* Socials */}
         {socials && (
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center justify-center sm:justify-start gap-3 mt-3">
             {socials.instagram && (
               <a
                 href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"
@@ -48,7 +48,7 @@ export const SpeakerCard = ({
                 href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"
@@ -64,7 +64,7 @@ export const SpeakerCard = ({
                 href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"
