@@ -26,6 +26,7 @@ export default function ClientRouter({ version }: ClientRouterProps) {
           <Route path="sponsors" element={<Sponsors />} />
           <Route path="teams" element={<Teams />} />
           <Route path="register" element={<Register />} />
+          <Route path="event-detail" element={<EventsDetail />} />
         </Route>
       </Routes>
     </VersionProvider>

@@ -13,7 +13,7 @@ export default function EventsDetail() {
         <EventDetailTabs />
 
         {/* Right — Sidebar (full width on mobile, fixed width on desktop) */}
-        <div className="w-full md:w-72 md:flex-shrink-0 md:pt-14">
+        <div className="w-full lg:w-72 md:flex-shrink md:pt-14">
           <SeatsAndQueryCard />
         </div>
       </SectionContainer>

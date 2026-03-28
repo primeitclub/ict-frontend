@@ -9,7 +9,7 @@ export const SpeakerCard = ({
   socials,
 }: ISpeaker) => {
   return (
-    <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-6 py-8 px-6 border-b border-gray-200 last:border-none">
+    <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-6 py-8 px-6 border-b border-gray-200 last:border-none max-w-[650px]">
       {/* Avatar */}
       <img
         src={image}
@@ -22,7 +22,9 @@ export const SpeakerCard = ({
         <h3 className="text-xl lg:text-2xl font-bold text-[#3571F0]">{name}</h3>
         <p className="text-sm lg:text-base font-bold text-gray-900">{role}</p>
         <p className="text-sm text-gray-500">{company}</p>
-        <p className="text-sm text-gray-600 mt-1 leading-relaxed">{bio}</p>
+        <p className="text-sm text-gray-600 mt-1 leading-relaxed text-justify">
+          {bio}
+        </p>
 
         {/* Socials */}
         {socials && (

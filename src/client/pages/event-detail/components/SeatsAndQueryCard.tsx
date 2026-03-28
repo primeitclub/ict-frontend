@@ -4,12 +4,12 @@ export const SeatsAndQueryCard = () => {
   const { booked, total } = SEATS_INFO;
 
   return (
-    <div className="w-full overflow-hidden border border-gray-200">
+    <div className="w-full overflow-hidden">
       {/* Seats Available */}
-      <div className="flex items-center gap-4 px-5 py-4 bg-gray-100">
+      <div className="flex items-center gap-4 px-5 py-4 mb-4 sm:mb-0 border border-[#E2E8F0] bg-[#F1F5F9] sm:bg-[#EFEFEF] rounded-xl sm:rounded-none sm:border-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-7 h-7 text-gray-800 flex-shrink-0"
+          className="w-10 h-10   text-gray-800 flex-shrink-0 bg-white p-2 rounded-lg sm:rounded-none sm:bg-transparent"
           viewBox="0 0 24 24"
           fill="currentColor"
         >
@@ -28,7 +28,7 @@ export const SeatsAndQueryCard = () => {
       </div>
 
       {/* Got Any Queries */}
-      <button className="w-full flex items-center gap-4 px-5 py-4 bg-[#3571F0] hover:bg-[#2a5fd6] transition-colors">
+      <button className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-[#3571F0] hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-6 h-6 text-white flex-shrink-0"
