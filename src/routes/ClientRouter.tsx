@@ -10,6 +10,7 @@ import {
 import PageLayout from "../client/layouts/PageLayout";
 
 import { VersionProvider } from "./VersionContext";
+import { EventsDetail } from "../client/pages/event-detail/types";
 
 interface ClientRouterProps {
   version: string;
@@ -25,6 +26,7 @@ export default function ClientRouter({ version }: ClientRouterProps) {
           <Route path="sponsors" element={<Sponsors />} />
           <Route path="teams" element={<Teams />} />
           <Route path="register" element={<Register />} />
+          <Route path="event-detail" element={<EventsDetail />} />
         </Route>
       </Routes>
     </VersionProvider>
