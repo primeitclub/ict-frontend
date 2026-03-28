@@ -29,7 +29,7 @@ export default function HighlightSection() {
       className=" bg-[#F2F5FA] text-black max-h-[848px] relative"
     >
       <button
-        className="absolute -top-5 left-[50%] transform -translate-x-1/2 z-48 cursor-pointer bg-white rounded-full p-2"
+        className="absolute -top-5 left-[50%] transform -translate-x-1/2 z-48 cursor-pointer bg-white rounded-full p-2 drop-shadow-xl "
         onClick={scrollToSection}
       >
         <SvgIcon />
