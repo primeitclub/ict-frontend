@@ -25,7 +25,7 @@ export default {
 
         // glow effect 
         'glow-primary':'#0956F9',
-        'glow-secondary':'#597DC4',
+        'glow-secondary':'#DBF5FF',
         'glow-tertiary':'#02369B',
       },
       fontFamily:{
