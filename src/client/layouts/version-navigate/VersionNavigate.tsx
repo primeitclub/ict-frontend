@@ -1,7 +1,7 @@
-import { VERSIONS } from "../../../routes/utils/route-type";
-import { useVersion } from "../../../routes/VersionContext";
+import { VERSIONS } from "../../routes/route-type";
 import { cn } from "../../../shared/utils/cn";
 import "../../../App.css";
+import { useVersion } from "../../routes/VersionContext";
 
 export default function VersionNavigate() {
   const { navigateToVersion, version } = useVersion();

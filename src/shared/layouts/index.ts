@@ -1,1 +1,1 @@
-export { default as PageLayout } from "./sectionContainer";
+export { default as PageLayout } from "../../client/components/sectionContainer";

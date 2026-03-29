@@ -1,7 +1,7 @@
 // routes/VersionContext.tsx
 import { createContext, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LATEST_VERSION } from "./utils/route-type";
+import { LATEST_VERSION } from "./route-type";
 
 interface VersionContextType {
   version: string;

@@ -1,6 +1,6 @@
 import type React from "react";
 import { cn } from "../../shared/utils/cn";
-import SectionContainer from "../../shared/layouts/sectionContainer";
+import SectionContainer from "./sectionContainer";
 
 interface ByContentProps {
   position?: "relative" | "absolute";

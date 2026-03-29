@@ -4,8 +4,8 @@ import { useNavigate, NavLink } from "react-router-dom";
 import Logo2 from "../headers/Logo/Logo2";
 import PrimeITClub from "../../../assets/PrimeITClub.svg";
 import PrimeCollege from "../../../assets/PrimeCollege.svg";
-import SectionContainer from "../../../shared/layouts/sectionContainer";
-import { useVersion } from "../../../routes/VersionContext";
+import SectionContainer from "../../components/sectionContainer";
+import { useVersion } from "../../routes/VersionContext";
 
 export const Footer = () => {
   const navigate = useNavigate();

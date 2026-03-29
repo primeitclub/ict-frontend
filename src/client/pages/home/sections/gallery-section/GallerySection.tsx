@@ -16,6 +16,7 @@ const GallerySection = () => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   const screen = useWindowBreakPoints() as ScreenSize;
+
   const positions = GALLERY_POSITIONS[screen];
   const activeIndex = hovered ?? selected;
   const sectionRef = useRef<HTMLDivElement>(null);
