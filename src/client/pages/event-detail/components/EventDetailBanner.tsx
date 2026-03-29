@@ -1,4 +1,4 @@
-import SectionContainer from "../../../../shared/layouts/sectionContainer";
+import SectionContainer from "../../../components/sectionContainer";
 
 export const EventDetailBanner = () => {
   return (

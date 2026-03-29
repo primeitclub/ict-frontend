@@ -1,4 +1,3 @@
-import SectionContainer from "../../../shared/layouts/sectionContainer";
 import { Heading } from "../../../shared/design-components";
 import InputBox from "./components/InputBox";
 import Payment from "./components/Payment";
@@ -11,35 +10,23 @@ import TopBgContent from "../../components/bg-content";
 
 const Register = () => {
   return (
-    <SectionContainer width="full" className="py-0">
+    <div className="py-0">
       <TopBgContent className="z-0">
         <Heading
           align="center"
-          className="text-[#F5F7FA] text-[36px] md:text-[48px]"
+          className="text-[#F5F7FA] text-[36px] md:text-[40px] font-semibold"
         >
           Register for the Event
         </Heading>
-        <p className="font-medium text-center text-[#94A3B8] text-[16px] p-[14px] lg:w-[70%] mx-auto">
+        <p className="font-medium text-center text-[#94A3B8] text-[16px] lg:w-[70%] mx-auto">
           Provide your details below to complete your event registration. Please
           ensure all information is accurate before submitting the form.
         </p>
       </TopBgContent>
-      {/* <header className="text-center flex flex-col justify-center items-center bg-gradient-to-b from-[#020919] to-[#3571F0] min-h-[326px]  ">
-        <Heading
-          align="center"
-          className="text-[#F5F7FA] text-[36px] md:text-[48px]"
-        >
-          Register for the Event
-        </Heading>
-        <p className="font-medium text-[#94A3B8] text-[16px] p-[14px] lg:w-[50%]">
-          Provide your details below to complete your event registration. Please
-          ensure all information is accurate before submitting the form.
-        </p>
-      </header> */}
       <div className="bg-[#F2F5FA] font-sans p-10">
         <form
           action=""
-          className="relative z-10 bg-[#FFFFFF] w-fit mx-auto -mt-20 text-black p-6 md:p-12 space-y-6 rounded-lg shadow-[0_4px_8px_0_#00000014]"
+          className="relative z-10 bg-[#FFFFFF] w-[800px] mx-auto -mt-20 text-black p-6 md:p-12 space-y-6 rounded-lg shadow-[0_4px_8px_0_#00000014]"
         >
           {/* Personal Information */}
 
@@ -130,7 +117,7 @@ const Register = () => {
           />
         </form>
       </div>
-    </SectionContainer>
+    </div>
   );
 };
 

@@ -1,14 +1,12 @@
 import { EventDetailBanner } from "../components/EventDetailBanner";
 import { SeatsAndQueryCard } from "../components/SeatsAndQueryCard";
 import { useState } from "react";
-import SectionContainer from "../../../../shared/layouts/sectionContainer";
 import { EventDetailTabs } from "../components/EventDetailTabs";
 import SectionHeader from "../../../components/section-header";
 
-import { Button } from "../../../../shared/design-components/";
 import Card from "../../../components/card";
 import { tabs } from "../data";
-import { CircleArrowRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import NavButton from "../../home/sections/highlight-section/components/NavButton";
@@ -16,8 +14,9 @@ import NavButton from "../../home/sections/highlight-section/components/NavButto
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import SectionContainer from "../../../components/sectionContainer";
 export default function EventsDetail() {
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeTab] = useState<number>(0);
   return (
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventDetailBanner />
