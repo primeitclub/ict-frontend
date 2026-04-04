@@ -1,6 +1,13 @@
 // routes/ClientRouter.tsx
 import { Routes, Route } from "react-router-dom";
-import { EventsPage, HomePage, Teams, Sponsors, Register } from "../pages";
+import {
+  EventsPage,
+  HomePage,
+  Teams,
+  Sponsors,
+  Register,
+  PaymentSuccess,
+} from "../pages";
 import PageLayout from "../layouts/PageLayout";
 import { VersionProvider } from "./VersionContext";
 import { EventsDetail } from "../pages/event-detail/types";
@@ -19,6 +26,7 @@ export default function ClientRouter({ version }: ClientRouterProps) {
           <Route path="sponsors" element={<Sponsors />} />
           <Route path="teams" element={<Teams />} />
           <Route path="register" element={<Register />} />
+          <Route path="success" element={<PaymentSuccess />} />
           <Route path="event-detail" element={<EventsDetail />} />
         </Route>
       </Routes>

@@ -1,4 +1,5 @@
 import { useRef } from "react";
+
 import Upload from "../icons/Upload";
 
 export default function Payment() {
@@ -35,7 +36,6 @@ export default function Payment() {
             accept="image/*"
           />
         </div>
-    
         <div className="flex flex-col items-center text-center">
           <div className="border p-3 bg-white rounded-lg shadow-sm">
             <img
