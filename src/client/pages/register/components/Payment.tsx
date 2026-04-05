@@ -10,8 +10,8 @@ export default function Payment() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <h2 className="font-medium mb-2">Payment Screenshot</h2>
+    <div className="w-full max-w-4xl mx-auto text-[10px] md:text-sm">
+      <h2 className="font-medium mb-2 text-sm">Payment Screenshot</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div
@@ -22,10 +22,10 @@ export default function Payment() {
             <Upload />
           </div>
 
-          <p className="text-sm font-medium text-[#020919]">
+          <p className="text-[10px] md:text-sm font-medium text-[#020919]">
             Click to upload or drag and drop
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-[8px] md:text-xs text-gray-400 mt-1">
             SVG, PNG, JPG or GIF (max. 5MB)
           </p>
 
@@ -45,10 +45,10 @@ export default function Payment() {
             />
           </div>
 
-          <p className="text-sm text-gray-500 mt-3">
+          <p className=" text-[#BBC0CC] mt-3">
             Accepted via eSewa / Khalti / Bank Transfer
           </p>
-          <p className="text-[#3571F0] font-semibold mt-1 text-lg">
+          <p className="text-[#3571F0] font-medium mt-1 text-[10px] md:text-sm">
             Amount: Rs. 500
           </p>
         </div>

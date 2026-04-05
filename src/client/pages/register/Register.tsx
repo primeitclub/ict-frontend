@@ -19,11 +19,11 @@ const Register = () => {
       <TopBgContent className="z-0">
         <Heading
           align="center"
-          className="text-[#F5F7FA] text-[36px] md:text-[40px] font-semibold"
+          className="text-[#F5F7FA] text-[28px] md:text-[40px] font-semibold"
         >
           Register for the Event
         </Heading>
-        <p className="font-medium text-center text-[#94A3B8] text-[16px] lg:w-[70%] mx-auto">
+        <p className="font-medium text-center text-[#94A3B8] text-xs md:text-base lg:w-[70%] mx-auto">
           Provide your details below to complete your event registration. Please
           ensure all information is accurate before submitting the form.
         </p>
@@ -38,7 +38,9 @@ const Register = () => {
           <div className="space-y-6 ">
             <span className="flex items-center gap-2">
               <Personal />
-              <legend className="font-semibold">Personal Information</legend>
+              <legend className="font-semibold text-sm md:text-xl">
+                Personal Information
+              </legend>
             </span>
 
             <div className="space-y-6  md:space-y-0 md:flex gap-x-6 ">
@@ -64,7 +66,9 @@ const Register = () => {
           <div className="space-y-6">
             <span className="flex items-center gap-2">
               <Academic />
-              <legend className="font-semibold">Academic Details</legend>
+              <legend className="font-semibold text-sm md:text-xl">
+                Academic Details
+              </legend>
             </span>
 
             <div className="space-y-6 md:space-y-0 md:flex justify-between gap-6 ">
@@ -95,9 +99,9 @@ const Register = () => {
           </div>
           {/* Event Selection and Payment */}
           <div className="space-y-6">
-            <span className="flex gap-2">
+            <span className="flex items-center gap-2">
               <Events />
-              <legend className="font-semibold">
+              <legend className="font-semibold text-sm md:text-xl">
                 Events Selction & Payment
               </legend>
             </span>
@@ -118,7 +122,7 @@ const Register = () => {
             variant="filled"
             rightIcon={<ChevronRight />}
             label="Register Now"
-            className="flex mx-auto"
+            className="flex mx-auto text-sm md:text-base"
             type="button"
             onClick={handleRegister}
           />
