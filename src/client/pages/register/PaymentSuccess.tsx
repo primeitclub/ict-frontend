@@ -58,6 +58,8 @@ const PaymentSuccess = () => {
             </div>
           </div>
 
+          {/* EVent Details Card Section */}
+
           <div className="flex flex-col gap-[8px] md:min-w-[434px] mx-auto text-[10px] lg:text-[12px]">
             <div className="bg-[#F8FAFC] p-[12px]">
               <InfoRow label="Registration id:" value={dummyEventDetail.id} />
