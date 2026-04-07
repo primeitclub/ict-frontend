@@ -1,3 +1,4 @@
+import React from "react";
 import type { ISpeaker } from "../types";
 
 export const SpeakerCard = ({
@@ -16,7 +17,6 @@ export const SpeakerCard = ({
         alt={name}
         className="w-36 h-36 sm:w-[200px] sm:h-[200px] rounded-full object-cover flex-shrink-0"
       />
-
       {/* Info */}
       <div className="flex flex-col gap-1">
         <h3 className="text-xl lg:text-2xl font-bold text-[#3571F0]">{name}</h3>
