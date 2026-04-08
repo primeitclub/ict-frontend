@@ -37,7 +37,7 @@ const PaymentSuccess = () => {
     <div className="py-0">
       <TopBgContent className="z-0"></TopBgContent>
       <div className="bg-[#F2F5FA] font-sans p-10">
-        <div className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-60 flex flex-col gap-7 px-2 py-6 md:px-8 md:py-7 space-y-6 rounded-lg shadow-[0px_8.66px_34.64px_-8.66px_#00000029] ">
+        <div className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-60 flex flex-col gap-2 sm:gap-7 px-2 py-6 md:px-8 md:py-7 space-y-6 rounded-lg shadow-[0px_8.66px_34.64px_-8.66px_#00000029] ">
           <div className="space-y-5">
             <div className="flex justify-center">
               <img src={Success} alt="" />
@@ -61,11 +61,11 @@ const PaymentSuccess = () => {
           {/* EVent Details Card Section */}
 
           <div className="flex flex-col gap-[8px] md:min-w-[434px] mx-auto text-[10px] lg:text-[12px]">
-            <div className="bg-[#F8FAFC] p-[12px]">
-              <InfoRow label="Registration id:" value={dummyEventDetail.id} />
+            <div className="bg-[#F8FAFC] p-[12px] rounded-[6px]">
+              <InfoRow label="Registration ID" value={dummyEventDetail.id} />
             </div>
 
-            <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px]">
+            <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">
               <span className="text-[#020919] font-medium">Event Details</span>
 
               <InfoRow label="Event Name" value={dummyEventDetail.name} />
@@ -79,7 +79,7 @@ const PaymentSuccess = () => {
               />
             </div>
 
-            <div className="bg-[#F8FAFC] p-[12px]">
+            <div className="bg-[#F8FAFC] p-[12px] rounded-[6px]">
               <InfoRow
                 label="Contact Email:"
                 value={dummyEventDetail.contactEmail}
