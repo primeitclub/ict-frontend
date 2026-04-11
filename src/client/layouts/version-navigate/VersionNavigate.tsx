@@ -7,7 +7,7 @@ export default function VersionNavigate() {
   const { navigateToVersion, version } = useVersion();
 
   return (
-    <div className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 rounded-full py-4 px-2 flex flex-col gap-2 backblur-lg overflow-hidden bg-[#040F264D]">
+    <div className="fixed  right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 rounded-full py-4 px-2 hidden sm:flex flex-col gap-2 backblur-lg overflow-hidden bg-[#040F264D]">
       <div className="glass-specular"></div>
       <div className="relative flex flex-col gap-2">
         {!!VERSIONS &&
