@@ -14,6 +14,7 @@ import SvgIcon from "../../../../components/icon/svgIcon";
 import { tabs } from "./data";
 import { Button } from "../../../../../shared/design-components";
 import NavButton from "./components/NavButton";
+import { useNavigate } from "react-router-dom";
 
 export default function HighlightSection() {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -22,6 +23,8 @@ export default function HighlightSection() {
   const scrollToSection = () => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -107,7 +110,11 @@ export default function HighlightSection() {
           >
             {tabs[activeTab].content.map((item, index) => (
               <SwiperSlide key={index}>
-                <Card item={item} />
+                <Card
+                  className="hover:cursor-pointer"
+                  onClick={() => navigate(`/event-detail`)}
+                  item={item}
+                />
               </SwiperSlide>
             ))}
           </Swiper>

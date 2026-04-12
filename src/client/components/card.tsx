@@ -1,14 +1,19 @@
 import { Calendar, Clock, MapPin, Banknote, ChevronRight } from "lucide-react";
 import type { ContentType } from "../pages/home/sections/highlight-section/types";
 import { Button } from "../../shared/design-components";
+import { useNavigate } from "react-router-dom";
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
 }
 
-const Card = ({ item }: CardProps) => {
+const Card = ({ item, ...rest }: CardProps) => {
+  const navigate = useNavigate();
   return (
-    <div className=" rounded-3xl bg-[#FEFEFE] p-4 group h-full font-sans w-[320px] mx-auto sm:w-auto">
+    <div
+      className=" rounded-3xl bg-[#FEFEFE] p-4 group h-full font-sans w-[320px] mx-auto sm:w-auto"
+      {...rest}
+    >
       <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
           src={item.image}
@@ -57,6 +62,10 @@ const Card = ({ item }: CardProps) => {
         </div>
 
         <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/register`);
+          }}
           label="Register Now"
           fullWidth
           rightIcon={
