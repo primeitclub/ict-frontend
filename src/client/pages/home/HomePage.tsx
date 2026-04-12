@@ -1,7 +1,7 @@
 import AboutSection from "./sections/about-section/AboutSection";
+import FAQSection from "./sections/faq-section/FaqSection";
 import GallerySection from "./sections/gallery-section/GallerySection";
 
-import FAQSection from "./sections/FAQs-section/FaqSection";
 import HighlightSection from "./sections/highlight-section/HighlightSection";
 import { LandingSection } from "./sections/landing-section/LandingSection";
 import SpeakerSection from "./sections/speaker-section/SpeakerSection";
