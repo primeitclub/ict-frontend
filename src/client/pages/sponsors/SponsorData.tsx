@@ -1,3 +1,4 @@
+
 type TitleProps = {
   title: string;
   imgUrl: string[];
@@ -27,8 +28,8 @@ const SponsorTitle = (props: TitleProps) => {
             imgUrl.length === 1 ? "flex sm:grid" : "grid"
           } ${
             sponsortier
-              ? "grid-cols-3 lg:grid-cols-4 gap-y-4 lg:gap-y-2"
-              : "grid-cols-4 sm:grid-cols-5 gap-y-5 gap-x-10 lg:gap-y-3"
+              ? "grid-cols-3 lg:grid-cols-4 gap-y-4 md:gap-y-2"
+              : "grid-cols-4  sm:grid-cols-5 px-[6%]  md:px-0 lg:pl-3  lg:pr-28  lg:gap-x-1 lg:gap-y-3"
           }`}
         >
           {imgUrl.map((el, index) => (
@@ -36,8 +37,8 @@ const SponsorTitle = (props: TitleProps) => {
               key={index}
               className={`flex items-center justify-center ${
                 sponsortier
-                  ? "w-[90px] h-[90px] sm:w-[130px] sm:h-[130px]  lg:w-[180px] lg:h-[180px]"
-                  : "w-[60px] h-[60px] sm:w-[90px] sm:h-[90px]  lg:w-[120px] lg:h-[120px]"
+                  ? "w-[90px] h-[90px] sm:w-[130px] lg:p-1 sm:h-[130px]  lg:w-[180px] lg:h-[180px]"
+                  : "w-[60px] h-[60px] sm:w-[90px] sm:h-[90px] md:px-1 lg:w-[120px] lg:h-[120px]"
               }`}
             >
               <img
