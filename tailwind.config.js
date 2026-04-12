@@ -14,6 +14,8 @@ export default {
         'primary-cyan':'#3571F0',
         'primary-cyan-dark':'#0099cc',       
         'secondary': '#212121',     
+        'admin-primary': '#01060A',
+        'admin-secondary': '#39BFF2',
         'accent-light': '#3B82F6',  
         'accent-dark': '#1D4ED8',  
         
