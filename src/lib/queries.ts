@@ -1,30 +1,30 @@
-/**
- * Centralized React Query query hook.
- *
- * Every data-fetching query in the app should use `useAppQuery` so that
- * error handling, loading states, and caching are consistent.
- */
+// /**
+//  * Centralized React Query query hook.
+//  *
+//  * Every data-fetching query in the app should use `useAppQuery` so that
+//  * error handling, loading states, and caching are consistent.
+//  */
 
-import {
-  useQuery,
-  type UseQueryOptions,
-} from "@tanstack/react-query";
-import type { ApiError } from "./api-client";
+// import {
+//   useQuery,
+//   type UseQueryOptions,
+// } from "@tanstack/react-query";
+// import type { ApiError } from "@/lib/api-client";
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// // ─── Types ───────────────────────────────────────────────────────────────────
 
-interface UseAppQueryOptions<TData>
-  extends Omit<UseQueryOptions<TData, ApiError>, "queryFn"> {
-  /** The async function that performs the actual API call */
-  queryFn: () => Promise<TData>;
-}
+// interface UseAppQueryOptions<TData>
+//   extends Omit<UseQueryOptions<TData, ApiError>, "queryFn"> {
+//   /** The async function that performs the actual API call */
+//   queryFn: () => Promise<TData>;
+// }
 
-// ─── Hook ────────────────────────────────────────────────────────────────────
+// // ─── Hook ────────────────────────────────────────────────────────────────────
 
-export function useAppQuery<TData = unknown>(
-  options: UseAppQueryOptions<TData>,
-) {
-  return useQuery<TData, ApiError>({
-    ...options,
-  });
-}
+// export function useAppQuery<TData = unknown>(
+//   options: UseAppQueryOptions<TData>,
+// ) {
+//   return useQuery<TData, ApiError>({
+//     ...options,
+//   });
+// }
