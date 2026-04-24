@@ -3,7 +3,7 @@ import SocialLinks from "./SocialLinks";
 
 const AboutContent = () => {
   return (
-    <div className="w-full lg:w-1/3 text-center md:text-left flex flex-col justify-center">
+    <div className="w-full lg:w-2/4 text-center md:text-left flex flex-col justify-center">
       <div className="lg:space-y-12">
         <Heading className="hidden lg:block font-semibold">
           <span className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] text-transparent bg-clip-text">
