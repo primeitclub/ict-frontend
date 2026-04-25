@@ -1,4 +1,3 @@
-import React from "react";
 import type { ISpeaker } from "../types";
 
 export const SpeakerCard = ({
