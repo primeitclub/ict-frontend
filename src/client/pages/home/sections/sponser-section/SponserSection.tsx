@@ -17,7 +17,7 @@ const images = Array(3).fill(dummyImages).flat();
 export default function SponserSection() {
   return (
     <SectionContainer as="section">
-      <div className="flex justify-center items-center min-h-screen w-full">
+      <div className="flex justify-center items-center w-full">
         <div className="w-[80%] 2xl:w-full space-y-12">
           <SectionHeader
             titleNormal="Supporting"

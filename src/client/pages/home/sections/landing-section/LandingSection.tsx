@@ -7,7 +7,7 @@ export function LandingSection() {
   console.log("this is test");
 
   return (
-    <div className="landing_section h-[90vh] pt-20 items-center w-full ">
+    <div className="landing_section  pt-20 items-center w-full ">
       <div className="flex flex-col  space-y-4 ">
         <div className="items-center flex justify-center text-center bg-red">
           <div className="flex items-center gap-2 border-1 bg-red p-2 rounded-full  bg-white/5  ">
