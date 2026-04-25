@@ -28,7 +28,7 @@ const SpeakerCard = () => {
       />
 
       {/* Card Content */}
-      <div className="relative z-10 pt-6 pl-6 pr-2 flex flex-col flex-1 gap-12 sm:gap-9">
+      <div className="relative z-10 pt-6 pl-6 pr-2 flex flex-col flex-1 gap-8 sm:gap-9">
         {/* Text */}
         <div className="flex flex-col gap-3 sm:gap-2 items-start">
           <span className="font-semibold  text-[#DBF5FF] text-[28px] justify-start text-left">

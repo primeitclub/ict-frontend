@@ -26,11 +26,11 @@ export default function SponserSection() {
             className="sm:text-nowrap"
           />
           {/* Sponser grid */}
-          <div className="grid grid-cols-3 gap-2 md:[grid-template-columns:repeat(auto-fill,180px)] 2xl:grid-cols-5 ">
+          <div className="grid grid-cols-3 gap-2 md:gap-4 md:justify-center md:[grid-template-columns:repeat(auto-fit,200px)] 2xl:grid-cols-5 ">
             {images.map((image, index) => (
               <div
                 key={index}
-                className=" aspect-square rounded-lg md:rounded-2xl  overflow-hidden"
+                className="aspect-square rounded-lg md:rounded-2xl overflow-hidden"
               >
                 <img
                   src={image}
