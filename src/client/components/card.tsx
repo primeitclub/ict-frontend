@@ -2,23 +2,27 @@ import { Calendar, Clock, MapPin, Banknote, ChevronRight } from "lucide-react";
 import type { ContentType } from "../pages/home/sections/highlight-section/types";
 import { Button } from "../../shared/design-components";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../shared/utils/cn";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
 }
 
-const Card = ({ item, ...rest }: CardProps) => {
+const Card = ({ item, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   return (
     <div
-      className=" rounded-3xl bg-[#FEFEFE] p-4 group h-full font-sans w-[320px] mx-auto sm:w-auto"
+      className={cn(
+        "rounded-3xl border border-black/5 bg-[#FEFEFE] p-4 group h-full font-sans w-[280px] mx-auto sm:w-[280px] md:w-auto shadow-[0_2px_8px_rgba(15,23,42,0.06),0_8px_18px_rgba(15,23,42,0.08)] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08),0_14px_28px_rgba(15,23,42,0.12)]",
+        className,
+      )}
       {...rest}
     >
       <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
           {item.seats} / {item.totalSeats} Seats
