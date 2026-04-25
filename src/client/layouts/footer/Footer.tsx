@@ -20,16 +20,20 @@ export const Footer = () => {
   ];
 
   return (
-    <SectionContainer className="px-4 sm:px-6 !pt-20" as="footer">
+    <SectionContainer
+      width="navbar"
+      className="px-4 sm:px-6 !pt-20"
+      as="footer"
+    >
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:items-start lg:gap-0">
         <div className="relative w-full lg:w-auto">
           <div
             className="flex flex-col items-center cursor-pointer lg:items-start"
             onClick={() => navigate(getPath("/"))}
           >
-            <div className="flex flex-col items-center lg:items-start w-[144px]">
-              <Logo2 />
-              <p className="mt-2 font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
+            <div className="flex flex-col items-center lg:items-start w-[164px]">
+              <Logo2 size="lg" className="h-9 sm:h-11 md:h-16 lg:h-20" />
+              <p className="mt-2 text-lg font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
                 Fusion Of Tech Talent & Creativity
               </p>
             </div>
@@ -190,7 +194,7 @@ export const Footer = () => {
       <div className="mt-9 border-[0.8px] border-[#353535]"></div>
 
       <div className="flex flex-col items-center w-full gap-6 lg:flex-row lg:justify-between mt-9 lg:gap-0">
-        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-sm font-semibold lg:justify-start lg:gap-8 lg:text-base lg:w-auto">
+        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-md font-semibold lg:justify-start lg:gap-8 lg:text-lg lg:w-auto">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}

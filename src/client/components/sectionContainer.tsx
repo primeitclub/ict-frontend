@@ -22,7 +22,7 @@ const SectionContainer = React.forwardRef<HTMLDivElement, PageLayoutProps>(
         case "full":
           return "w-full max-w-screen-2xl mx-auto ";
         case "container":
-          return "max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 my-[60px] md:my-[120px] lg:my-[160px] xl:my-[200px]";
+          return "max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 my-[60px] md:my-[120px] lg:my-[160px] xl:my-[180px]";
       }
     }
 
