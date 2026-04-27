@@ -8,6 +8,8 @@ const routes = [
   { label: "FAQs", path: "faqs" },
 ];
 
+const baseRoute = "content-management";
+
 export default function ContentManagementLayout() {
-  return <RenderSubRoute routes={routes} />;
+  return <RenderSubRoute baseRoute={baseRoute} routes={routes} />;
 }

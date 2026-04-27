@@ -1,5 +1,8 @@
 export { default as Dashboard } from './home/Dashboard';
 export { default as Versions } from './home/Versions';
+export { default as VersionForm } from './home/VersionForm';
+export { default as HomeLayout } from './home/HomeLayout';
+export { default as HomeRouter } from './home/HomeRoute';
 
 export { default as Hero } from './content-management/Hero';
 export { default as About } from './content-management/About';
@@ -32,3 +35,5 @@ export { default as FaqsForm } from './content-management/FaqsForm';
 
 export { default as SpeakersForm } from './people/SpeakersForm';
 export { default as TeamsForm } from './people/TeamsForm';
+
+export { default as Login } from './auth/Login';

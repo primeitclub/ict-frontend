@@ -5,6 +5,8 @@ const routes = [
   { label: "Teams", path: "teams" },
 ];
 
+const baseRoute = "people";
+
 export default function PeopleLayout() {
-  return <RenderSubRoute routes={routes} />;
+  return <RenderSubRoute baseRoute={baseRoute} routes={routes} />;
 }

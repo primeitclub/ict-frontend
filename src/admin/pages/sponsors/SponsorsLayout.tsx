@@ -6,6 +6,8 @@ const routes = [
   { label: "Archive", path: "archive" },
 ];
 
+const baseRoute = "sponsors";
+
 export default function SponsorsLayout() {
-  return <RenderSubRoute routes={routes} />;
+  return <RenderSubRoute baseRoute={baseRoute} routes={routes} />;
 }

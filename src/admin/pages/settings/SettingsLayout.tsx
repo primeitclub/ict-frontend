@@ -6,6 +6,8 @@ const routes = [
   { label: "Payment Setup", path: "payment-setup" },
 ];
 
+const baseRoute = "settings";
+
 export default function SettingsLayout() {
-  return <RenderSubRoute routes={routes} />;
+  return <RenderSubRoute baseRoute={baseRoute} routes={routes} />;
 }

@@ -8,6 +8,7 @@ import {
   type ColumnDef,
 } from "@tanstack/react-table";
 import { Search } from "lucide-react";
+import EmptyCart from "../../../assets/icons/EmptyCart";
 
 interface TableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,7 +39,7 @@ export default function Table<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      {showSearch && (
+      {showSearch && data.length > 0 && (
         <div className="relative w-full max-w-sm">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
             <Search size={18} />
@@ -93,7 +94,14 @@ export default function Table<TData, TValue>({
                   colSpan={columns.length}
                   className="p-4 text-center text-gray-500"
                 >
-                  No results found.
+                  <div className="flex flex-col items-center justify-center mx-auto w-fit gap-8 py-20">
+                    <div className="opacity-20">
+                      <EmptyCart />
+                    </div>
+                    <span className="text-sm font-semibold text-gray-400">
+                      No results found.
+                    </span>
+                  </div>
                 </td>
               </tr>
             )}
