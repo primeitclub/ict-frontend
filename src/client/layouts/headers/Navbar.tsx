@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full h-[63px] bg-[#020919] transition-all duration-300">
       <SectionContainer
-        width="container"
+        width="navbar"
         className="flex items-center justify-between h-full w-full !py-0"
       >
         <div className="hover:cursor-pointer" onClick={() => navigate("/")}>

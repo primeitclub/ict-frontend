@@ -124,7 +124,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {leftIcon && <span className="inline-flex">{leftIcon}</span>}
             {label}
             {rightIcon && (
-              <span className="inline-flex  transition-transform duration-300 group-hover:translate-x-1">
+              <span className="inline-flex   transition-transform duration-300 group-hover:translate-x-1">
                 {rightIcon}
               </span>
             )}

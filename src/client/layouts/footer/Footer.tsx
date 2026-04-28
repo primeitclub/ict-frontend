@@ -20,16 +20,20 @@ export const Footer = () => {
   ];
 
   return (
-    <SectionContainer className="px-4 sm:px-6 !pt-20" as="footer">
+    <SectionContainer
+      width="navbar"
+      className="px-4 sm:px-6 !pt-20"
+      as="footer"
+    >
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:items-start lg:gap-0">
         <div className="relative w-full lg:w-auto">
           <div
             className="flex flex-col items-center cursor-pointer lg:items-start"
             onClick={() => navigate(getPath("/"))}
           >
-            <div className="flex flex-col items-center lg:items-start w-[144px]">
-              <Logo2 />
-              <p className="mt-2 font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
+            <div className="flex flex-col items-center lg:items-start w-[164px]">
+              <Logo2 size="lg" className="h-9 sm:h-11 md:h-16 lg:h-20" />
+              <p className="mt-2 text-lg font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
                 Fusion Of Tech Talent & Creativity
               </p>
             </div>
@@ -60,8 +64,10 @@ export const Footer = () => {
           </button>
         </div>
 
-        <div className="text-center lg:text-left">
-          <h1 className="text-[#50A6FE] font-sans font-bold">Contact Us</h1>
+        <div className="text-center lg:text-left ">
+          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+            Contact Us
+          </h1>
           <ul className="lg:mt-[16px] text-sm lg:text-base">
             <li>+123 45 6 789</li>
           </ul>
@@ -69,8 +75,10 @@ export const Footer = () => {
             <li>itclub.prime@prime.edu.np</li>
           </ul>
         </div>
-        <div className="text-center lg:text-left">
-          <h1 className="text-[#50A6FE] font-sans font-bold">Connect</h1>
+        <div className="text-center lg:text-left ">
+          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+            Connect
+          </h1>
           <div>
             <ul className="mt-[5px] flex flex-row lg:flex-col gap-6 lg:gap-3 justify-center lg:justify-start list-none p-0 m-0">
               {" "}
@@ -186,7 +194,7 @@ export const Footer = () => {
       <div className="mt-9 border-[0.8px] border-[#353535]"></div>
 
       <div className="flex flex-col items-center w-full gap-6 lg:flex-row lg:justify-between mt-9 lg:gap-0">
-        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-sm font-semibold lg:justify-start lg:gap-8 lg:text-base lg:w-auto">
+        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-md font-semibold lg:justify-start lg:gap-8 lg:text-lg lg:w-auto">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}
@@ -228,20 +236,23 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
         </button>
       </div>
 
-    <div className="relative mt-8 overflow-hidden text-center">
-  <h1 className="font-extrabold whitespace-nowrap bg-gradient-to-b from-[#DBF5FF] via-[#007AFF] to-[#04143B] bg-clip-text text-transparent
-                 text-4xl sm:text-5xl md:text-7xl lg:text-[170px] leading-tight">
-    ICT MEETUP
-  </h1>
-  <div
-    className="absolute bottom-0 left-0 w-full
-               h-[1.5em] sm:h-[2em] md:h-[3em] lg:h-[9em]
+      <div className="relative mt-8 overflow-hidden text-center">
+        <h1
+          className="font-extrabold whitespace-nowrap  bg-[linear-gradient(to_bottom,#FFFFFF_0%,#DBF5FF_10%,#007AFF_50%,#04143B_100%)]  bg-clip-text text-transparent
+                 text-[clamp(24px,14vw,190px)] leading-tight"
+        >
+          ICT MEETUP
+        </h1>
+        {/* h-[3em] sm:h-[5em] md:h-[7em] lg:h-[12em] */}
+        <div
+          className="absolute bottom-0 left-0 w-full
+              h-[clamp(45px,12vw,800px)]
                bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"
-  ></div>
-</div>
+        ></div>
+      </div>
 
-      <div className="mb-8 m- text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
-        <p>© 2025 ICT Meetup V8 | Prime IT Club, Prime College</p>
+      <div className="my-6 mb-12 text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
+        <p>© 2026 ICT Meetup V8 | Prime IT Club, Prime College</p>
       </div>
     </SectionContainer>
   );

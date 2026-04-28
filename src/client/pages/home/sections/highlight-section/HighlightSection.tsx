@@ -106,12 +106,12 @@ export default function HighlightSection() {
                 slidesPerView: 4,
               },
             }}
-            className="pb-16 "
+            className="pb-16"
           >
             {tabs[activeTab].content.map((item, index) => (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={index} className="py-2">
                 <Card
-                  className="hover:cursor-pointer"
+                  className="hover:cursor-pointer "
                   onClick={() => navigate(`/event-detail`)}
                   item={item}
                 />

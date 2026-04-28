@@ -12,7 +12,7 @@ export default function Dropdown({ options, value, onChange }: DropdownProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative w-full text-base">
+    <div className="relative w-full text-base text-xs">
       {/* Trigger */}
       <button
         onClick={() => setOpen(!open)}
@@ -24,7 +24,7 @@ export default function Dropdown({ options, value, onChange }: DropdownProps) {
 
       {/* Dropdown Menu */}
       {open && (
-        <div className="absolute mt-2 w-full border rounded-lg z-10 bg-[#DDDDDD] space-y-[3px]">
+        <div className="absolute mt-2 w-full flex flex-col rounded-lg z-10 bg-[#DDDDDD] divide-y divide-[#DDDDDD]">
           {options.map((option) => (
             <div
               key={option}
@@ -32,7 +32,7 @@ export default function Dropdown({ options, value, onChange }: DropdownProps) {
                 onChange(option);
                 setOpen(false);
               }}
-              className="flex gap-[8px] items-center bg-[#F2F5FA] hover:bg-[#DBF5FF] border-y-[0.15px] border-y-[#4E81EF] last:border-none first:border-none  rounded-md px-3 py-1.5"
+              className="flex gap-[8px] items-center bg-[#F2F5FA] hover:bg-[#DBF5FF] shadow-[inset_0_0_0_0.15px_#4E81EF] rounded-md px-3 py-1.5"
             >
               <ArrowSVG useSolidStroke={true} solidStrokeColor="#000" />
               <span className="">{option}</span>

@@ -17,14 +17,14 @@ const InputBox = ({
 }: InputBoxProps) => {
   // Shared styles for input and select
   const commonInputStyles =
-    "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
+    "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-[10px] md:text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
 
   if (variant === "box") {
     return (
       <div className="flex flex-col gap-2 w-full">
         <label
           htmlFor={inputName}
-          className="font-medium text-sm text-gray-700"
+          className="font-medium text-[10px] md:text-sm text-gray-700"
         >
           {inputName}
         </label>
@@ -43,7 +43,7 @@ const InputBox = ({
       <div className="flex flex-col gap-2 w-full">
         <label
           htmlFor={inputName}
-          className="font-medium text-sm text-gray-700"
+          className="font-medium text-[10px] md:text-sm text-gray-700"
         >
           {inputName}
         </label>
@@ -74,7 +74,9 @@ const InputBox = ({
   // Radio Variant
   return (
     <div className="flex flex-col gap-2 w-full">
-      <p className="font-medium text-sm text-gray-700">{inputName}</p>
+      <p className="font-medium text-[10px] md:text-sm text-gray-700">
+        {inputName}
+      </p>
       <div className="flex gap-6 mt-1">
         {options.map((option) => (
           <label
