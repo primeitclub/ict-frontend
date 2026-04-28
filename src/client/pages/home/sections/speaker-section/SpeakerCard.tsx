@@ -28,30 +28,30 @@ const SpeakerCard = () => {
       />
 
       {/* Card Content */}
-      <div className="relative z-10 pt-6 pl-6 pr-2 flex flex-col flex-1">
+      <div className="relative z-10 pt-6 pl-6 pr-2 flex flex-col flex-1 gap-8 sm:gap-9">
         {/* Text */}
-        <div className="flex flex-col gap-2 items-start">
-          <span className="font-bold text-[28px] justify-start text-left">
+        <div className="flex flex-col gap-3 sm:gap-2 items-start">
+          <span className="font-semibold  text-[#DBF5FF] text-[28px] justify-start text-left">
             Saugat
             <br />
             KC
           </span>
-          <div className="flex flex-col items-start gap-2 mb-2">
-            <span className="font-primary text-sm font-medium">
+          <div className="flex flex-col items-start gap-1 sm:gap-1 mb-2 sm:mb-0  ">
+            <span className="font-primary text-sm font-normal sm:font-medium">
               Artificial Intelligence Engineer
             </span>
             <span className="text-xs text-[#BBC0CC]">Qniverse</span>
-            <div className="flex items-center gap-2 mt-1">
-              <img src={Rightarrow} alt="Arrow" />
-              <span className="text-[13px] bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
-                AI in Finance
-              </span>
-            </div>
+          </div>
+          <div className="flex items-center gap-2 mt-1">
+            <img src={Rightarrow} alt="Arrow" />
+            <span className="text-[13px] font-semibold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
+              AI in Finance
+            </span>
           </div>
         </div>
 
         {/* Social Icons */}
-        <div className="flex gap-3 mb-3">
+        <div className="flex gap-3 ">
           <a>
             <svg
               width="25"
@@ -121,7 +121,7 @@ const SpeakerCard = () => {
         </div>
 
         {/* Speaker Image — sits naturally at the bottom */}
-        <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-80px]">
+        <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px]">
           <img
             src={Speakers}
             alt="Speaker"

@@ -4,7 +4,7 @@ import SectionContainer from "./sectionContainer";
 
 interface ByContentProps {
   position?: "relative" | "absolute";
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 

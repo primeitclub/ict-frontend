@@ -39,7 +39,7 @@ const SpeakerSection = () => {
   };
 
   return (
-    <SectionContainer className="mx-auto text-center px-4 sm:px-6 space-y-14 my-32">
+    <SectionContainer className="mx-auto text-center px-4 sm:px-6 space-y-14 my-20 sm:my-32">
       <SectionHeader
         titleNormal="Joining Us This"
         titleHighlight="Edition"
@@ -49,7 +49,7 @@ const SpeakerSection = () => {
       />
 
       {/* Mobile Carousel */}
-      <div className="flex sm:hidden flex-col items-center gap-6">
+      <div className="flex sm:hidden flex-col items-center gap-12">
         {/* Swipeable card area */}
         <div
           className="w-full flex justify-center"
@@ -74,8 +74,8 @@ const SpeakerSection = () => {
               onClick={() => goTo(i)}
               className={`rounded-full transition-all duration-300 ${
                 i === activeIndex
-                  ? "w-4 h-2 bg-[#51A7FF]"
-                  : "w-2 h-2 bg-white/20"
+                  ? "w-2 h-2 bg-[#51A7FF]"
+                  : "w-2 h-2 bg-[#ADADAD]"
               }`}
             />
           ))}
