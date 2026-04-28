@@ -4,8 +4,6 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import { Text } from "../../../../../shared/design-components";
 
 export function LandingSection() {
-  console.log("this is test");
-
   return (
     <div className="landing_section  pt-20 items-center w-full ">
       <div className="flex flex-col  space-y-4 ">
