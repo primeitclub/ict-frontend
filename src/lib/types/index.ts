@@ -1,3 +1,10 @@
+import API_ROUTES from "../routes/routes";
+
+export type TYPED_ROUTES = typeof API_ROUTES;
+
+export type ROUTE_KEYS = keyof TYPED_ROUTES;
+
+
 /**
  * Template literal type utilities.
  *

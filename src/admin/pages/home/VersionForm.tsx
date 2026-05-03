@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Save, Upload, X } from "lucide-react";
 import { useApiMutation } from "../../../lib/use-api-mutation";
+import { ApiError } from "../../../lib/api-client";
 import { useApiQuery } from "../../../lib/use-api-query";
 import {
   EventVersionStatus,
@@ -10,10 +11,9 @@ import {
 } from "../../types/version";
 import toast from "react-hot-toast";
 
-// Import your custom input components
-import Input from "../../components/input/Input";
-import Select from "../../components/input/Select";
-import FormDatePicker from "../../../shared/design-components/DatePicker/FormDatePicker";
+import FormDatePicker from "../../components/form-field/date-picker/FormDatePicker";
+import FormInput from "../../components/form-field/input-field/InputController";
+import FormSelect from "../../components/form-field/input-select/SelectController";
 
 interface VersionFormValues {
   version_name: string;
@@ -31,29 +31,29 @@ export default function VersionForm() {
   const navigate = useNavigate();
   const isEdit = Boolean(id);
 
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [uploadedPreview, setUploadedPreview] = useState<string | null>(null);
+  const [logoCleared, setLogoCleared] = useState(false);
 
-  // usefull for edit mode and populate the form value with it
+  // fetch the data item
   const { data: existingData, isLoading: isFetching } = useApiQuery(
     "versionDetail",
   )<{ data: FlagshipEventVersion }>({
     pathParams: { id: id as string },
     config: { enabled: isEdit },
-  } as any);
+  });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm<VersionFormValues>({
+  const methods = useForm<VersionFormValues>({
     defaultValues: {
       status: EventVersionStatus.DRAFT,
       is_current: false,
     },
   });
+  const { reset } = methods;
+
+  const logoPreview = logoCleared
+    ? null
+    : (uploadedPreview ?? existingData?.data?.logo ?? null);
 
   useEffect(() => {
     if (existingData?.data) {
@@ -67,13 +67,9 @@ export default function VersionForm() {
         status: version.status,
         is_current: version.is_current,
       });
-      if (version.logo) {
-        setLogoPreview(version.logo);
-      }
     }
   }, [existingData, reset]);
 
-  // create a new version
   const { execute: createVersion, isLoading: isCreating } = useApiMutation(
     "versions",
   )<FlagshipEventVersion, FormData>({
@@ -85,16 +81,17 @@ export default function VersionForm() {
     onError: (err) => toast.error(err.message || "Failed to create version"),
   });
 
-  // update the existing version
   const { execute: updateVersion, isLoading: isUpdating } = useApiMutation(
     "versionDetail",
   )<FlagshipEventVersion, FormData>({
     method: "PATCH",
+    pathParams: { id: id as string },
     onSuccess: () => {
       toast.success("Version updated successfully");
-      navigate("/admin/versions");
+      navigate("/admin/home/versions");
     },
-    onError: (err) => toast.error(err.message || "Failed to update version"),
+    onError: (err: ApiError) =>
+      toast.error(err.message || "Failed to update version"),
   });
 
   const onSubmit = async (data: VersionFormValues) => {
@@ -108,9 +105,7 @@ export default function VersionForm() {
     }
 
     if (isEdit) {
-      await updateVersion(formData, {
-        pathParams: { id: id as string },
-      } as any);
+      await updateVersion(formData);
     } else {
       await createVersion(formData);
     }
@@ -122,11 +117,14 @@ export default function VersionForm() {
       setLogoFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
+        setUploadedPreview(reader.result as string);
+        setLogoCleared(false);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  //fetch options from the api and put them into option for react select
 
   const statusOptions = [
     { label: "Draft", value: EventVersionStatus.DRAFT },
@@ -151,137 +149,136 @@ export default function VersionForm() {
       </div>
 
       <div className="bg-admin-primary border border-gray-800 rounded-lg p-6 shadow-xl">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input
-              label="Version Name"
-              placeholder="ICT Meetup 2026"
-              error={errors.version_name?.message}
-              {...register("version_name", {
-                required: "Version name is required",
-              })}
-            />
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormInput
+                name="version_name"
+                label="Version Name"
+                placeholder="ICT Meetup 2026"
+                rules={{ required: "Version name is required" }}
+              />
 
-            <Input
-              label="Slug"
-              placeholder="ict-meetup-2026"
-              error={errors.slug?.message}
-              {...register("slug", { required: "Slug is required" })}
-            />
+              <FormInput
+                name="slug"
+                label="Slug"
+                placeholder="ict-meetup-2026"
+                rules={{ required: "Slug is required" }}
+              />
 
-            <Input
-              label="Version Number"
-              type="number"
-              step="0.1"
-              placeholder="1.0"
-              error={errors.version_number?.message}
-              {...register("version_number", {
-                required: "Version number is required",
-              })}
-            />
+              <FormInput
+                name="version_number"
+                label="Version Number"
+                type="number"
+                step="0.1"
+                placeholder="1.0"
+                rules={{ required: "Version number is required" }}
+              />
 
-            <Select
-              label="Status"
-              options={statusOptions}
-              error={errors.status?.message}
-              {...register("status")}
-            />
+              <FormSelect
+                name="status"
+                label="Status"
+                options={statusOptions}
+                rules={{ required: "Status is required" }}
+              />
 
-            <FormDatePicker
-              control={control}
-              name="start_date"
-              label="Start Date"
-              rules={{ required: "Start date is required" }}
-              error={errors.start_date?.message}
-            />
+              <FormDatePicker
+                control={methods.control}
+                name="start_date"
+                label="Start Date"
+                rules={{ required: "Start date is required" }}
+                error={methods.formState.errors.start_date?.message}
+              />
 
-            <FormDatePicker
-              control={control}
-              name="end_date"
-              label="End Date"
-              rules={{ required: "End date is required" }}
-              error={errors.end_date?.message}
-            />
-          </div>
+              <FormDatePicker
+                control={methods.control}
+                name="end_date"
+                label="End Date"
+                rules={{ required: "End date is required" }}
+                error={methods.formState.errors.end_date?.message}
+              />
+            </div>
 
-          {/* Logo Upload Section */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">
-              Event Logo
-            </label>
-            <div className="flex items-center space-x-4">
-              <div className="relative w-24 h-24 bg-[#02111F] border border-gray-800 rounded-lg flex items-center justify-center overflow-hidden">
-                {logoPreview ? (
-                  <img
-                    src={logoPreview}
-                    alt="Preview"
-                    className="w-full h-full object-contain"
+            {/* Logo Upload Section */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Event Logo
+              </label>
+              <div className="flex items-center space-x-4">
+                <div className="relative w-24 h-24 bg-[#02111F] border border-gray-800 rounded-lg flex items-center justify-center overflow-hidden">
+                  {logoPreview ? (
+                    <img
+                      src={logoPreview}
+                      alt="Preview"
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <Upload className="text-gray-600" size={24} />
+                  )}
+                  {logoPreview && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUploadedPreview(null);
+                        setLogoFile(null);
+                        setLogoCleared(true);
+                      }}
+                      className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </div>
+                <label className="cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded-lg transition-colors">
+                  Choose Logo
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleLogoChange}
                   />
-                ) : (
-                  <Upload className="text-gray-600" size={24} />
-                )}
-                {logoPreview && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLogoPreview(null);
-                      setLogoFile(null);
-                    }}
-                    className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
-                  >
-                    <X size={12} />
-                  </button>
-                )}
+                </label>
               </div>
-              <label className="cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded-lg transition-colors">
-                Choose Logo
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handleLogoChange}
-                />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="is_current"
+                {...methods.register("is_current")}
+                className="w-4 h-4 rounded border-gray-800 bg-[#02111F] text-admin-secondary focus:ring-admin-secondary"
+              />
+              <label
+                htmlFor="is_current"
+                className="text-sm text-gray-300 cursor-pointer"
+              >
+                Mark as the current version
               </label>
             </div>
-          </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="is_current"
-              {...register("is_current")}
-              className="w-4 h-4 rounded border-gray-800 bg-[#02111F] text-admin-secondary focus:ring-admin-secondary"
-            />
-            <label
-              htmlFor="is_current"
-              className="text-sm text-gray-300 cursor-pointer"
-            >
-              Mark as the current version
-            </label>
-          </div>
-
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-800">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="flex items-center space-x-2 px-6 py-2 bg-admin-secondary hover:bg-admin-secondary/80 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
-            >
-              {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <Save size={18} />
-              )}
-              <span>{isEdit ? "Update Version" : "Create Version"}</span>
-            </button>
-          </div>
-        </form>
+            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-800">
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="flex items-center space-x-2 px-6 py-2 bg-admin-secondary hover:bg-admin-secondary/80 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Save size={18} />
+                )}
+                <span>{isEdit ? "Update Version" : "Create Version"}</span>
+              </button>
+            </div>
+          </form>
+        </FormProvider>
       </div>
     </div>
   );

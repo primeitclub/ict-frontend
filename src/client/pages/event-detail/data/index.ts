@@ -1,5 +1,5 @@
 import type { IEventBanner, IEventMeta, ISeatsInfo, ISpeaker } from "../types";
-  import type { TabType } from "../types";
+import type { TabType } from "../types";
 
 export const EVENT_BANNER: IEventBanner = {
   label: "Workshop",
@@ -56,10 +56,8 @@ export const EVENT_COVERED_ITEMS: string[] = [
   "Performance optimization for massive component libraries.",
 ];
 
-
 export const EVENT_DESCRIPTION =
   "Dive deep into the world of scalable UI. This intensive micro-event, part of the Apex Global Summit 2026, focuses on moving beyond basic layouts into the realm of enterprise-grade component libraries. You will learn to bridge the gap between Figma design tokens and production-ready React components using modern CSS-in-JS and headless UI patterns.";
-
 
 export const tabs: TabType[] = [
   {

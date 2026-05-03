@@ -7,7 +7,7 @@ import {
   flexRender,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { Search } from "lucide-react";
+import { Search, RefreshCw } from "lucide-react";
 import EmptyCart from "../../../assets/icons/EmptyCart";
 
 interface TableProps<TData, TValue> {
@@ -15,6 +15,7 @@ interface TableProps<TData, TValue> {
   data: TData[];
   showSearch?: boolean;
   searchPlaceholder?: string;
+  onRefetch?: () => void;
 }
 
 export default function Table<TData, TValue>({
@@ -22,9 +23,11 @@ export default function Table<TData, TValue>({
   data,
   showSearch = true,
   searchPlaceholder = "Search...",
+  onRefetch,
 }: TableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState("");
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
@@ -39,20 +42,33 @@ export default function Table<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      {showSearch && data.length > 0 && (
-        <div className="relative w-full max-w-sm">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
-            <Search size={18} />
+      <div className="flex items-center justify-start gap-4">
+        {showSearch && data.length > 0 && (
+          <div className="relative w-full max-w-sm">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+              <Search size={18} />
+            </div>
+            <input
+              type="text"
+              value={globalFilter ?? ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="bg-admin-primary border border-admin-primary text-white text-sm rounded-lg block w-full pl-10 p-2.5 outline-none transition-colors"
+              placeholder={searchPlaceholder}
+            />
           </div>
-          <input
-            type="text"
-            value={globalFilter ?? ""}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            className="bg-admin-primary border border-admin-primary text-white text-sm rounded-lg block w-full pl-10 p-2.5 outline-none transition-colors"
-            placeholder={searchPlaceholder}
-          />
-        </div>
-      )}
+        )}
+        {onRefetch && (
+         <div>
+           <button
+            onClick={onRefetch}
+            className="ml-auto p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all w-fit mr-auto"
+            title="Refresh"
+          >
+            <RefreshCw size={16} />
+          </button>
+         </div>
+        )}
+      </div>
       <div className="w-full overflow-x-auto rounded-lg border border-gray-800 bg-admin-primary">
         <table className="w-full text-sm text-left align-middle ">
           <thead className="text-white bg-[#02111F] whitespace-nowrap">

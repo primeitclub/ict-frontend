@@ -22,6 +22,7 @@ const ContentManagementRouter = () => {
         <Route path="hero">
           <Route index element={<Hero />} />
           <Route path="add" element={<HeroForm />} />
+          <Route path="edit/:id" element={<HeroForm />} />
         </Route>
         <Route path="about">
           <Route index element={<About />} />

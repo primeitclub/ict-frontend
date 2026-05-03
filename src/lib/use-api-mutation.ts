@@ -62,7 +62,7 @@ interface UseApiMutationArgs<T, K extends ApiRouteKey> extends PathParamsArg<K> 
 }
 
 interface UseApiMutationResult<T, TPayload> {
-  execute: (payload?: TPayload) => Promise<T>;
+  execute: (payload?: TPayload, options?: { pathParams?: Record<string, string> }) => Promise<T>;
   data: T | undefined;
   isLoading: boolean;
   isSuccess: boolean;
@@ -109,14 +109,19 @@ export function useApiMutation<K extends ApiRouteKey>(
 
     const pathTemplate = API_ROUTES[route];
 
+    const pathParamsKey = JSON.stringify(pathParams);
     const url = useMemo(
       () => interpolatePath(pathTemplate, pathParams),
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [pathTemplate, JSON.stringify(pathParams)],
+      [pathTemplate, pathParamsKey],
     );
 
     const execute = useCallback(
-      async (payload?: TPayload): Promise<T> => {
+      async (payload?: TPayload, options?: { pathParams?: Record<string, string> }): Promise<T> => {
+        const finalUrl = options?.pathParams
+          ? interpolatePath(pathTemplate, options.pathParams)
+          : url;
+
         setIsLoading(true);
         setIsError(false);
         setError(null);
@@ -126,16 +131,16 @@ export function useApiMutation<K extends ApiRouteKey>(
 
           switch (method) {
             case "POST":
-              result = await ictClient.post<T>(url, payload);
+              result = await ictClient.post<T>(finalUrl, payload);
               break;
             case "PUT":
-              result = await ictClient.put<T>(url, payload);
+              result = await ictClient.put<T>(finalUrl, payload);
               break;
             case "PATCH":
-              result = await ictClient.patch<T>(url, payload);
+              result = await ictClient.patch<T>(finalUrl, payload);
               break;
             case "DELETE":
-              result = await ictClient.delete<T>(url);
+              result = await ictClient.delete<T>(finalUrl);
               break;
           }
 
@@ -168,7 +173,7 @@ export function useApiMutation<K extends ApiRouteKey>(
         }
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [url, method],
+      [url, method, pathTemplate],
     );
 
     const reset = useCallback(() => {

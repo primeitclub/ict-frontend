@@ -8,6 +8,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAuth } from "../../admin/hooks/use-auth";
+import Toast from "../../shared/design-components/toast/Toast";
 
 export default function AdminLayout() {
   const { logout, isLoggingOut } = useAuth();
@@ -65,6 +66,7 @@ export default function AdminLayout() {
           </div>
         </aside>
         <main className="flex-1 p-6">
+          <Toast />
           <Outlet />
         </main>
       </div>

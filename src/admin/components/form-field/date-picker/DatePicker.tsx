@@ -1,8 +1,7 @@
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from "lucide-react";
-import type { MiddlewareReturn } from "@floating-ui/core";
-import type { MiddlewareState } from "@floating-ui/dom";
+import type { MiddlewareReturn, MiddlewareState } from "@floating-ui/dom";
 
 interface DatePickerProps {
   label: string;
@@ -42,7 +41,7 @@ const DatePicker = ({
                 offset: [0, 8],
               },
               fn: function (
-                state: MiddlewareState,
+                _state: MiddlewareState,
               ): MiddlewareReturn | Promise<MiddlewareReturn> {
                 throw new Error("Function not implemented.");
               },

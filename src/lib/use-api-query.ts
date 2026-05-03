@@ -121,10 +121,11 @@ export function useApiQuery<K extends ApiRouteKey>(
     const pathTemplate = API_ROUTES[route];
 
     // Memoize the interpolated URL so it doesn't cause unnecessary re-renders
+    const pathParamsKey = JSON.stringify(pathParams);
     const url = useMemo(
       () => interpolatePath(pathTemplate, pathParams),
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [pathTemplate, JSON.stringify(pathParams)],
+      [pathTemplate, pathParamsKey],
     );
 
     const queryKey = buildQueryKey(pathTemplate, pathParams as Record<string, string>, queryParams);
@@ -150,3 +151,4 @@ export function useApiQuery<K extends ApiRouteKey>(
 
   return useInternalQuery as UseApiQueryFn<K>;
 }
+

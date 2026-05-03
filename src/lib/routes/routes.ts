@@ -1,17 +1,5 @@
-/**
- * Type-safe API route definitions.
- *
- * All API paths are defined here as a single `as const` object.
- * The `${variable}` syntax marks dynamic path segments that will
- * be interpolated at runtime and type-checked at compile time.
- *
- * Usage:
- *   API_ROUTES.events       → "/events"
- *   API_ROUTES.eventDetail  → "/events/${eventId}"  (requires pathParams.eventId)
- */
-
-export const API_ROUTES = {
-  // ─── Auth ─────────────────────────────────────────────────────────────────
+const API_ROUTES = {
+    // ─── Auth ─────────────────────────────────────────────────────────────────
   login: "/auth/login",
   logout: "/auth/logout",
 
@@ -41,8 +29,6 @@ export const API_ROUTES = {
 
   // ─── Content ──────────────────────────────────────────────────────────────
   hero: "/content/hero",
-  heroSections: "/hero-sections",
-  heroSectionDetail: "/hero-sections/${id}",
   about: "/content/about",
   gallery: "/content/gallery",
   faqs: "/content/faqs",
@@ -51,16 +37,6 @@ export const API_ROUTES = {
   socialMedia: "/settings/social-media",
   contacts: "/settings/contacts",
   payments: "/settings/payments",
-} as const;
+} as const 
 
-/**
- * Type of the API_ROUTES object.
- * Used to constrain generic parameters in hooks.
- */
-export type ApiRoutes = typeof API_ROUTES;
-
-/**
- * All valid route keys — e.g. "events" | "eventDetail" | "speakers" | ...
- */
-export type ApiRouteKey = keyof ApiRoutes;
-
+export default API_ROUTES;

@@ -1,72 +1,75 @@
+import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/table/Table";
-
-type HeroData = {
-  id: string;
-  title: string;
-  description: string;
-  status: "Active" | "Draft" | "Archived";
-};
-
-const data: HeroData[] = [
-  {
-    id: "1",
-    title: "Welcome to ICT Meetup",
-    description: "The biggest tech event of the year.",
-    status: "Active",
-  },
-  {
-    id: "2",
-    title: "Register Now!",
-    description: "Early bird tickets are now available.",
-    status: "Draft",
-  },
-  {
-    id: "3",
-    title: "Call for Speakers",
-    description: "Submit your proposals before the deadline.",
-    status: "Archived",
-  },
-];
-
-const columns: ColumnDef<HeroData>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "description",
-    header: "Description",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue("status") as string;
-      return (
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-medium ${
-            status === "Active"
-              ? "bg-green-500/20 text-green-400"
-              : status === "Draft"
-                ? "bg-yellow-500/20 text-yellow-400"
-                : "bg-gray-500/20 text-gray-400"
-          }`}
-        >
-          {status}
-        </span>
-      );
-    },
-  },
-];
+import TableRowActions from "../../components/table/TableRowActions";
+import { useApiQuery } from "../../../lib";
+import { useApiMutation } from "../../../lib/use-api-mutation";
+import type { HeroSection } from "../../types/hero";
+import toast from "react-hot-toast";
 
 export default function Hero() {
   const navigate = useNavigate();
+
+  const { data, isLoading, refetch } = useApiQuery("heroSections")<{ data: { items: HeroSection[] } }>();
+
+  const { execute: deleteHeroSection } = useApiMutation("heroSectionDetail")<void, never>({
+    method: "DELETE",
+    onSuccess: () => refetch(),
+    onError: (error) => toast.error(error.message || "Failed to delete hero section"),
+  });
+
+  const columns: ColumnDef<HeroSection>[] = useMemo(() => [
+    {
+      id: "sn",
+      header: "S.N",
+      cell: ({ row }) => row.index + 1,
+    },
+    {
+      accessorKey: "heading",
+      header: "Title",
+    },
+    {
+      accessorKey: "paragraph",
+      header: "Description",
+    },
+    {
+      header: "Version",
+      accessorKey: "flagshipEventVersion.version_number",
+      cell: ({ row }) => {
+        const version = row.original.flagshipEventVersion;
+        return (
+          <div>
+            {version.version_number}
+            {version.is_current && (
+              <span className="inline-block w-2 h-2 bg-green-500 rounded-full ml-2" />
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "updatedAt",
+      header: "Last Updated",
+      cell: ({ row }) => new Date(row.getValue("updatedAt")).toLocaleDateString(),
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <TableRowActions
+          editHref={`edit/${row.original.id}`}
+          onDelete={() => {
+            if (window.confirm("Are you sure you want to delete this hero section?")) {
+              deleteHeroSection(undefined, { pathParams: { id: row.original.id } });
+            }
+          }}
+        />
+      ),
+    },
+  ], [deleteHeroSection]);
+
+  const items = data?.data?.items ?? [];
 
   return (
     <div className="space-y-6">
@@ -85,7 +88,12 @@ export default function Hero() {
         </button>
       </div>
 
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={items} onRefetch={refetch} />
+      {isLoading && (
+        <div className="flex justify-center py-8">
+          <div className="w-8 h-8 border-2 border-gray-800 border-t-admin-secondary rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import { useMemo } from "react";
-import { Edit2, Trash2, CheckCircle2, FileText } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { CheckCircle2, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import TableRowActions from "../../components/table/TableRowActions";
 import { useApiQuery } from "../../../lib/use-api-query";
 import { useApiMutation } from "../../../lib/use-api-mutation";
 import Table from "../../components/table/Table";
 import type { FlagshipEventVersion } from "../../types/version";
 import { EventVersionStatus } from "../../types/version";
 import toast from "react-hot-toast";
+import { statusColors } from "../../constants";
 
 export default function Versions() {
   const { data, isLoading, refetch } = useApiQuery("versions")<{
@@ -21,7 +23,6 @@ export default function Versions() {
   >({
     method: "DELETE",
     onSuccess: () => {
-      toast.success("Version deleted successfully");
       refetch();
     },
     onError: (error) => {
@@ -34,7 +35,7 @@ export default function Versions() {
       {
         accessorKey: "version_name",
         header: "Version Name",
-        cell: (info: any) => (
+        cell: (info) => (
           <div className="flex items-center space-x-3">
             {info.row.original.logo ? (
               <img
@@ -54,12 +55,12 @@ export default function Versions() {
       {
         accessorKey: "version_number",
         header: "Number",
-        cell: (info: any) => `v${info.getValue()}`,
+        cell: (info) => `v${info.getValue()}`,
       },
       {
         accessorKey: "slug",
         header: "Slug",
-        cell: (info: any) => (
+        cell: (info) => (
           <code className="text-xs bg-gray-800 px-2 py-1 rounded text-blue-400">
             {info.getValue()}
           </code>
@@ -68,16 +69,11 @@ export default function Versions() {
       {
         accessorKey: "status",
         header: "Status",
-        cell: (info: any) => {
+        cell: (info) => {
           const status = info.getValue() as EventVersionStatus;
-          const colors = {
-            [EventVersionStatus.ACTIVE]: "text-green-400 bg-green-400/10",
-            [EventVersionStatus.DRAFT]: "text-yellow-400 bg-yellow-400/10",
-            [EventVersionStatus.ARCHIVED]: "text-gray-400 bg-gray-400/10",
-          };
           return (
             <span
-              className={`px-2 py-1 rounded-full text-xs font-medium ${colors[status]}`}
+              className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </span>
@@ -87,7 +83,7 @@ export default function Versions() {
       {
         accessorKey: "is_current",
         header: "Current",
-        cell: (info: any) =>
+        cell: (info) =>
           info.getValue() ? (
             <div className="flex items-center text-green-500">
               <CheckCircle2 size={16} className="mr-1" />
@@ -100,37 +96,19 @@ export default function Versions() {
       {
         id: "actions",
         header: "Actions",
-        cell: (info: any) => (
-          <div className="flex items-center space-x-2">
-            <Link
-              to={`edit/${info.row.original.id}`}
-              className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all"
-              title="Edit Version"
-            >
-              <Edit2 size={16} />
-            </Link>
-            <button
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "Are you sure you want to delete this version?",
-                  )
-                ) {
-                  deleteVersion(undefined, {
-                    pathParams: { id: info.row.original.id },
-                  } as any);
-                }
-              }}
-              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
-              title="Delete Version"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
+        cell: (info) => (
+          <TableRowActions
+            editHref={`edit/${info.row.original.id}`}
+            onDelete={() => {
+              if (window.confirm("Are you sure you want to delete this version?")) {
+                deleteVersion(undefined, { pathParams: { id: info.row.original.id } });
+              }
+            }}
+          />
         ),
       },
     ],
-    [deleteVersion, refetch],
+    [deleteVersion],
   );
 
   return (
@@ -155,6 +133,7 @@ export default function Versions() {
           columns={columns}
           data={data?.data?.items || []}
           searchPlaceholder="Search versions..."
+          onRefetch={refetch}
         />
         {isLoading && (
           <div className="flex justify-center py-8">
@@ -165,3 +144,4 @@ export default function Versions() {
     </div>
   );
 }
+
