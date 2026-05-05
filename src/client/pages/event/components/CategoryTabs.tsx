@@ -20,7 +20,7 @@ const CategoryTabs = ({ activeTab, setActiveTab }: CategoryTabsProps) => {
       {/* --- MOBILE DROPDOWN --- */}
       <div className="md:hidden relative mx-auto max-w-[300px] sm:max-w-none">
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(!isOpen)} 
           className="w-full h-[34px] bg-[#3571F0] hover:bg-[#184EBF] text-white px-4 rounded-full flex items-center justify-between transition-colors duration-200 text-sm font-semibold shadow-md"
         >
           <span className="truncate pr-2">
