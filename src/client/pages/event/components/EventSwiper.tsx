@@ -53,7 +53,7 @@ const EventSwiper = () => {
           {sliderData.map((slide, i) => (
             <SwiperSlide
               key={i}
-              className="relative bg-transparent rounded-t rounded-b-lg sm:rounded-3xl overflow-hidden group shadow-xl"
+              className="relative bg-red-600 rounded-t rounded-b-lg sm:rounded-3xl overflow-hidden group shadow-xl"
             >
               <div className="overflow-hidden h-[240px] md:h-[515px]">
                 <img

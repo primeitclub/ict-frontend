@@ -123,7 +123,7 @@ export default function Teams() {
         {/* Team members */}
         {/* <div className="font-base gap-x-[42px] w-fit mx-auto grid justify-between grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] lg:gap-x-[36px]"> */}
 
-        <div className="font-base gap-x-[16px] lg:gap-x-[20px] w-full grid justify-items-center grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%]">
+        <div className="font-base gap-x-[16px] lg:gap-x-[20px] w-full grid justify-items-center grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] md:max-h-[calc(100vh-8rem)] md:overflow-y-auto md:pr-2 no-scrollbar">
           {" "}
           {filteredTeamData.map((member, index) => (
             <TeamCard

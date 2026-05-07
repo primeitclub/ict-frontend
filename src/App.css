@@ -71,7 +71,16 @@
 
   padding-bottom: 40px !important;
 }
+.events-swiper-3d {
+  /* Swiper uses this for pagination + navigation defaults */
+  --swiper-theme-color: #02369b;
+}
 .events-swiper .swiper-pagination {
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+}
+.events-swiper-3d .swiper-pagination {
   position: absolute;
   width: 100%;
   z-index: 20;
@@ -100,5 +109,36 @@
 }
 
 .events-swiper .swiper-pagination-bullet {
-  background: #02369b;
+  background: #02369b !important;
+  width: 10px;
+  height: 10px;
+  opacity: 0.35;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.events-swiper-3d .swiper-pagination-bullet {
+  background: #02369b !important;
+  width: 10px;
+  height: 10px;
+  opacity: 0.35;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.events-swiper .swiper-pagination-bullet-active,
+.events-swiper-3d .swiper-pagination-bullet-active {
+  transform: scale(1.35);
+  opacity: 1;
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge legacy */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
