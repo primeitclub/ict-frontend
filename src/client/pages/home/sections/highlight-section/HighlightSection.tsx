@@ -111,7 +111,7 @@ export default function HighlightSection() {
             {tabs[activeTab].content.map((item, index) => (
               <SwiperSlide key={index} className="py-2">
                 <Card
-                  className="hover:cursor-pointer "
+                  className="hover:cursor-pointer transform-gpu transition-transform duration-300 ease-out hover:-translate-y-2 magic-metamorph"
                   onClick={() => navigate(`/event-detail`)}
                   item={item}
                 />
