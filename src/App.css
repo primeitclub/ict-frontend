@@ -143,7 +143,7 @@
   display: none; /* Chrome/Safari */
 }
 
-@keyframes magic-sweep {
+/* @keyframes magic-sweep {
   0% {
     transform: translateX(-140%) rotate(12deg);
     opacity: 0;
@@ -155,7 +155,7 @@
     transform: translateX(140%) rotate(12deg);
     opacity: 0;
   }
-}
+} */
 
 /* "Metamorph" hover: shimmer + soft glow, no layout impact */
 .magic-metamorph {
