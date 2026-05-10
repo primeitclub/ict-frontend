@@ -39,7 +39,7 @@ const Card = ({ item, className, ...rest }: CardProps) => {
               key={i}
               className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
             >
-              <img src={av} alt="Speaker" className="w-8 h-8 rounded-full " />
+              <img src={av} alt="Speaker" className="w-8 h-8 rounded-full border-2 border-white " />
             </div>
           ))}
         </div>
