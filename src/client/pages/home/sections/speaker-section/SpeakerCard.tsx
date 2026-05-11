@@ -12,7 +12,7 @@ const SpeakerCard = () => {
           0 4px 32px rgba(0, 0, 0, 0.35)
         `,
       }}
-      className="relative w-[280px] bg-transparent rounded-2xl overflow-hidden border border-white/[0.05] flex flex-col"
+      className="group relative w-[280px] bg-transparent rounded-2xl overflow-hidden border border-white/[0.05] flex flex-col transition-transform duration-300 speaker-metamagic hover:-translate-y-2 hover:border-white/[0.12]"
     >
       {/* Glow Behind Everything */}
       <div
@@ -24,6 +24,10 @@ const SpeakerCard = () => {
           blur-2xl
           top-24
           z-0
+          opacity-80
+          transition-transform duration-500 ease-out
+          group-hover:scale-110
+          group-hover:opacity-100
         "
       />
 
@@ -42,7 +46,7 @@ const SpeakerCard = () => {
             </span>
             <span className="text-xs text-[#BBC0CC]">Qniverse</span>
           </div>
-          <div className="flex items-center gap-2 mt-1">
+        <div className="flex items-center gap-2 mt-1 transition-transform duration-300 group-hover:translate-x-1">
             <img src={Rightarrow} alt="Arrow" />
             <span className="text-[13px] font-semibold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
               AI in Finance
@@ -52,7 +56,7 @@ const SpeakerCard = () => {
 
         {/* Social Icons */}
         <div className="flex gap-3 ">
-          <a>
+          <a className="transition-transform duration-300 group-hover:-translate-y-1">
             <svg
               width="25"
               height="25"
@@ -74,7 +78,7 @@ const SpeakerCard = () => {
               />
             </svg>
           </a>
-          <a>
+          <a className="transition-transform duration-300 group-hover:-translate-y-1">
             <svg
               width="25"
               height="25"
@@ -97,7 +101,7 @@ const SpeakerCard = () => {
               </defs>
             </svg>
           </a>
-          <a>
+          <a className="transition-transform duration-300 group-hover:-translate-y-1">
             <svg
               width="25"
               height="25"
@@ -121,7 +125,7 @@ const SpeakerCard = () => {
         </div>
 
         {/* Speaker Image — sits naturally at the bottom */}
-        <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px]">
+        <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px] transition-transform duration-500 ease-out group-hover:-translate-y-3">
           <img
             src={Speakers}
             alt="Speaker"

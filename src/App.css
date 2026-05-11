@@ -71,7 +71,16 @@
 
   padding-bottom: 40px !important;
 }
+.events-swiper-3d {
+  /* Swiper uses this for pagination + navigation defaults */
+  --swiper-theme-color: #02369b;
+}
 .events-swiper .swiper-pagination {
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+}
+.events-swiper-3d .swiper-pagination {
   position: absolute;
   width: 100%;
   z-index: 20;
@@ -100,5 +109,150 @@
 }
 
 .events-swiper .swiper-pagination-bullet {
-  background: #02369b;
+  background: #02369b !important;
+  width: 10px;
+  height: 10px;
+  opacity: 0.35;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.events-swiper-3d .swiper-pagination-bullet {
+  background: #02369b !important;
+  width: 10px;
+  height: 10px;
+  opacity: 0.35;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.events-swiper .swiper-pagination-bullet-active,
+.events-swiper-3d .swiper-pagination-bullet-active {
+  transform: scale(1.35);
+  opacity: 1;
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge legacy */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* @keyframes magic-sweep {
+  0% {
+    transform: translateX(-140%) rotate(12deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(140%) rotate(12deg);
+    opacity: 0;
+  }
+} */
+
+/* "Metamorph" hover: shimmer + soft glow, no layout impact */
+.magic-metamorph {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.magic-metamorph::before {
+  content: "";
+  position: absolute;
+  inset: -60% -40%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(2, 54, 155, 0.06) 35%,
+    rgba(81, 167, 255, 0.18) 50%,
+    rgba(2, 54, 155, 0.06) 65%,
+    transparent 100%
+  );
+  transform: translateX(-140%) rotate(12deg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.magic-metamorph:hover::before {
+  animation: magic-sweep 700ms ease-out forwards;
+}
+.magic-metamorph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      120px 80px at 12% 18%,
+      rgba(81, 167, 255, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      140px 90px at 88% 82%,
+      rgba(2, 54, 155, 0.14),
+      transparent 60%
+    );
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+.magic-metamorph:hover::after {
+  opacity: 1;
+}
+
+@keyframes speaker-sweep {
+  0% {
+    transform: translateX(-120%) rotate(-8deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120%) rotate(-8deg);
+    opacity: 0;
+  }
+}
+
+/* Different hover from highlight cards: vertical-ish light beam */
+.speaker-metamagic {
+  position: relative;
+  isolation: isolate;
+}
+.speaker-metamagic::before {
+  content: "";
+  position: absolute;
+  inset: -40% -35%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(81, 167, 255, 0.16) 40%,
+    rgba(2, 54, 155, 0.22) 50%,
+    rgba(81, 167, 255, 0.16) 60%,
+    transparent 100%
+  );
+  transform: translateX(-120%) rotate(-8deg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.speaker-metamagic:hover::before {
+  animation: speaker-sweep 650ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-metamorph:hover::before {
+    animation: none;
+    opacity: 0;
+  }
+  .speaker-metamagic:hover::before {
+    animation: none;
+    opacity: 0;
+  }
 }

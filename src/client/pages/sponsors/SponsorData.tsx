@@ -24,12 +24,12 @@ const SponsorTitle = (props: TitleProps) => {
 
         {/* Sponsor Images */}
         <div
-          className={`w-full justify-center place-items-center ${
+          className={`w-full  justify-center place-items-center ${
             imgUrl.length === 1 ? "flex sm:grid" : "grid"
           } ${
             sponsortier
               ? "grid-cols-3 lg:grid-cols-4 gap-y-4 md:gap-y-2"
-              : "grid-cols-4  sm:grid-cols-5 px-[6%]  md:px-0 lg:pl-3  lg:pr-28  lg:gap-x-1 lg:gap-y-3"
+              : "grid-cols-4  sm:grid-cols-5 px-[6%]  md:px-0 lg:pl-3    lg:gap-x-1 lg:gap-y-3"
           }`}
         >
           {imgUrl.map((el, index) => (
@@ -37,15 +37,15 @@ const SponsorTitle = (props: TitleProps) => {
               key={index}
               className={`flex items-center justify-center ${
                 sponsortier
-                  ? "w-[90px] h-[90px] sm:w-[130px] lg:p-1 sm:h-[130px]  lg:w-[180px] lg:h-[180px]"
-                  : "w-[60px] h-[60px] sm:w-[90px] sm:h-[90px] md:px-1 lg:w-[120px] lg:h-[120px]"
+                  ? "w-[90px] h-[90px] sm:w-[130px] lg:p-1 sm:h-[130px] lg:w-[145px] lg:h-[145px] xl:w-[180px] xl:h-[180px]"
+                  : "w-[60px] h-[60px] sm:w-[90px] sm:h-[90px] my-2  md:px-1 lg:w-[110px] lg:h-[110px] xl:w-[140px] xl:h-[140px]"
               }`}
             >
               <img
                 src={el}
                 alt={altdata}
-                className={`w-full h-full object-contain ${
-                  sponsortier ? "rounded-xl" : "rounded-lg"
+                className={`w-full h-full object-contain rounded-md sm:rounded-xl ${
+                  sponsortier ? "rounded-xl" : "lg:rounded-2xl"
                 }`}
               />
             </div>

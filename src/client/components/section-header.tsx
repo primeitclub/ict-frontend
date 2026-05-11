@@ -37,7 +37,7 @@ export default function SectionHeader({
     <div className={cn("w-full flex", alignStyles[align], className)}>
       <h2
         className={cn(
-          " text-[40px] md:text-[60px] font-[650] tracking-[-2.4px] w-fit ",
+          " text-[30px] md:text-[60px] font-[650] tracking-[-1.2px] md:tracking-[-2.4px] w-fit ",
           reversePosition ? "flex gap-2 flex-row-reverse" : "",
           varientStyles[varient || "primary"],
         )}

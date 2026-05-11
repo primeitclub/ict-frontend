@@ -4,9 +4,9 @@ export const SeatsAndQueryCard = () => {
   const { booked, total } = SEATS_INFO;
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full  overflow-hidden ">
       {/* Seats Available */}
-      <div className="flex items-center gap-4 px-5 py-4 mb-4 sm:mb-0 border border-[#E2E8F0] bg-[#F1F5F9] sm:bg-[#EFEFEF] rounded-xl sm:rounded-none sm:border-0">
+      <div className="flex items-center gap-4 px-5 py-0 mb-4 sm:mb-0 border border-[#E2E8F0] bg-[#F1F5F9] sm:bg-[#EFEFEF] rounded-xl sm:rounded-none sm:border-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-10 h-10   text-gray-800 flex-shrink-0 bg-white p-2 rounded-lg sm:rounded-none sm:bg-transparent"
@@ -21,7 +21,7 @@ export const SeatsAndQueryCard = () => {
           <span className="text-base font-bold text-gray-900">
             Seats Available
           </span>
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-gray-600 pb-3">
             {booked} out of {total} Seats booked
           </span>
         </div>

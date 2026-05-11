@@ -21,15 +21,18 @@ export default function EventsDetail() {
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventDetailBanner />
 
-      <SectionContainer className="px-4 md:px-10 py-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+      <SectionContainer className="px-4 justify-between md:px-10 py-0 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
         {/* Left — Tabs (full width on mobile, flex-1 on desktop) */}
-        <EventDetailTabs />
+        <div className="flex   md:pt-6">
+              <EventDetailTabs  />
+        </div>
+        
 
         {/* Right — Sidebar (full width on mobile, fixed width on desktop) */}
-        <div className="w-full lg:w-72 md:flex-shrink md:pt-14">
+        <div className=" w-full max-w-72  pt-2  h-fit ">
           <SeatsAndQueryCard />
         </div>
-      </SectionContainer>
+      </SectionContainer >
       <div className=" bg-[#F2F5FA] text-black max-h-[848px] relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 py-16 md:space-y-10 space-y-12">
           {/* section header */}
