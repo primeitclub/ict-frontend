@@ -59,10 +59,10 @@ export const EventDetailTabs = () => {
                 className={`transition-transform duration-700 ${
                   activeTab === tab.id
                     ? "text-[#3571F0]"
-                    : "text-black -rotate-45 group-hover:rotate-0 hover:text-[#3571F0]"
+                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
                 }`}
               />
-              {tab.label}
+              <div className="group-hover:text-[#3571F0]">{tab.label}</div>
             </button>
           );
         })}
