@@ -4,7 +4,7 @@ export const SeatsAndQueryCard = () => {
   const { booked, total } = SEATS_INFO;
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full  overflow-hidden ">
       {/* Seats Available */}
       <div className="flex items-center gap-4 px-5 py-0 mb-4 sm:mb-0 border border-[#E2E8F0] bg-[#F1F5F9] sm:bg-[#EFEFEF] rounded-xl sm:rounded-none sm:border-0">
         <svg
