@@ -15,16 +15,44 @@ import { tabs } from "./data";
 import { Button } from "../../../../../shared/design-components";
 import NavButton from "./components/NavButton";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useHome } from "../../useHome";
+import type { ContentType } from "./types";
 
 export default function HighlightSection() {
   const [activeTab, setActiveTab] = useState<number>(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { data: highlights = [] } = useHome((d) => d.sections.highlights);
+
+  // TODO(mapping): Card's ContentType diverges from the Event entity. Confirmed
+  // fields are wired; the rest are placeholders pending your confirmation:
+  //  - speaker line uses `subtitle`; avatars/time/remaining-seats aren't on the
+  //    aggregate yet (left empty / set to totalSeats).
+  //  - price is parsed from `fee` (a string) — confirm the fee format.
+  //  - tabs are category-based, but highlights arrive as one flat published
+  //    list, so every tab currently shows the same cards. Category grouping is
+  //    deferred until we confirm the category shape on the payload.
+  const cards: ContentType[] = highlights.map((e) => ({
+    image: e.imageUrl ?? "",
+    title: e.title,
+    speaker: e.subtitle ?? "",
+    avatar: [],
+    date: e.date ?? "",
+    price: Number(e.fee) || 0,
+    time: "",
+    place: e.location,
+    seats: e.totalSeats,
+    totalSeats: e.totalSeats,
+  }));
 
   const scrollToSection = () => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const navigate = useNavigate();
+
+  if (!cards.length) return null;
 
   return (
     <div
@@ -108,13 +136,28 @@ export default function HighlightSection() {
             }}
             className="pb-16"
           >
-            {tabs[activeTab].content.map((item, index) => (
+            {cards.map((item, index) => (
               <SwiperSlide key={index} className="py-2">
-                <Card
-                  className="hover:cursor-pointer "
-                  onClick={() => navigate(`/event-detail`)}
-                  item={item}
-                />
+                {/*
+                  Each card uses its loop index as a stagger delay (index * 0.1s),
+                  so the row reveals left-to-right instead of all at once — that
+                  cascade is what makes it feel interactive. whileInView + once
+                  fires the reveal when the row scrolls into view, just once.
+                  whileHover lifts the card for a tactile response.
+                */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.05 }}
+                >
+                  <Card
+                    className="hover:cursor-pointer "
+                    onClick={() => navigate(`/event-detail`)}
+                    item={item}
+                  />
+                </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>

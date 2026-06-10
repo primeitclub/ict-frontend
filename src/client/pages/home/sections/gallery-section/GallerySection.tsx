@@ -7,13 +7,18 @@ import SvgIcon from "../../../../components/icon/svgIcon";
 import SectionHeader from "../../../../components/section-header";
 import GalleryCard from "./components/GalleryCard";
 
-import { GALLERY_IMAGES, GALLERY_POSITIONS } from "./data";
+import { GALLERY_POSITIONS } from "./data";
 import type { ScreenSize } from "./types";
 import { Button } from "../../../../../shared/design-components";
+import { useHome } from "../../useHome";
 
 const GallerySection = () => {
   const [selected, setSelected] = useState<number | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
+
+  // Gallery is a bounded (1-7) image array; the position maps below are laid
+  // out for up to 7, so any image past index 6 has no slot and is skipped.
+  const { data: gallery = [] } = useHome((d) => d.sections.gallery);
 
   const screen = useWindowBreakPoints() as ScreenSize;
 
@@ -24,6 +29,8 @@ const GallerySection = () => {
   const scrollToSection = () => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  if (!gallery.length) return null;
 
   return (
     <div ref={sectionRef} className="w-full py-24 bg-white relative">
@@ -42,7 +49,7 @@ const GallerySection = () => {
         />
 
         <div className="relative flex justify-center items-center h-[300px] md:h-[400px] lg:h-[500px]">
-          {GALLERY_IMAGES.map((img, i) => {
+          {gallery.slice(0, positions.length).map((img, i) => {
             const offset =
               activeIndex !== null && i !== activeIndex
                 ? i < activeIndex
@@ -52,10 +59,10 @@ const GallerySection = () => {
 
             return (
               <GalleryCard
-                key={i}
-                img={img}
+                key={img.id}
+                img={img.cloudImageUrl}
                 index={i}
-                total={GALLERY_IMAGES.length}
+                total={Math.min(gallery.length, positions.length)}
                 pos={positions[i]}
                 isHovered={hovered === i}
                 isSelected={selected === i}

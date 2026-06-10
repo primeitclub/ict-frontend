@@ -1,20 +1,15 @@
 // import { Button } from "../../../../../shared/design-components";
 
+import { motion } from "framer-motion";
 import SectionContainer from "../../../../components/sectionContainer";
 import SectionHeader from "../../../../components/section-header";
-
-// Images for sponsor logo
-const dummyImages = [
-  "https://play-lh.googleusercontent.com/BzSi2p7xAuJLc0002bE_5MTbhu0GCHcbo2lmqRkSED40DqfITuqPWPBkP2HJrbiK8k4",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Hamro_Patro_wordmark.svg/960px-Hamro_Patro_wordmark.svg.png",
-  "https://img.jobsnepal.com/big/qSxpuEM2kQ8BfmsvJ7jFLqgTxcOx6PZz22BTQn5x.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVueevO7lTftBZ51TVZFPoxDtBv6xC_YKWPA&s",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVVjGobhSM9kGdCcq9IrxCgX32Xg2qdLs-_g&s",
-];
-
-const images = Array(3).fill(dummyImages).flat();
+import { useHome } from "../../useHome";
 
 export default function SponserSection() {
+  const { data: sponsors = [] } = useHome((d) => d.sections.sponsors);
+
+  if (!sponsors.length) return null;
+
   return (
     <SectionContainer as="section">
       <div className="flex justify-center items-center w-full">
@@ -27,16 +22,26 @@ export default function SponserSection() {
           />
           {/* Sponser grid */}
           <div className="grid grid-cols-3 gap-2 md:gap-4 md:justify-center md:[grid-template-columns:repeat(auto-fit,180px)] 2xl:grid-cols-5 ">
-            {images.map((image, index) => (
-              <div
-                key={index}
+            {sponsors.map((sponsor, index) => (
+              // Index-staggered reveal, matching the event/speaker grids.
+              // Small delay step (0.04s) keeps the wave snappy across many logos.
+              <motion.a
+                key={sponsor.id}
+                href={sponsor.link ?? undefined}
+                target={sponsor.link ? "_blank" : undefined}
+                rel={sponsor.link ? "noopener noreferrer" : undefined}
                 className="aspect-square rounded-lg md:rounded-2xl overflow-hidden"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.04 }}
               >
                 <img
-                  src={image}
+                  src={sponsor.imageUrl ?? undefined}
+                  alt={sponsor.name}
                   className="w-full h-full object-cover md:rounded-2xl"
                 />
-              </div>
+              </motion.a>
             ))}
           </div>
         </div>

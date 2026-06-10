@@ -18,6 +18,9 @@ interface ClientRouterProps {
 }
 
 export default function ClientRouter({ version }: ClientRouterProps) {
+
+
+
   return (
     <VersionProvider version={version}>
       <Routes>

@@ -40,6 +40,10 @@ export const API_ROUTES = {
   sponsorDetail: "/sponsors/${sponsorId}",
 
   // ─── Content ──────────────────────────────────────────────────────────────
+  // Aggregated landing-page content. No slug → current edition; with slug →
+  // that specific edition (backend resolves & scopes all sections).
+  homeContent: "/content",
+  homeContentBySlug: "/content/${slug}",
   hero: "/content/hero",
   heroSections: "/hero-sections",
   heroSectionDetail: "/hero-sections/${id}",
