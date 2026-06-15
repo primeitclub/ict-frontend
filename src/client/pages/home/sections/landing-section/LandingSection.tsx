@@ -70,13 +70,13 @@ export function LandingSection() {
 
 
           <div className="flex text-[34px] m-auto sm:text-[50px] sm:leading-[46px]  md:text-[64px] 2xl:text-[80px] font-[700] leading-[37px] px-3 md:leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">
-            {hero.heading}
+            {hero?.heading}
           </div>
           <Text
             align="center"
             className="flex px-5 sm:px-9 lg:px-20 my-3 text-[10px] sm:text-[16px]"
           >
-            {hero.paragraph}
+            {hero?.paragraph}
           </Text>
           {/* <div className="">
             ICT Meetup, designed to inspire collaboration, encourage learning
