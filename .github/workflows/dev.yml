@@ -2,7 +2,7 @@ name: ICT Meetup Dev Website CI/CD
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, admin-panel]
 
 jobs:
   build-and-deploy:
