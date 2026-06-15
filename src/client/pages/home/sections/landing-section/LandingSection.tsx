@@ -7,10 +7,28 @@ import { motion } from "framer-motion";
 import image from "../../../../../../public/ICT Meet/Arc-1.png"
 import { useHome } from "../../useHome";
 
+function formatEventDateRange(startDate?: string | null, endDate?: string | null): string {
+  if (!startDate || !endDate) return "";
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const monthFmt = new Intl.DateTimeFormat("en-US", { month: "long" });
+  const yearFmt = new Intl.DateTimeFormat("en-US", { year: "numeric" });
+  if (
+    start.getFullYear() === end.getFullYear() &&
+    start.getMonth() === end.getMonth()
+  ) {
+    return `${start.getDate()}-${end.getDate()} ${monthFmt.format(start)}, ${yearFmt.format(start)}`;
+  }
+  const shortMonthFmt = new Intl.DateTimeFormat("en-US", { month: "short" });
+  return `${start.getDate()} ${shortMonthFmt.format(start)} - ${end.getDate()} ${shortMonthFmt.format(end)}, ${yearFmt.format(end)}`;
+}
+
 export function LandingSection() {
-  // Reads just the hero slice from the shared edition query (already in cache).
   const { data: hero } = useHome((d) => d.sections.hero);
+  const { data: edition } = useHome((d) => d.edition);
   if (!hero) return null;
+
+  const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
 
   return (
     <div className="landing_section relative w-full min-h-screen overflow-hidden pt-32 sm:pt-40">
@@ -46,7 +64,7 @@ export function LandingSection() {
               Event on
             </div>
             <div className="flex text-[14px] items-center gap-2 leading-3 font-normal -tracking-[0.598px]">
-              12-13 January, 2025 <ArrowRight size={20} />{" "}
+              {dateLabel || "Coming Soon"} <ArrowRight size={20} />{" "}
             </div>{" "}
           </div>
         </div>

@@ -31,7 +31,7 @@ export default function ClientRouter({ version }: ClientRouterProps) {
           <Route path="teams" element={<Teams />} />
           <Route path="register" element={<Register />} />
           <Route path="success" element={<PaymentSuccess />} />
-          <Route path="event-detail" element={<EventsDetail />} />
+          <Route path="event-detail/:eventId" element={<EventsDetail />} />
           <Route path="contacts" element={<ContactUs />} />
         </Route>
       </Routes>

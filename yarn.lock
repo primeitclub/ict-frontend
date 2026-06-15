@@ -1430,6 +1430,13 @@
   dependencies:
     "@babel/types" "^7.28.2"
 
+"@types/dompurify@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-3.2.0.tgz#56610bf3e4250df57744d61fbd95422e07dfb840"
+  integrity sha512-Fgg31wv9QbLDA0SpTOXO3MaxySc4DKGLi8sna4/Utjo4r3ZRPdCt4UQee8BWr+Q5z21yifghREPJGYaEOEIACg==
+  dependencies:
+    dompurify "*"
+
 "@types/estree@1.0.8", "@types/estree@^1.0.6":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.8.tgz#958b91c991b1867ced318bedea0e215ee050726e"
@@ -1916,7 +1923,7 @@ dom-helpers@^5.0.1:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
 
-dompurify@^3.4.9:
+dompurify@*, dompurify@^3.4.9:
   version "3.4.9"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.4.9.tgz#b036637b2df8997126b58837bc90f85dbcad6b2f"
   integrity sha512-4dPSRMRDqHvs0V4YDFCsaIZo4if5u0xM+llyxiM2fwuZFdKArUBAF3VtI2+n8NKg9P870WMdYk0UhqQNoWXbfQ==

@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react"; // Optional: Use Lucide or a simple SVG
+import { ChevronDown } from "lucide-react";
 
 type inputVariant = "radio" | "box" | "select";
 
@@ -7,6 +7,8 @@ interface InputBoxProps {
   placeHolder?: string;
   variant: inputVariant;
   options?: string[];
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 const InputBox = ({
@@ -14,8 +16,9 @@ const InputBox = ({
   placeHolder,
   variant,
   options = [],
+  value,
+  onChange,
 }: InputBoxProps) => {
-  // Shared styles for input and select
   const commonInputStyles =
     "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-[10px] md:text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
 
@@ -33,6 +36,8 @@ const InputBox = ({
           type="text"
           className={commonInputStyles}
           placeholder={placeHolder}
+          value={value ?? ""}
+          onChange={(e) => onChange?.(e.target.value)}
         />
       </div>
     );
@@ -51,7 +56,8 @@ const InputBox = ({
           <select
             id={inputName}
             className={`${commonInputStyles} appearance-none pr-10 cursor-pointer`}
-            defaultValue=""
+            value={value ?? ""}
+            onChange={(e) => onChange?.(e.target.value)}
           >
             <option value="" disabled>
               {placeHolder || "Select an option"}
@@ -62,7 +68,6 @@ const InputBox = ({
               </option>
             ))}
           </select>
-          {/* Custom Down Arrow Icon */}
           <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-500">
             <ChevronDown size={18} strokeWidth={2.5} />
           </div>
@@ -87,6 +92,8 @@ const InputBox = ({
               type="radio"
               name={inputName}
               value={option}
+              checked={value === option}
+              onChange={() => onChange?.(option)}
               className="w-4 h-4 accent-[#1E67FF] cursor-pointer"
             />
             <span className="text-sm text-gray-600 group-hover:text-[#1E67FF] transition-colors">

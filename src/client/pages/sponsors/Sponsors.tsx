@@ -1,100 +1,107 @@
-import { useState } from "react";
 import SectionContainer from "../../components/sectionContainer.tsx";
-import { Button } from "../../../shared/design-components/index.ts";
-
-import image1 from "/ICT Meet/hamro patro.svg";
 import SponsorData from "./SponsorData.tsx";
 import GlowCircle from "./GlowCircle.tsx";
+import { useApiQuery } from "../../../lib/index.ts";
+import { useVersionData } from "../../hooks/use-version-data.ts";
+
+interface Category {
+  id: string;
+  name: string;
+  displayName: string;
+  displayOrder: number;
+}
+
+interface Sponsor {
+  id: string;
+  name: string;
+  link: string | null;
+  imageUrl: string | null;
+  displayOrder: number;
+  category: Category;
+}
+
+interface PaginatedResult<T> {
+  items: T[];
+  meta: { total: number; page: number; limit: number };
+}
+
+interface Envelope<T> {
+  status: string;
+  message: string;
+  data: T;
+}
+
 const Sponsors = () => {
-  const [sponsorlist] = useState(true);
+  const { versionId, isLoading: versionLoading } = useVersionData();
+
+  const { data: categoriesRes, isLoading: categoriesLoading } = useApiQuery(
+    "sponsorCategories",
+  )<Envelope<PaginatedResult<Category>>>({
+    queryParams: { limit: 100 },
+    enabled: !!versionId,
+  });
+
+  const { data: sponsorsRes, isLoading: sponsorsLoading } = useApiQuery(
+    "sponsors",
+  )<Envelope<PaginatedResult<Sponsor>>>({
+    queryParams: { versionId: versionId ?? undefined, limit: 200 },
+    enabled: !!versionId,
+  });
+
+  const categories = (categoriesRes?.data?.items ?? []).slice().sort(
+    (a, b) => a.displayOrder - b.displayOrder,
+  );
+  const sponsors = sponsorsRes?.data?.items ?? [];
+  const isLoading = versionLoading || categoriesLoading || sponsorsLoading;
+
+  if (isLoading) {
+    return (
+      <SectionContainer>
+        <p className="text-center text-white/60 py-40">Loading sponsors…</p>
+      </SectionContainer>
+    );
+  }
+
+  if (!sponsors.length) {
+    return (
+      <SectionContainer>
+        <p className="text-center text-white/60 py-40">No sponsors available.</p>
+      </SectionContainer>
+    );
+  }
+
+  // Group sponsors by category, preserving category sort order.
+  const grouped = categories.map((cat, idx) => ({
+    category: cat,
+    items: sponsors
+      .filter((s) => s.category?.id === cat.id)
+      .slice()
+      .sort((a, b) => a.displayOrder - b.displayOrder),
+    // First category uses the "big" title style; subsequent use the smaller one.
+    big: idx === 0,
+    // Categories with displayOrder ≤ 3 are treated as tier sponsors (larger slots).
+    sponsortier: cat.displayOrder <= 3,
+  })).filter((g) => g.items.length > 0);
+
   return (
-    <SectionContainer >
-      
-            {!sponsorlist ? (
-        <div className="w-full flex bg-[#3571F0] gap-10   rounded-lg ">
-          <div className="flex flex-col w-1/2 p-10 gap-5 ">
-            <h1 className="text-[50px] -tracking-[2.4px]">Become A Sponsor</h1>
-            <p className="text-[20px] leading-[28px] font-[300]">
-              Partner with ICT MeetUp and showcase your brand to a vibrant
-              community of tech enthusiasts, developers, and creators while
-              engaging with curious minds eager to learn, build, and innovate.
-            </p>
-            <div className="flex">
-              <Button variant="solid-white" label="Be a Sponsor" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h1 className="font-[600] text-[22px] leading-[30px] ">
-              Contact Person
-            </h1>
-            <p className="text-[16px] leading-[30px]">
-              Aditika Singh(9843744896)
-            </p>
-            <h1 className="font-[600] text-[22px]  leading-[30px]">Mail Us</h1>
-            <p className="text-[16px] leading-[30px]">
-              sponsor@primeitclub.com
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full flex flex-col gap-20 mt-10 relative items-center  ">
-          {/* <SponsorTitle title='Title Sponsor' imgUrl={image1} /> */}
+    <SectionContainer>
+      <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
+        {grouped.map(({ category, items, big, sponsortier }) => (
           <SponsorData
-            title="Title Sponsor"
-            altdata="Sponsor img"
-            big={true}
-            sponsortier={true}
-            imgUrl={[image1]}
+            key={category.id}
+            title={category.displayName}
+            altdata={`${category.displayName} sponsor logo`}
+            big={big}
+            sponsortier={sponsortier}
+            imgUrl={items.map((s) => s.imageUrl ?? "")}
           />
-          <SponsorData
-            title="Platinum Sponsor"
-            altdata="Sponsor img"
-            big={false}
-            sponsortier={true}
-            imgUrl={[image1, image1,image1]}
-          />
-          <SponsorData
-            title="Gold Sponsor"
-            altdata="Sponsor img"
-            big={false}
-            sponsortier={true}
-            imgUrl={[image1, image1, image1]}
-          />
-          <SponsorData
-            title="Silver Sponsor"
-            altdata="Sponsor img"
-            big={false}
-            sponsortier={true}
-            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1]}
-          />
-          <SponsorData
-            title="Inkind Sponsor"
-            altdata="Sponsor img"
-            big={false}
-            sponsortier={false}
-            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1,image1, image1, image1,image1,image1,image1,image1]}
-          />
-          <SponsorData
-            title="Community Partner"
-            altdata="Sponsor img"
-            big={false}
-            sponsortier={false}
-            imgUrl={[image1, image1, image1,image1,image1,image1,image1,image1,image1, image1, image1,image1,image1,image1,image1]}
-          />
+        ))}
 
-          <GlowCircle x="top-0" y="-left-[20%]" />
-          <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />
-          <GlowCircle x="bottom-0" y="-left-[20%]" />
-          
-          
-          {/* <div className="flex bg-[#02369E66] w-[282.06px] h-[283px] md:w-[666px] md:h-[666px] rounded-full absolute blur-[94px] md:blur-[200px] -right-[20%] top-[50%] -z-10 "></div> */}
-          {/* <div className="flex bg-[#02369E66] w-[282.06px] h-[283px] md:w-[666px] md:h-[666px] rounded-full absolute blur-[94px] md:blur-[200px] -left-[20%] bottom-[0%] -z-10 "></div> */}
-        </div>
-      )}
-      
-
-    </SectionContainer> 
-    
+        <GlowCircle x="top-0" y="-left-[20%]" />
+        <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />
+        <GlowCircle x="bottom-0" y="-left-[20%]" />
+      </div>
+    </SectionContainer>
   );
 };
 

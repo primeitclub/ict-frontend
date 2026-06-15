@@ -33,7 +33,8 @@ export default function HighlightSection() {
   //  - tabs are category-based, but highlights arrive as one flat published
   //    list, so every tab currently shows the same cards. Category grouping is
   //    deferred until we confirm the category shape on the payload.
-  const cards: ContentType[] = highlights.map((e) => ({
+  const cards: (ContentType & { id: string })[] = highlights.map((e) => ({
+    id: e.id,
     image: e.imageUrl ?? "",
     title: e.title,
     speaker: e.subtitle ?? "",
@@ -154,7 +155,7 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail`)}
+                    onClick={() => navigate(`/event-detail/${item.id}`)}
                     item={item}
                   />
                 </motion.div>

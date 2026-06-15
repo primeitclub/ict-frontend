@@ -4,16 +4,27 @@ import CategoryTabs from "./components/CategoryTabs";
 import EventGrid from "./components/EventGrid";
 import { ArrowRight } from "lucide-react";
 import Button from "../../../shared/design-components/button/Button";
+import { useEventCategories, useEventsList } from "./useEvents";
+
 export default function EventsPage() {
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("all");
+
+  const { categories, isLoading: categoriesLoading } = useEventCategories();
+  const categoryIdParam = activeCategoryId === "all" ? undefined : activeCategoryId;
+  const { events, isLoading: eventsLoading } = useEventsList(categoryIdParam);
 
   return (
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA] pb-4">
-      <EventSwiper />
+      <EventSwiper events={events} />
       <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 py-2 sm:py-16 md:space-y-10 space-y-12">
-          <CategoryTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-          <EventGrid activeTab={activeTab} />
+          <CategoryTabs
+            categories={categories}
+            activeCategoryId={activeCategoryId}
+            onSelect={setActiveCategoryId}
+            isLoading={categoriesLoading}
+          />
+          <EventGrid events={events} isLoading={eventsLoading} />
           <Button
             className="flex items-center justify-center mx-auto md:hidden"
             rightIcon={

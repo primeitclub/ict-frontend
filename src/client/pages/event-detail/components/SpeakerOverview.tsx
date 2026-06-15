@@ -9,10 +9,36 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { SPEAKERS } from "../data";
 import { SpeakerCard } from "./SpeakerCard";
+import type { EventDetailData } from "../useEventDetail";
 
-export const SpeakerOverview = () => {
+interface SpeakerOverviewProps {
+  event: EventDetailData;
+}
+
+export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
+  const speaker = event.speaker;
+
+  if (!speaker) {
+    return (
+      <p className="text-gray-500 py-4">No speaker information available.</p>
+    );
+  }
+
+  const speakerCardProps = {
+    name: speaker.name,
+    role: speaker.designation,
+    company: speaker.company ?? undefined,
+    bio: speaker.bio,
+    image: speaker.imageUrl ?? "",
+    socials: speaker.socialLinks
+      ? {
+          instagram: speaker.socialLinks.instagram,
+          linkedin: speaker.socialLinks.linkedin,
+        }
+      : undefined,
+  };
+
   return (
     <>
       {/* Mobile: coverflow swiper */}
@@ -23,37 +49,21 @@ export const SpeakerOverview = () => {
           grabCursor={true}
           centeredSlides={true}
           slidesPerView={1}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          pagination={{
-            clickable: true,
-            dynamicBullets: false,
-          }}
+          coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 1, slideShadows: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          loop={false}
+          pagination={{ clickable: true, dynamicBullets: false }}
           className="!pb-10"
         >
-          {SPEAKERS.map((speaker, i) => (
-            <SwiperSlide key={i} className="rounded-2xl overflow-hidden shadow-xl bg-white">
-              <SpeakerCard {...speaker} />
-            </SwiperSlide>
-          ))}
+          <SwiperSlide className="rounded-2xl overflow-hidden shadow-xl bg-white">
+            <SpeakerCard {...speakerCardProps} />
+          </SwiperSlide>
         </Swiper>
       </div>
 
-      {/* Desktop: original list */}
+      {/* Desktop: list */}
       <div className="hidden sm:block">
-        {SPEAKERS.map((speaker, i) => (
-          <SpeakerCard key={i} {...speaker} />
-        ))}
+        <SpeakerCard {...speakerCardProps} />
       </div>
     </>
   );

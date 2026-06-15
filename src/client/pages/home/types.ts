@@ -10,6 +10,8 @@ export interface Edition {
   slug: string;
   name: string;
   isCurrent: boolean;
+  startDate?: string | null;
+  endDate?: string | null;
 }
 
 export interface HeroSection {

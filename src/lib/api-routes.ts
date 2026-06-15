@@ -24,18 +24,24 @@ export const API_ROUTES = {
   // ─── Events ───────────────────────────────────────────────────────────────
   events: "/events",
   eventDetail: "/events/${eventId}",
+  eventCategories: "/events/category",
+
+  // ─── Event Registrations ──────────────────────────────────────────────────
+  eventRegistrations: "/event-registrations",
+  eventRegistrationDetail: "/event-registrations/${registrationId}",
 
   // ─── Speakers ─────────────────────────────────────────────────────────────
   speakers: "/speakers",
   speakerDetail: "/speakers/${speakerId}",
 
   // ─── Teams ────────────────────────────────────────────────────────────────
-  teams: "/teams",
-  teamDetail: "/teams/${teamId}",
+  teamMembers: "/team-members",
+  teamMemberDetail: "/team-members/${teamMemberId}",
+  teamMemberCategories: "/team-members/category",
 
   // ─── Sponsors ─────────────────────────────────────────────────────────────
-  sponsorCategories: "/sponsor-categories",
-  sponsorCategoryDetail: "/sponsor-categories/${categoryId}",
+  sponsorCategories: "/sponsors/category",
+  sponsorCategoryDetail: "/sponsors/category/${categoryId}",
   sponsors: "/sponsors",
   sponsorDetail: "/sponsors/${sponsorId}",
 
@@ -52,9 +58,11 @@ export const API_ROUTES = {
   faqs: "/content/faqs",
 
   // ─── Settings ─────────────────────────────────────────────────────────────
-  socialMedia: "/settings/social-media",
-  contacts: "/settings/contacts",
-  payments: "/settings/payments",
+  settings: "/settings",
+  settingDetail: "/settings/${settingId}",
+  settingsContacts: "/settings/contacts",
+  settingsSocialMedia: "/settings/social-media",
+  settingsPayments: "/settings/payments",
 } as const;
 
 /**
