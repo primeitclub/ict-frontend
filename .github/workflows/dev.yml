@@ -34,3 +34,6 @@ jobs:
           username: ${{ secrets.FTP_DEV_USERNAME }}
           password: ${{ secrets.FTP_DEV_PASSWORD }}
           local-dir: ./dist/
+          protocol: ftps
+          port: 21
+          timeout: 60000
