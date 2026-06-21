@@ -8,6 +8,7 @@ import { API_ROUTES } from "./lib/api-routes";
 
 interface VersionItem {
   id: string;
+  slug: string;
   version_number: string;
   status: "active" | "archived" | "draft";
   is_current: boolean;
@@ -34,22 +35,32 @@ function App() {
   const items = data?.data?.items?.filter((v) => v.status !== "draft") ?? [];
 
   const currentItem = items.find((v) => v.is_current);
-  const latestVersion = currentItem ? toRouteVersion(currentItem.version_number) : LATEST_VERSION;
-  const oldVersions = items
-    .filter((v) => !v.is_current)
-    .map((v) => toRouteVersion(v.version_number))
-    .filter((v, i, arr) => arr.indexOf(v) === i);
+  const latestRouteVersion = currentItem ? toRouteVersion(currentItem.version_number) : LATEST_VERSION;
+  const latestSlug = currentItem?.slug ?? LATEST_VERSION;
+
+  const oldItems = items.filter((v) => !v.is_current);
 
   return (
     <Routes>
-      {oldVersions.map((version) => (
-        <Route
-          key={version}
-          path={`/${version}/*`}
-          element={<ClientRouter version={version} />}
-        />
-      ))}
-      <Route path="/*" element={<ClientRouter version={latestVersion} />} />
+      {oldItems.map((item) => {
+        const routeVersion = toRouteVersion(item.version_number);
+        return (
+          <Route
+            key={routeVersion}
+            path={`/${routeVersion}/*`}
+            element={<ClientRouter version={routeVersion} slug={item.slug} isLatest={false} latestVersion={latestRouteVersion} />}
+          />
+        );
+      })}
+      {/* Also match the current version by its slug/routeVersion (e.g. /v9/*) */}
+      <Route
+        path={`/${latestRouteVersion}/*`}
+        element={<ClientRouter version={latestRouteVersion} slug={latestSlug} isLatest={true} latestVersion={latestRouteVersion} />}
+      />
+      <Route
+        path="/*"
+        element={<ClientRouter version={latestRouteVersion} slug={latestSlug} isLatest={true} latestVersion={latestRouteVersion} />}
+      />
     </Routes>
   );
 }

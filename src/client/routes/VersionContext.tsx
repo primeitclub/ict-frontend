@@ -1,10 +1,10 @@
 // routes/VersionContext.tsx
 import { createContext, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LATEST_VERSION } from "./route-type";
 
 interface VersionContextType {
   version: string;
+  slug: string;
   isLatest: boolean;
   getPath: (path: string) => string;
   navigateToVersion: (newVersion: string) => void;
@@ -14,13 +14,15 @@ const VersionContext = createContext<VersionContextType | null>(null);
 
 interface ProviderProps {
   version: string;
+  slug: string;
+  isLatest: boolean;
+  latestVersion: string;
   children: React.ReactNode;
 }
 
-export function VersionProvider({ version, children }: ProviderProps) {
+export function VersionProvider({ version, slug, isLatest, latestVersion, children }: ProviderProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isLatest = version === LATEST_VERSION;
 
   // Generate correct path based on version
   const getPath = (path: string): string => {
@@ -43,7 +45,7 @@ export function VersionProvider({ version, children }: ProviderProps) {
     }
 
     // Navigate to same page in new version
-    if (newVersion === LATEST_VERSION) {
+    if (newVersion === latestVersion) {
       navigate(currentPage);
     } else {
       navigate(`/${newVersion}${currentPage}`);
@@ -56,6 +58,7 @@ export function VersionProvider({ version, children }: ProviderProps) {
     <VersionContext.Provider
       value={{
         version,
+        slug,
         isLatest,
         getPath,
         navigateToVersion,

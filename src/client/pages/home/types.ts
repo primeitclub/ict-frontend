@@ -10,6 +10,8 @@ export interface Edition {
   slug: string;
   name: string;
   isCurrent: boolean;
+  logo?: string | null;
+  logoPath?: string | null;
   startDate?: string | null;
   endDate?: string | null;
 }
