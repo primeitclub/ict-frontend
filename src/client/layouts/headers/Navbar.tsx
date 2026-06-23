@@ -5,12 +5,13 @@ import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
-import { LATEST_VERSION } from "../../routes/route-type";
+import { useHome } from "../../pages/home/useHome";
 
 const Navbar = () => {
   const { getPath } = useVersion();
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
+  const { data: logo } = useHome((d) => d.edition.logoPath ?? d.edition.logo);
 
   const pages = [
     { path: "/", label: "Home" },
@@ -29,7 +30,7 @@ const Navbar = () => {
         className="flex items-center justify-between h-full w-full !py-0"
       >
         <div className="hover:cursor-pointer" onClick={() => navigate("/")}>
-          <Logo2 />
+          <Logo2 src={logo} />
         </div>
 
         <div className="sm:hidden">
@@ -67,21 +68,17 @@ const Navbar = () => {
                   <h3 className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent font-semibold text-xl mb-6 tracking-wide">
                     Versions
                   </h3>
-                  <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
-                    {versions.map((v) => {
-                      const lowerV = v.toLowerCase();
-                      const toPath = lowerV === LATEST_VERSION ? "/" : `/${lowerV}`;
-                      return (
-                        <NavLink
-                          key={v}
-                          to={toPath}
-                          className="hover:text-white transition-colors duration-300"
-                          onClick={() => setToggle(false)}
-                        >
-                          {v}
-                        </NavLink>
-                      );
-                    })}
+                   <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
+                    {versions.map((v) => (
+                         <NavLink
+                        key={v}
+                        to={`/${v.toLowerCase()}`}
+                        className="hover:text-white transition-colors duration-300"
+                        onClick={() => setToggle(false)}
+                      >
+                        {v}
+                      </NavLink>
+                    ))}
                   </div>
                 </div>
               </div>

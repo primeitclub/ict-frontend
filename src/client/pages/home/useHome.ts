@@ -26,14 +26,14 @@ interface Envelope<T> {
 }
 
 export function useHome<T = HomeContent>(select?: (d: HomeContent) => T) {
-  const { version, isLatest } = useVersion();
+  const { slug, isLatest } = useVersion();
 
   const path = isLatest
     ? API_ROUTES.homeContent
-    : API_ROUTES.homeContentBySlug.replace("${slug}", encodeURIComponent(version));
+    : API_ROUTES.homeContentBySlug.replace("${slug}", encodeURIComponent(slug));
 
   return useQuery({
-    queryKey: ["home", isLatest ? "current" : version],
+    queryKey: ["home", isLatest ? "current" : slug],
     queryFn: async () => {
       const res = await ictClient.get<Envelope<HomeContent>>(path);
       return res.data;

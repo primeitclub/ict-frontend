@@ -15,14 +15,17 @@ import ContactUs from "../pages/contact-us/ContactUs";
 
 interface ClientRouterProps {
   version: string;
+  slug: string;
+  isLatest: boolean;
+  latestVersion: string;
 }
 
-export default function ClientRouter({ version }: ClientRouterProps) {
+export default function ClientRouter({ version, slug, isLatest, latestVersion }: ClientRouterProps) {
 
 
 
   return (
-    <VersionProvider version={version}>
+    <VersionProvider version={version} slug={slug} isLatest={isLatest} latestVersion={latestVersion}>
       <Routes>
         <Route element={<PageLayout />}>
           <Route index element={<HomePage />} />
