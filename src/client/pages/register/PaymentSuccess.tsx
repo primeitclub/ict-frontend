@@ -1,17 +1,32 @@
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useApiQuery } from "../../../lib";
 import { Button } from "../../../shared/design-components";
 import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { Heading } from "../../../shared/design-components";
 import Success from "../register/icons/Success.svg";
 
-const dummyEventDetail = {
-  id: "ICT_294138535",
-  name: "Mastering Component Driven Architecture",
-  date: "10th February, 2026",
-  venue: "Prime College",
-  price: "Free",
-  contactEmail: "sauravmdhr@gmail.com",
-};
+interface EventRegistrationDetail {
+  id: string;
+  versionId: string;
+  event: {
+    title: string;
+    date: string | null;
+    location: string;
+    fee: string;
+    feeType: string;
+  };
+}
+
+interface ContactSettings {
+  clubEmail: string | null;
+}
+
+interface Envelope<T> {
+  status: string;
+  message: string;
+  data: T;
+}
 
 const InfoRow = ({
   label,
@@ -33,6 +48,64 @@ const InfoRow = ({
 );
 
 const PaymentSuccess = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const registrationId = searchParams.get("id");
+
+  const { data: registrationRes, isLoading: isRegistrationLoading } = useApiQuery(
+    "eventRegistrationDetail",
+  )<Envelope<EventRegistrationDetail>>({
+    pathParams: { registrationId: registrationId ?? "" },
+    enabled: !!registrationId,
+  });
+
+  const versionId = registrationRes?.data?.versionId;
+
+  const { data: contactsRes, isLoading: isContactsLoading } = useApiQuery(
+    "settingsContacts",
+  )<Envelope<ContactSettings>>({
+    queryParams: { versionId: versionId ?? undefined },
+    enabled: !!versionId,
+  });
+
+  const isLoading = isRegistrationLoading || (!!versionId && isContactsLoading);
+
+  const regDetail = registrationRes?.data;
+  const contactEmail = contactsRes?.data?.clubEmail || "sauravmdhr@gmail.com";
+
+  const formatDate = (dateStr?: string | null) => {
+    if (!dateStr) return "N/A";
+    try {
+      const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
+      return new Date(dateStr).toLocaleDateString("en-US", options);
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const getPrice = () => {
+    if (!regDetail?.event) return "Free";
+    return regDetail.event.feeType === "free" ? "Free" : regDetail.event.fee;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="py-0">
+        <TopBgContent className="z-0"></TopBgContent>
+        <div className="bg-[#F2F5FA] font-sans p-10 min-h-[500px] flex items-center justify-center">
+          <p className="text-center text-[#64748B] text-lg">Loading registration details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback to static dummy data if no registration ID was provided (e.g. direct nav)
+  const displayId = regDetail?.id ? `ICT_${regDetail.id.split("-")[0].toUpperCase()}` : "ICT_294138535";
+  const displayName = regDetail?.event?.title ?? "Mastering Component Driven Architecture";
+  const displayDate = formatDate(regDetail?.event?.date) !== "N/A" ? formatDate(regDetail?.event?.date) : "10th February, 2026";
+  const displayVenue = regDetail?.event?.location ?? "Prime College";
+  const displayPrice = regDetail?.event ? getPrice() : "Free";
+
   return (
     <div className="py-0">
       <TopBgContent className="z-0"></TopBgContent>
@@ -58,23 +131,22 @@ const PaymentSuccess = () => {
             </div>
           </div>
 
-          {/* EVent Details Card Section */}
-
+          {/* Event Details Card Section */}
           <div className="flex flex-col gap-[8px] md:min-w-[434px] mx-auto text-[10px] lg:text-[12px]">
             <div className="bg-[#F8FAFC] p-[12px] rounded-[6px]">
-              <InfoRow label="Registration ID" value={dummyEventDetail.id} />
+              <InfoRow label="Registration ID" value={displayId} />
             </div>
 
             <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">
               <span className="text-[#020919] font-medium">Event Details</span>
 
-              <InfoRow label="Event Name" value={dummyEventDetail.name} />
-              <InfoRow label="Event Date" value={dummyEventDetail.date} />
+              <InfoRow label="Event Name" value={displayName} />
+              <InfoRow label="Event Date" value={displayDate} />
 
-              <InfoRow label="Location" value={dummyEventDetail.venue} />
+              <InfoRow label="Location" value={displayVenue} />
               <InfoRow
                 label="Event Price"
-                value={dummyEventDetail.price}
+                value={displayPrice}
                 valueClassName="text-[#16A34A]"
               />
             </div>
@@ -82,7 +154,7 @@ const PaymentSuccess = () => {
             <div className="bg-[#F8FAFC] p-[12px] rounded-[6px]">
               <InfoRow
                 label="Contact Email:"
-                value={dummyEventDetail.contactEmail}
+                value={contactEmail}
               />
             </div>
           </div>
@@ -94,6 +166,7 @@ const PaymentSuccess = () => {
               label="Explore More Events"
               className="flex mx-auto shadow-[0px_0px_6px_0px_#00000033] text-nowrap w-full "
               type="button"
+              onClick={() => navigate("/events")}
             />{" "}
             <Button
               variant="solid-white"
@@ -101,6 +174,7 @@ const PaymentSuccess = () => {
               label="Contact Support"
               className="flex mx-auto text-[#3571F0] shadow-[0px_0px_6px_0px_#00000033] text-nowrap   w-full"
               type="button"
+              onClick={() => navigate("/contacts")}
             />
           </div>
         </div>

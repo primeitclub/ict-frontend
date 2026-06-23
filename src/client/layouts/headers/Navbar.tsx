@@ -5,6 +5,7 @@ import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
+import { LATEST_VERSION } from "../../routes/route-type";
 
 const Navbar = () => {
   const { getPath } = useVersion();
@@ -67,16 +68,20 @@ const Navbar = () => {
                     Versions
                   </h3>
                   <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
-                    {versions.map((v) => (
-                      <NavLink
-                        key={v}
-                        to={`/${v.toLowerCase()}`}
-                        className="hover:text-white transition-colors duration-300"
-                        onClick={() => setToggle(false)}
-                      >
-                        {v}
-                      </NavLink>
-                    ))}
+                    {versions.map((v) => {
+                      const lowerV = v.toLowerCase();
+                      const toPath = lowerV === LATEST_VERSION ? "/" : `/${lowerV}`;
+                      return (
+                        <NavLink
+                          key={v}
+                          to={toPath}
+                          className="hover:text-white transition-colors duration-300"
+                          onClick={() => setToggle(false)}
+                        >
+                          {v}
+                        </NavLink>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

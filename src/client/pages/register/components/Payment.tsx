@@ -1,13 +1,34 @@
 import { useRef, useState } from "react";
 import Upload from "../icons/Upload";
+import { useApiQuery } from "../../../../lib";
+import { useVersionData } from "../../../hooks/use-version-data";
 
 interface PaymentProps {
   onFileChange?: (file: File | null) => void;
+  selectedEvent?: {
+    feeType: string;
+    fee: string;
+  } | null;
 }
 
-export default function Payment({ onFileChange }: PaymentProps) {
+interface PaymentSettings {
+  qrCodeUrl: string | null;
+}
+
+export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const { versionId } = useVersionData();
+
+  const { data: paymentsRes } = useApiQuery("settingsPayments")<{
+    message: string;
+    data: PaymentSettings;
+  }>({
+    queryParams: { versionId: versionId ?? undefined },
+    enabled: !!versionId,
+  });
+
+  const qrCodeUrl = paymentsRes?.data?.qrCodeUrl ?? null;
 
   const handleBoxClick = () => {
     fileInputRef.current?.click();
@@ -21,6 +42,32 @@ export default function Payment({ onFileChange }: PaymentProps) {
       setPreview(null);
     }
     onFileChange?.(file);
+  };
+
+  if (!selectedEvent) {
+    return (
+      <div className="w-full max-w-4xl mx-auto text-center py-8 bg-[#F8FAFC] border border-dashed border-gray-300 rounded-lg p-6">
+        <p className="text-gray-500 text-[10px] md:text-sm">
+          Please select an event to see payment information.
+        </p>
+      </div>
+    );
+  }
+
+  if (selectedEvent?.feeType === "free") {
+    return (
+      <div className="w-full max-w-4xl mx-auto text-center py-8 bg-[#F4FBF7] border border-[#D1F2E0] rounded-lg p-6">
+        <h2 className="font-semibold text-[#16A34A] text-sm md:text-base mb-1">Free Event</h2>
+        <p className="text-gray-500 text-[10px] md:text-sm">
+          No payment is required for this event. You can proceed with registration without uploading a screenshot.
+        </p>
+      </div>
+    );
+  }
+
+  const getAmountText = () => {
+    if (!selectedEvent) return "Rs. 500";
+    return `Rs. ${selectedEvent.fee}`;
   };
 
   return (
@@ -70,17 +117,23 @@ export default function Payment({ onFileChange }: PaymentProps) {
         {/* QR Section */}
         <div className="flex flex-col items-center text-center">
           <div className="border p-3 bg-white rounded-lg shadow-sm">
-            <img
-              src="/qr.png"
-              alt="QR Code"
-              className="w-40 h-40 object-contain"
-            />
+            {qrCodeUrl ? (
+              <img
+                src={qrCodeUrl}
+                alt="Payment QR Code"
+                className="w-40 h-40 object-contain"
+              />
+            ) : (
+              <div className="w-40 h-40 flex items-center justify-center bg-gray-100 rounded text-gray-400 text-xs">
+                QR code not available
+              </div>
+            )}
           </div>
           <p className="text-[#BBC0CC] mt-3">
             Accepted via eSewa / Khalti / Bank Transfer
           </p>
           <p className="text-[#3571F0] font-medium mt-1 text-[10px] md:text-sm">
-            Amount: Rs. 500
+            Amount: {getAmountText()}
           </p>
         </div>
       </div>

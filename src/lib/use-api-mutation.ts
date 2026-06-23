@@ -53,13 +53,13 @@ type PathParamsArg<K extends ApiRouteKey> =
     ? { pathParams: TemplateVariables<ApiRoutes[K]> }
     : { pathParams?: never };
 
-interface UseApiMutationArgs<T, K extends ApiRouteKey> extends PathParamsArg<K> {
+type UseApiMutationArgs<T, K extends ApiRouteKey> = PathParamsArg<K> & {
   method?: HttpMutationMethod;
   onSuccess?: (data: T) => void;
   onError?: (error: ApiError) => void;
   /** Route keys to invalidate after a successful mutation (triggers refetch). */
   invalidateRoutes?: ApiRouteKey[];
-}
+};
 
 interface UseApiMutationResult<T, TPayload> {
   execute: (payload?: TPayload, options?: { pathParams?: Record<string, string> }) => Promise<T>;
