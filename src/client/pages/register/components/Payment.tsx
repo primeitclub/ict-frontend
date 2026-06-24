@@ -74,7 +74,7 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
     <div className="w-full max-w-4xl mx-auto text-[10px] md:text-sm">
       <h2 className="font-medium mb-2 text-sm">Payment Screenshot</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div className={qrCodeUrl ? "grid grid-cols-1 md:grid-cols-2 gap-6 items-center" : "max-w-md mx-auto"}>
         {/* Upload Box */}
         <div
           onClick={handleBoxClick}
@@ -115,27 +115,23 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
         </div>
 
         {/* QR Section */}
-        <div className="flex flex-col items-center text-center">
-          <div className="border p-3 bg-white rounded-lg shadow-sm">
-            {qrCodeUrl ? (
+        {qrCodeUrl && (
+          <div className="flex flex-col items-center text-center">
+            <div className="border p-3 bg-white rounded-lg shadow-sm">
               <img
                 src={qrCodeUrl}
                 alt="Payment QR Code"
                 className="w-40 h-40 object-contain"
               />
-            ) : (
-              <div className="w-40 h-40 flex items-center justify-center bg-gray-100 rounded text-gray-400 text-xs">
-                QR code not available
-              </div>
-            )}
+            </div>
+            <p className="text-[#BBC0CC] mt-3">
+              Accepted via eSewa / Khalti / Bank Transfer
+            </p>
+            <p className="text-[#3571F0] font-medium mt-1 text-[10px] md:text-sm">
+              Amount: {getAmountText()}
+            </p>
           </div>
-          <p className="text-[#BBC0CC] mt-3">
-            Accepted via eSewa / Khalti / Bank Transfer
-          </p>
-          <p className="text-[#3571F0] font-medium mt-1 text-[10px] md:text-sm">
-            Amount: {getAmountText()}
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );

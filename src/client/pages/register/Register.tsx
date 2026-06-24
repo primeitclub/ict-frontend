@@ -188,33 +188,47 @@ const Register = () => {
                 variant="radio"
                 options={["Yes", "No"]}
                 value={form.isStudent}
-                onChange={(v) => set("isStudent", v as "Yes" | "No")}
+                onChange={(v) => {
+                  set("isStudent", v as "Yes" | "No");
+                  if (v === "No") {
+                    setForm((prev) => ({
+                      ...prev,
+                      educationLevel: "",
+                      faculty: "",
+                      year: "",
+                    }));
+                  }
+                }}
               />
-              <InputBox
-                inputName="Education Level"
-                placeHolder="Choose your level"
-                variant="select"
-                options={EDUCATION_LEVELS}
-                value={form.educationLevel}
-                onChange={(v) => set("educationLevel", v)}
-              />
+              {form.isStudent === "Yes" && (
+                <InputBox
+                  inputName="Education Level"
+                  placeHolder="Choose your level"
+                  variant="select"
+                  options={EDUCATION_LEVELS}
+                  value={form.educationLevel}
+                  onChange={(v) => set("educationLevel", v)}
+                />
+              )}
             </div>
-            <div className="space-y-6 md:space-y-0 md:flex gap-6">
-              <InputBox
-                inputName="Your Faculty"
-                placeHolder="e.g. CSIT, BCA"
-                variant="box"
-                value={form.faculty}
-                onChange={(v) => set("faculty", v)}
-              />
-              <InputBox
-                inputName="Year/Batch"
-                placeHolder="e.g. 2078"
-                variant="box"
-                value={form.year}
-                onChange={(v) => set("year", v)}
-              />
-            </div>
+            {form.isStudent === "Yes" && (
+              <div className="space-y-6 md:space-y-0 md:flex gap-6">
+                <InputBox
+                  inputName="Your Faculty"
+                  placeHolder="e.g. CSIT, BCA"
+                  variant="box"
+                  value={form.faculty}
+                  onChange={(v) => set("faculty", v)}
+                />
+                <InputBox
+                  inputName="Year/Batch"
+                  placeHolder="e.g. 2078"
+                  variant="box"
+                  value={form.year}
+                  onChange={(v) => set("year", v)}
+                />
+              </div>
+            )}
           </div>
 
           {/* Event Selection & Payment */}

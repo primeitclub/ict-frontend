@@ -1,31 +1,33 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useApiQuery } from "../../../lib";
+import { useState, useEffect } from "react";
 import { Button } from "../../../shared/design-components";
 import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { Heading } from "../../../shared/design-components";
 import Success from "../register/icons/Success.svg";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
+
 interface EventRegistrationDetail {
   id: string;
+  eventId: string;
   versionId: string;
-  event: {
+  event?: {
     title: string;
     date: string | null;
     location: string;
     fee: string;
     feeType: string;
-  };
+  } | null;
 }
 
-interface ContactSettings {
-  clubEmail: string | null;
-}
-
-interface Envelope<T> {
-  status: string;
-  message: string;
-  data: T;
+interface EventDetail {
+  id: string;
+  title: string;
+  date: string | null;
+  location: string;
+  fee: string;
+  feeType: string;
 }
 
 const InfoRow = ({
@@ -52,40 +54,66 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const registrationId = searchParams.get("id");
 
-  const { data: registrationRes, isLoading: isRegistrationLoading } = useApiQuery(
-    "eventRegistrationDetail",
-  )<Envelope<EventRegistrationDetail>>({
-    pathParams: { registrationId: registrationId ?? "" },
-    enabled: !!registrationId,
-  });
+  const [regDetail, setRegDetail] = useState<EventRegistrationDetail | null>(null);
+  const [eventDetail, setEventDetail] = useState<EventDetail | null>(null);
+  const [contactEmail, setContactEmail] = useState("support@ictmeetup.com");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const versionId = registrationRes?.data?.versionId;
+  useEffect(() => {
+    if (!registrationId) return;
 
-  const { data: contactsRes, isLoading: isContactsLoading } = useApiQuery(
-    "settingsContacts",
-  )<Envelope<ContactSettings>>({
-    queryParams: { versionId: versionId ?? undefined },
-    enabled: !!versionId,
-  });
+    fetch(`${API_BASE}/event-registrations/${registrationId}`)
 
-  const isLoading = isRegistrationLoading || (!!versionId && isContactsLoading);
 
-  const regDetail = registrationRes?.data;
-  const contactEmail = contactsRes?.data?.clubEmail || "sauravmdhr@gmail.com";
+      .then((r) => r.json())
+
+      .then(async (res) => {
+        const detail: EventRegistrationDetail = res?.data;
+        setRegDetail(detail ?? null);
+
+        // If the relation returned the event, use it directly
+        if (detail?.event?.title) {
+          setEventDetail(detail.event as EventDetail);
+        } else if (detail?.eventId) {
+          // Fallback: fetch event directly using eventId
+          try {
+            const evRes = await fetch(`${API_BASE}/events/${detail.eventId}`);
+            const evJson = await evRes.json();
+            if (evJson?.data) setEventDetail(evJson.data);
+          } catch {/* ignore */}
+        }
+
+        // Fetch contact email using versionId
+        if (detail?.versionId) {
+          fetch(`${API_BASE}/settings/contacts?versionId=${detail.versionId}`)
+            .then((r) => r.json())
+            .then((cr) => {
+              const email = cr?.data?.clubEmail || cr?.data?.email;
+              if (email) setContactEmail(email);
+            })
+            .catch(() => {});
+        }
+      })
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+  }, [registrationId]);
+
 
   const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "N/A";
+    if (!dateStr) return "—";
     try {
       const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
-      return new Date(dateStr).toLocaleDateString("en-US", options);
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return "—";
+      return d.toLocaleDateString("en-US", options);
     } catch {
       return dateStr;
     }
   };
 
   const getPrice = () => {
-    if (!regDetail?.event) return "Free";
-    return regDetail.event.feeType === "free" ? "Free" : regDetail.event.fee;
+    if (!eventDetail) return "Free";
+    return eventDetail.feeType === "free" ? "Free" : eventDetail.fee;
   };
 
   if (isLoading) {
@@ -99,12 +127,11 @@ const PaymentSuccess = () => {
     );
   }
 
-  // Fallback to static dummy data if no registration ID was provided (e.g. direct nav)
-  const displayId = regDetail?.id ? `ICT_${regDetail.id.split("-")[0].toUpperCase()}` : "ICT_294138535";
-  const displayName = regDetail?.event?.title ?? "Mastering Component Driven Architecture";
-  const displayDate = formatDate(regDetail?.event?.date) !== "N/A" ? formatDate(regDetail?.event?.date) : "10th February, 2026";
-  const displayVenue = regDetail?.event?.location ?? "Prime College";
-  const displayPrice = regDetail?.event ? getPrice() : "Free";
+  const displayId = regDetail?.id ? `ICT_${regDetail.id.split("-")[0].toUpperCase()}` : "—";
+  const displayName = eventDetail?.title ?? "—";
+  const displayDate = formatDate(eventDetail?.date);
+  const displayVenue = eventDetail?.location ?? "—";
+  const displayPrice = eventDetail ? getPrice() : "—";
 
   return (
     <div className="py-0">
