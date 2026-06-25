@@ -8,7 +8,7 @@ import Events from "./icons/Events";
 import { Button } from "../../../shared/design-components";
 import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
 import { useVersionData } from "../../hooks/use-version-data";
 import { ictClient, ApiError } from "../../../lib";
@@ -28,6 +28,8 @@ const EDUCATION_LEVELS = ["School", "High School", "Bachelors", "Masters"];
 
 const Register = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const queryEventId = searchParams.get("eventId");
   const { versionId } = useVersionData();
   const { events } = useEventsList();
   const paymentFileRef = useRef<File | null>(null);
@@ -40,7 +42,7 @@ const Register = () => {
     educationLevel: "",
     faculty: "",
     year: "",
-    eventId: "",
+    eventId: queryEventId || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -64,7 +66,9 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    if (!paymentFileRef.current) {
+    const selectedEvent = publishedEvents.find((e) => e.id === form.eventId);
+    const isPaid = selectedEvent?.feeType === "paid";
+    if (isPaid && !paymentFileRef.current) {
       setErrorMsg("Please upload your payment screenshot.");
       return;
     }
@@ -85,12 +89,18 @@ const Register = () => {
     }
     data.append("eventId", form.eventId);
     data.append("versionId", versionId);
-    data.append("image", paymentFileRef.current);
+    if (paymentFileRef.current) {
+      data.append("image", paymentFileRef.current);
+    }
 
     setIsSubmitting(true);
     try {
-      await ictClient.post("/event-registrations", data);
-      navigate("/success");
+      const response = await ictClient.post<{ data: { id: string } }>(
+        "/event-registrations",
+        data,
+      );
+      const registrationId = response.data.id;
+      navigate(`/success?id=${registrationId}`);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         setErrorMsg(
@@ -178,33 +188,47 @@ const Register = () => {
                 variant="radio"
                 options={["Yes", "No"]}
                 value={form.isStudent}
-                onChange={(v) => set("isStudent", v as "Yes" | "No")}
+                onChange={(v) => {
+                  set("isStudent", v as "Yes" | "No");
+                  if (v === "No") {
+                    setForm((prev) => ({
+                      ...prev,
+                      educationLevel: "",
+                      faculty: "",
+                      year: "",
+                    }));
+                  }
+                }}
               />
-              <InputBox
-                inputName="Education Level"
-                placeHolder="Choose your level"
-                variant="select"
-                options={EDUCATION_LEVELS}
-                value={form.educationLevel}
-                onChange={(v) => set("educationLevel", v)}
-              />
+              {form.isStudent === "Yes" && (
+                <InputBox
+                  inputName="Education Level"
+                  placeHolder="Choose your level"
+                  variant="select"
+                  options={EDUCATION_LEVELS}
+                  value={form.educationLevel}
+                  onChange={(v) => set("educationLevel", v)}
+                />
+              )}
             </div>
-            <div className="space-y-6 md:space-y-0 md:flex gap-6">
-              <InputBox
-                inputName="Your Faculty"
-                placeHolder="e.g. CSIT, BCA"
-                variant="box"
-                value={form.faculty}
-                onChange={(v) => set("faculty", v)}
-              />
-              <InputBox
-                inputName="Year/Batch"
-                placeHolder="e.g. 2078"
-                variant="box"
-                value={form.year}
-                onChange={(v) => set("year", v)}
-              />
-            </div>
+            {form.isStudent === "Yes" && (
+              <div className="space-y-6 md:space-y-0 md:flex gap-6">
+                <InputBox
+                  inputName="Your Faculty"
+                  placeHolder="e.g. CSIT, BCA"
+                  variant="box"
+                  value={form.faculty}
+                  onChange={(v) => set("faculty", v)}
+                />
+                <InputBox
+                  inputName="Year/Batch"
+                  placeHolder="e.g. 2078"
+                  variant="box"
+                  value={form.year}
+                  onChange={(v) => set("year", v)}
+                />
+              </div>
+            )}
           </div>
 
           {/* Event Selection & Payment */}
@@ -229,7 +253,10 @@ const Register = () => {
                 if (found) set("eventId", found.id);
               }}
             />
-            <Payment onFileChange={handleFileChange} />
+            <Payment
+              onFileChange={handleFileChange}
+              selectedEvent={publishedEvents.find((e) => e.id === form.eventId)}
+            />
           </div>
 
           {errorMsg && (

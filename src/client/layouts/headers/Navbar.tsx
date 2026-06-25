@@ -68,9 +68,9 @@ const Navbar = () => {
                   <h3 className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent font-semibold text-xl mb-6 tracking-wide">
                     Versions
                   </h3>
-                  <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
+                   <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
                     {versions.map((v) => (
-                      <NavLink
+                         <NavLink
                         key={v}
                         to={`/${v.toLowerCase()}`}
                         className="hover:text-white transition-colors duration-300"
