@@ -6,6 +6,7 @@ interface TeamCardProps {
   id?: string;
   name: string;
   role: string;
+  imageUrl?: string | null;
   socialLinks: {
     instagram?: string;
     linkedin?: string;
@@ -13,12 +14,12 @@ interface TeamCardProps {
   };
 }
 
-export default function TeamCard({ name, role, socialLinks }: TeamCardProps) {
+export default function TeamCard({ name, role, imageUrl, socialLinks }: TeamCardProps) {
   return (
     <div className="grid">
       <div className="relative min-w-[160px] w-full max-w-[210px] h-fit">
         {/* Team Member Image */}
-        <img src={ref1} alt="team-image" className="rounded-2xl" />
+        <img src={imageUrl ?? ref1} alt="team-image" className="rounded-2xl" />
         {/* Icons on Image */}
         <div className="grid gap-2 absolute top-[12.96px] right-2">
           <a href={socialLinks.instagram}>

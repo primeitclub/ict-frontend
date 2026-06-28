@@ -2,7 +2,7 @@ name: ICT Meetup Dev Website CI/CD
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, admin-panel]
 
 jobs:
   build-and-deploy:
@@ -25,6 +25,7 @@ jobs:
         run: yarn build
         env:
           CI: false
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -33,3 +34,6 @@ jobs:
           username: ${{ secrets.FTP_DEV_USERNAME }}
           password: ${{ secrets.FTP_DEV_PASSWORD }}
           local-dir: ./dist/
+          protocol: ftps
+          port: 21
+          timeout: 60000

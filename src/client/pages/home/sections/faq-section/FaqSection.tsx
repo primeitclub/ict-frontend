@@ -1,42 +1,22 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import SectionContainer from "../../../../components/sectionContainer";
 import SectionHeader from "../../../../components/section-header";
 import FAQItem from "./FaqIteams";
-
-const faqs = [
-  {
-    question: "Who can participate in the event?",
-    answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations. Through our extensive network of tech companies and experts, students gain hands-on exposure to current trends, participate in practical workshops, and develop essential skills in professional environments.",
-  },
-  {
-    question: "Who can participate in the event?",
-    answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations.",
-  },
-  {
-    question: "Who can participate in the event?",
-    answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations.",
-  },
-  {
-    question: "Who can participate in the event?",
-    answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations.",
-  },
-  {
-    question: "Who can participate in the event?",
-    answer:
-      "ICT Meetup is not just a standard conference, it's an immersive experience that bridges the gap between academic education and real industry expectations.",
-  },
-];
+import { useHome } from "../../useHome";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  // FAQ is present ONLY for the current edition — the backend omits the `faq`
+  // key for past editions, so absence here means "don't render this section".
+  const { data: faqs } = useHome((d) => d.sections.faq);
+
   const handleToggle = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
   };
+
+  if (!faqs?.length) return null;
 
   return (
     <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12">
@@ -65,14 +45,24 @@ const FAQSection = () => {
       {/* FAQ List */}
       <div className="flex flex-col gap-4 max-w-4xl mx-auto">
         {faqs.map((faq, i) => (
-          <FAQItem
-            key={i}
-            index={i + 1}
-            question={faq.question}
-            answer={faq.answer}
-            isOpen={openIndex === i}
-            onToggle={() => handleToggle(i)}
-          />
+          // Index-staggered fade/slide-in so the list cascades top-to-bottom.
+          // Wrapping (rather than editing FAQItem) keeps the item's open/close
+          // logic untouched — this layer only owns the entrance animation.
+          <motion.div
+            key={faq.id}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.08 }}
+          >
+            <FAQItem
+              index={i + 1}
+              question={faq.title ?? ""}
+              answer={faq.description ?? ""}
+              isOpen={openIndex === i}
+              onToggle={() => handleToggle(i)}
+            />
+          </motion.div>
         ))}
       </div>
     </SectionContainer>

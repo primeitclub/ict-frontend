@@ -1,7 +1,12 @@
 import Speakers from "./../../../../../assets/speaker-1.png";
 import Rightarrow from "./../../../../../assets/events_navigation.svg";
+import type { Speaker } from "../../types";
 
-const SpeakerCard = () => {
+interface SpeakerCardProps {
+  speaker: Speaker;
+}
+
+const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
   return (
     <div
       style={{
@@ -32,16 +37,17 @@ const SpeakerCard = () => {
         {/* Text */}
         <div className="flex flex-col gap-3 sm:gap-2 items-start">
           <span className="font-semibold  text-[#DBF5FF] text-[28px] justify-start text-left">
-            Saugat
-            <br />
-            KC
+            {speaker.name}
           </span>
           <div className="flex flex-col items-start gap-1 sm:gap-1 mb-2 sm:mb-0  ">
             <span className="font-primary text-sm font-normal sm:font-medium">
-              Artificial Intelligence Engineer
+              {speaker.designation}
             </span>
-            <span className="text-xs text-[#BBC0CC]">Qniverse</span>
+            <span className="text-xs text-[#BBC0CC]">{speaker.company}</span>
           </div>
+          {/* TODO(mapping): the talk topic ("AI in Finance") has no field on the
+              Speaker entity. Hardcoded for now — confirm where this comes from
+              (talk/session relation?) before wiring. */}
           <div className="flex items-center gap-2 mt-1">
             <img src={Rightarrow} alt="Arrow" />
             <span className="text-[13px] font-semibold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
@@ -52,7 +58,11 @@ const SpeakerCard = () => {
 
         {/* Social Icons */}
         <div className="flex gap-3 ">
-          <a>
+          <a
+            href={speaker.socialLinks?.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               width="25"
               height="25"
@@ -74,7 +84,11 @@ const SpeakerCard = () => {
               />
             </svg>
           </a>
-          <a>
+          <a
+            href={speaker.socialLinks?.portfolio}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               width="25"
               height="25"
@@ -97,7 +111,11 @@ const SpeakerCard = () => {
               </defs>
             </svg>
           </a>
-          <a>
+          <a
+            href={speaker.socialLinks?.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               width="25"
               height="25"
@@ -123,8 +141,8 @@ const SpeakerCard = () => {
         {/* Speaker Image — sits naturally at the bottom */}
         <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px]">
           <img
-            src={Speakers}
-            alt="Speaker"
+            src={speaker.imageUrl ?? Speakers}
+            alt={speaker.name}
             className="object-contain object-top max-h-[220px] w-auto"
           />
         </div>

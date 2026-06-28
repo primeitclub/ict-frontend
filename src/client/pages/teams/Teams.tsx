@@ -5,81 +5,72 @@ import TeamCard from "./components/teamCard";
 import Dropdown from "./components/Dropdown";
 import { Heading } from "../../../shared/design-components";
 import { useState } from "react";
+import { useApiQuery } from "../../../lib";
+import { useVersionData } from "../../hooks/use-version-data";
 
-type Role =
-  | "All"
-  | "HR"
-  | "Finance"
-  | "Officers"
-  | "Outreach"
-  | "Organizer"
-  | "Directors"
-  | "Events"
-  | "Marketing"
-  | "Executive"
-  | "Public Relations"
-  | "General Member";
+interface Category {
+  id: string;
+  name: string;
+  displayName: string;
+}
 
-const roles: Role[] = [
-  "All",
-  "HR",
-  "Finance",
-  "Officers",
-  "Outreach",
-  "Organizer",
-  "Directors",
-  "Events",
-  "Marketing",
-  "Executive",
-  "Public Relations",
-  "General Member",
-];
-// Dummy Team Data
-const teamData = [
-  {
-    name: "Saugat KC",
-    role: "Social Media",
-    socialLinks: { instagram: "#" },
-  },
-  { name: "Saugat KC", role: "HR", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Finance", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Officers", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Outreach", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Executive", socialLinks: { instagram: "#" } },
-  {
-    name: "Saugat KC",
-    role: "Public Relations",
-    socialLinks: { instagram: "#" },
-  },
-  {
-    name: "Saugat KC",
-    role: "General Member",
-    socialLinks: { instagram: "#" },
-  },
-  { name: "Saugat KC", role: "Finance", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Officers", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Organizer", socialLinks: { instagram: "#" } },
-  { name: "Saugat KC", role: "Executive", socialLinks: { instagram: "#" } },
-  {
-    name: "Saugat KC",
-    role: "Public Relations",
-    socialLinks: { instagram: "#" },
-  },
-  {
-    name: "Saugat KC",
-    role: "General Member",
-    socialLinks: { instagram: "#" },
-  },
-];
+interface TeamMember {
+  id: string;
+  name: string;
+  imageUrl: string | null;
+  socialLinks: {
+    instagram?: string;
+    linkedin?: string;
+    portfolio?: string;
+  };
+  category: Category;
+  designation: { id: string; name: string } | null;
+}
+
+interface PaginatedResult<T> {
+  items: T[];
+  meta: { total: number; page: number; limit: number };
+}
+
+interface Envelope<T> {
+  status: string;
+  message: string;
+  data: T;
+}
 
 export default function Teams() {
-  const [activeRole, setActiveRole] = useState<Role>("All");
-  const filteredTeamData =
-    activeRole === "All"
-      ? teamData
-      : teamData.filter((member) => member.role === activeRole);
+  const { versionId, isLoading: versionLoading } = useVersionData();
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("all");
+
+  const { data: categoriesRes, isLoading: categoriesLoading } = useApiQuery(
+    "teamMemberCategories",
+  )<Envelope<PaginatedResult<Category>>>({
+    queryParams: { limit: 100 },
+    enabled: !!versionId,
+  });
+
+  const { data: membersRes, isLoading: membersLoading } = useApiQuery(
+    "teamMembers",
+  )<Envelope<PaginatedResult<TeamMember>>>({
+    queryParams: {
+      versionId: versionId ?? undefined,
+      ...(activeCategoryId !== "all" ? { categoryId: activeCategoryId } : {}),
+      limit: 200,
+    },
+    enabled: !!versionId,
+  });
+
+  const categories: Category[] = categoriesRes?.data?.items ?? [];
+  const members: TeamMember[] = membersRes?.data?.items ?? [];
+  const isLoading = versionLoading || categoriesLoading || membersLoading;
+
+  const categoryOptions = [
+    { id: "all", displayName: "All" },
+    ...categories.map((c) => ({ id: c.id, displayName: c.displayName })),
+  ];
+
+  const activeLabel =
+    categoryOptions.find((c) => c.id === activeCategoryId)?.displayName ?? "All";
 
   return (
     <SectionContainer as="section" className=" py-10">
@@ -90,49 +81,60 @@ export default function Teams() {
             Meet the <br /> Team
           </Heading>
 
-          {/* filter options Desktop */}
+          {/* Filter options — Desktop */}
           <div className="hidden md:flex md:flex-wrap gap-[12px] mb-10">
-            {roles.map((role, index) => (
+            {categoryOptions.map((cat) => (
               <FilterButton
-                key={index}
-                variant={activeRole === role ? "active" : "inactive"}
+                key={cat.id}
+                variant={activeCategoryId === cat.id ? "active" : "inactive"}
                 leftIcon={
                   <ArrowSVG
-                    useSolidStroke={activeRole === role} // toggle stroke
-                    solidStrokeColor="#DBF5FF" // set solid color
-                    className={activeRole === role ? "rotate-[38deg]" : ""}
+                    useSolidStroke={activeCategoryId === cat.id}
+                    solidStrokeColor="#DBF5FF"
+                    className={activeCategoryId === cat.id ? "rotate-[38deg]" : ""}
                   />
                 }
-                onClick={() => setActiveRole(role)}
-                label={role}
-                className=" gap-[8.42px] h-fit"
+                onClick={() => setActiveCategoryId(cat.id)}
+                label={cat.displayName}
+                className="gap-[8.42px] h-fit"
               />
             ))}
           </div>
 
-          {/* Filter Option Mobile */}
+          {/* Filter Option — Mobile */}
           <div className="md:hidden font-sans font-medium max-w-[248px] mx-auto mt-10 mb-20 text-[12px] text-black">
             <Dropdown
-              options={roles}
-              value={activeRole}
-              onChange={(role) => setActiveRole(role as Role)}
+              options={categoryOptions.map((c) => c.displayName)}
+              value={activeLabel}
+              onChange={(label) => {
+                const found = categoryOptions.find((c) => c.displayName === label);
+                if (found) setActiveCategoryId(found.id);
+              }}
             />
           </div>
         </div>
 
-        {/* Team members */}
-        {/* <div className="font-base gap-x-[42px] w-fit mx-auto grid justify-between grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%] lg:gap-x-[36px]"> */}
-
+        {/* Team members grid */}
         <div className="font-base gap-x-[16px] lg:gap-x-[20px] w-full grid justify-items-center grid-cols-2 lg:grid-cols-3 md:w-[60%] lg:w-[70%]">
-          {" "}
-          {filteredTeamData.map((member, index) => (
-            <TeamCard
-              key={index}
-              name={member.name}
-              role={member.role}
-              socialLinks={member.socialLinks}
-            />
-          ))}
+          {isLoading ? (
+            <p className="col-span-2 lg:col-span-3 text-center text-white/60 py-20">
+              Loading...
+            </p>
+          ) : members.length === 0 ? (
+            <p className="col-span-2 lg:col-span-3 text-center text-white/60 py-20">
+              No team members found.
+            </p>
+          ) : (
+            members.map((member) => (
+              <TeamCard
+                key={member.id}
+                name={member.name}
+                role={member.designation?.name ?? member.category.displayName}
+                imageUrl={member.imageUrl}
+                socialLinks={member.socialLinks ?? {}}
+              />
+            ))
+          )}
         </div>
       </div>
     </SectionContainer>

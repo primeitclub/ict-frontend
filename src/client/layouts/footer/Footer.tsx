@@ -6,10 +6,56 @@ import PrimeITClub from "../../../assets/PrimeITClub.svg";
 import PrimeCollege from "../../../assets/PrimeCollege.svg";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
+import { useApiQuery } from "../../../lib";
+import { useVersionData } from "../../hooks/use-version-data";
+
+interface Envelope<T> {
+  status: string;
+  message: string;
+  data: T;
+}
+
+interface ContactSettings {
+  clubEmail: string | null;
+  clubPhoneNumber: string | null;
+}
+
+interface SocialMediaSettings {
+  socialMediaLinks: { platform: string; link: string }[] | null;
+}
 
 export const Footer = () => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
+  const { versionId } = useVersionData();
+
+  const { data: contactsRes } = useApiQuery("settingsContacts")<
+    Envelope<ContactSettings>
+  >({
+    queryParams: { versionId: versionId ?? undefined },
+    enabled: !!versionId,
+  });
+
+  const { data: socialRes } = useApiQuery("settingsSocialMedia")<
+    Envelope<SocialMediaSettings>
+  >({
+    queryParams: { versionId: versionId ?? undefined },
+    enabled: !!versionId,
+  });
+
+  const clubEmail = contactsRes?.data?.clubEmail || "itclub.prime@prime.edu.np";
+  const clubPhone = contactsRes?.data?.clubPhoneNumber || "+123 45 6 789";
+
+  const socialLinks = socialRes?.data?.socialMediaLinks ?? [];
+  const facebookLink = socialLinks.find(
+    (l) => l.platform.toLowerCase() === "facebook",
+  )?.link || "#";
+  const instagramLink = socialLinks.find(
+    (l) => l.platform.toLowerCase() === "instagram",
+  )?.link || "#";
+  const linkedinLink = socialLinks.find(
+    (l) => l.platform.toLowerCase() === "linkedin",
+  )?.link || "#";
 
   const pages = [
     { path: "/", label: "Home" },
@@ -69,10 +115,10 @@ export const Footer = () => {
             Contact Us
           </h1>
           <ul className="lg:mt-[16px] text-sm lg:text-base">
-            <li>+123 45 6 789</li>
+            <li>{clubPhone}</li>
           </ul>
           <ul className="lg:mt-[16px] text-sm lg:text-base">
-            <li>itclub.prime@prime.edu.np</li>
+            <li>{clubEmail}</li>
           </ul>
         </div>
         <div className="text-center lg:text-left ">
@@ -84,7 +130,9 @@ export const Footer = () => {
               {" "}
               <li>
                 <a
-                  href="#"
+                  href={facebookLink}
+                  target={facebookLink !== "#" ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="lg:mt-[17px] flex items-center gap-[10px]"
                 >
                   <span>
@@ -115,7 +163,9 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href={instagramLink}
+                  target={instagramLink !== "#" ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="lg:mt-[5px] flex items-center gap-[12px] "
                 >
                   <span>
@@ -140,7 +190,9 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href={linkedinLink}
+                  target={linkedinLink !== "#" ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="lg:mt-[5px] flex items-center gap-[12px] "
                 >
                   <span>

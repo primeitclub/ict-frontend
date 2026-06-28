@@ -10,7 +10,7 @@ export default {
     extend: {
       backgroundColor: {
         // background colors 
-        'primary': '#020919',
+        'primary': '#010005',
         'primary-cyan':'#3571F0',
         'primary-cyan-dark':'#0099cc',       
         'secondary': '#212121',     

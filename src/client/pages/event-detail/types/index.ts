@@ -8,8 +8,8 @@ export interface ISpeakerSocials {
 export interface ISpeaker {
   name: string;
   role: string;
-  company: string;
-  bio: string;
+  company?: string;
+  bio?: string;
   image: string;
   socials?: ISpeakerSocials;
 }

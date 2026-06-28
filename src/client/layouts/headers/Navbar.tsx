@@ -5,11 +5,13 @@ import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
+import { useHome } from "../../pages/home/useHome";
 
 const Navbar = () => {
   const { getPath } = useVersion();
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
+  const { data: logo } = useHome((d) => d.edition.logoPath ?? d.edition.logo);
 
   const pages = [
     { path: "/", label: "Home" },
@@ -22,13 +24,13 @@ const Navbar = () => {
   const versions = ["V8", "V7", "V6", "V5"];
 
   return (
-    <header className="sticky top-0 z-50 w-full h-[63px] bg-[#020919] transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full h-[63px] bg-primary transition-all duration-300">
       <SectionContainer
         width="navbar"
         className="flex items-center justify-between h-full w-full !py-0"
       >
         <div className="hover:cursor-pointer" onClick={() => navigate("/")}>
-          <Logo2 />
+          <Logo2 src={logo} />
         </div>
 
         <div className="sm:hidden">
@@ -51,7 +53,13 @@ const Navbar = () => {
                   {pages.map(({ label, path }) => (
                     <NavLink
                       key={`${label}-${path}`}
-                      className="text-white"
+                      className={({ isActive }) =>
+                        `transition-colors duration-300 ${
+                          isActive
+                            ? "text-nav-active font-semibold"
+                            : "text-nav-default hover:text-nav-hover"
+                        }`
+                      }
                       to={getPath(path)}
                       onClick={() => setToggle(false)}
                     >
@@ -66,9 +74,9 @@ const Navbar = () => {
                   <h3 className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent font-semibold text-xl mb-6 tracking-wide">
                     Versions
                   </h3>
-                  <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
+                   <div className="flex flex-col items-center gap-6 text-base font-normal text-gray-400">
                     {versions.map((v) => (
-                      <NavLink
+                         <NavLink
                         key={v}
                         to={`/${v.toLowerCase()}`}
                         className="hover:text-white transition-colors duration-300"
@@ -84,13 +92,17 @@ const Navbar = () => {
           )}
         </div>
 
-        <nav className="hidden gap-8 text-xl sm:flex text-white">
+        <nav className="hidden gap-8 text-xl sm:flex">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}
               to={getPath(path)}
               className={({ isActive }) =>
-                isActive ? "text-secondary" : "hover:text-secondary/80"
+                `transition-colors duration-300 ${
+                  isActive
+                    ? "text-nav-active font-semibold"
+                    : "text-nav-default hover:text-nav-hover"
+                }`
               }
             >
               {label}
