@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import image from "../../../../../../public/ICT Meet/Arc-1.png"
 import { useHome } from "../../useHome";
+import { Link } from "react-router-dom";
 
 function formatEventDateRange(startDate?: string | null, endDate?: string | null): string {
   if (!startDate || !endDate) return "";
@@ -84,18 +85,22 @@ export function LandingSection() {
           </div> */}
         </div>
         <div className="flex sm:flex-row flex-col gap-4 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
-          <Button
-            variant="glass"
-            className="text-xs sm:text-base"
-            rightIcon={<ChevronRight />}
-            label="Register Now "
-          />
-          <Button
-            variant="glass"
-            className="text-xs sm:text-base"
-            rightIcon={<ChevronRight />}
-            label="Be a Sponsor"
-          />
+          <Link to={"/register"}>
+            <Button
+              variant="glass"
+              className="text-xs sm:text-base"
+              rightIcon={<ChevronRight />}
+              label="Register Now "
+            />
+          </Link>
+          <Link to={"/sponsors"}>
+            <Button
+              variant="glass"
+              className="text-xs sm:text-base"
+              rightIcon={<ChevronRight />}
+              label="Be a Sponsor"
+            />
+          </Link>
         </div>
       </motion.div>
 
