@@ -21,9 +21,9 @@ export interface EventDetailData {
     name: string;
     designation: string;
     company: string | null;
+    description?: string | null;
     imageUrl: string | null;
     socialLinks: { instagram?: string; linkedin?: string; portfolio?: string } | null;
-    bio?: string;
   } | null;
 }
 
