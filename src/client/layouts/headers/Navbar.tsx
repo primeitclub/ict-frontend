@@ -53,7 +53,13 @@ const Navbar = () => {
                   {pages.map(({ label, path }) => (
                     <NavLink
                       key={`${label}-${path}`}
-                      className="text-white"
+                      className={({ isActive }) =>
+                        `transition-colors duration-300 ${
+                          isActive
+                            ? "text-nav-active font-semibold"
+                            : "text-nav-default hover:text-nav-hover"
+                        }`
+                      }
                       to={getPath(path)}
                       onClick={() => setToggle(false)}
                     >
@@ -86,13 +92,17 @@ const Navbar = () => {
           )}
         </div>
 
-        <nav className="hidden gap-8 text-xl sm:flex text-white">
+        <nav className="hidden gap-8 text-xl sm:flex">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}
               to={getPath(path)}
               className={({ isActive }) =>
-                isActive ? "text-secondary" : "hover:text-secondary/80"
+                `transition-colors duration-300 ${
+                  isActive
+                    ? "text-nav-active font-semibold"
+                    : "text-nav-default hover:text-nav-hover"
+                }`
               }
             >
               {label}
