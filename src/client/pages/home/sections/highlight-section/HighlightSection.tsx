@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useHome } from "../../useHome";
 import type { ContentType } from "./types";
+import { slugify } from "../../../../../lib";
 
 export default function HighlightSection() {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -138,7 +139,7 @@ export default function HighlightSection() {
             className="pb-16"
           >
             {cards.map((item, index) => (
-              <SwiperSlide key={index} className="py-2">
+              <SwiperSlide key={index} className="h-auto">
                 {/*
                   Each card uses its loop index as a stagger delay (index * 0.1s),
                   so the row reveals left-to-right instead of all at once — that
@@ -155,7 +156,7 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail/${item.id}`)}
+                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
                     item={item}
                   />
                 </motion.div>

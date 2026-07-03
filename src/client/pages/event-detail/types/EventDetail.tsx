@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { EventDetailBanner } from "../components/EventDetailBanner";
+import { slugify } from "../../../../lib";
 import { SeatsAndQueryCard } from "../components/SeatsAndQueryCard";
 import { EventDetailTabs } from "../components/EventDetailTabs";
 import SectionContainer from "../../../components/sectionContainer";
@@ -18,12 +19,13 @@ import type { ContentType } from "../../event/types";
 
 export default function EventsDetail() {
   const { eventId } = useParams<{ eventId: string }>();
+  const navigate = useNavigate();
   const { event, isLoading, isError } = useEventDetail(eventId);
 
   // Other events: all published events excluding the current one
   const { events: otherEvents } = useEventsList();
   const relatedEvents = otherEvents
-    .filter((e) => e.id !== eventId)
+    .filter((e) => e.id !== event?.id)
     .slice(0, 8);
 
   if (isLoading) {
@@ -98,7 +100,12 @@ export default function EventsDetail() {
                   };
                   return (
                     <SwiperSlide key={e.id}>
-                      <Card item={cardItem} />
+                      <div
+                        onClick={() => navigate(`/event-detail/${slugify(e.title)}`)}
+                        className="cursor-pointer"
+                      >
+                        <Card item={cardItem} />
+                      </div>
                     </SwiperSlide>
                   );
                 })}

@@ -56,12 +56,13 @@ const PaymentSuccess = () => {
 
   const [regDetail, setRegDetail] = useState<EventRegistrationDetail | null>(null);
   const [eventDetail, setEventDetail] = useState<EventDetail | null>(null);
-  const [contactEmail, setContactEmail] = useState("support@ictmeetup.com");
-  const [isLoading, setIsLoading] = useState(true);
+  const [contactEmail, setContactEmail] = useState("itclubprime@Prime.edu.np");
+  const [isLoading, setIsLoading] = useState(!!registrationId);
 
   useEffect(() => {
-    if (!registrationId) return;
-
+    if (!registrationId) {
+      return;
+    }
     fetch(`${API_BASE}/event-registrations/${registrationId}`)
 
 
