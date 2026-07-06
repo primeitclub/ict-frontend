@@ -5,14 +5,6 @@ interface EventsOverviewProps {
 }
 
 export const EventsOverview = ({ event }: EventsOverviewProps) => {
-  const registrationDeadline = event.registrationDeadline
-    ? new Date(event.registrationDeadline).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
-
   return (
     <div className="flex flex-col gap-8">
       {/* Description */}
@@ -21,26 +13,6 @@ export const EventsOverview = ({ event }: EventsOverviewProps) => {
         <p className="text-base text-gray-700 leading-relaxed text-justify">
           {event.description}
         </p>
-        <div className="flex flex-col gap-1 text-base text-[#2d2d2d]">
-          {event.startTime && (
-            <p>
-              <span className="font-medium">Start Time:</span> {event.startTime}
-              {event.endTime ? ` – ${event.endTime}` : ""}
-            </p>
-          )}
-          {registrationDeadline && (
-            <p>
-              <span className="font-medium">Registration Closes:</span>{" "}
-              {registrationDeadline}
-            </p>
-          )}
-          <p>
-            <span className="font-medium">Location:</span> {event.location}
-          </p>
-          <p>
-            <span className="font-medium">Total Seats:</span> {event.totalSeats}
-          </p>
-        </div>
       </div>
     </div>
   );

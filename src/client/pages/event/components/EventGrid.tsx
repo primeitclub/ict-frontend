@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "../../../components/card";
 import type { ApiEvent } from "../useEvents";
 import type { ContentType } from "../types";
+import { slugify } from "../../../../lib";
 
 interface EventGridProps {
   events: ApiEvent[];
@@ -52,7 +53,7 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
       {events.map((event) => (
         <div
           key={event.id}
-          onClick={() => navigate(`/event-detail/${event.id}`)}
+          onClick={() => navigate(`/event-detail/${slugify(event.title)}`)}
           className="cursor-pointer"
         >
           <Card item={toCardItem(event)} />
