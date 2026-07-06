@@ -55,7 +55,7 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
           onClick={() => navigate(`/event-detail/${event.id}`)}
           className="cursor-pointer"
         >
-          <Card item={toCardItem(event)} />
+          <Card item={toCardItem(event)} eventId={event.id} />
         </div>
       ))}
     </div>

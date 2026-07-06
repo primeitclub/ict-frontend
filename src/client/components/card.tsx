@@ -6,9 +6,10 @@ import { cn } from "../../shared/utils/cn";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
+  eventId?: string;
 }
 
-const Card = ({ item, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   return (
     <div
@@ -68,7 +69,7 @@ const Card = ({ item, className, ...rest }: CardProps) => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/register`);
+            navigate(eventId ? `/register?eventId=${eventId}` : `/register`);
           }}
           label="Register Now"
           fullWidth

@@ -157,6 +157,7 @@ export default function HighlightSection() {
                     className="hover:cursor-pointer "
                     onClick={() => navigate(`/event-detail/${item.id}`)}
                     item={item}
+                    eventId={item.id}
                   />
                 </motion.div>
               </SwiperSlide>
