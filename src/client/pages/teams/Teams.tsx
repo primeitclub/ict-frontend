@@ -72,13 +72,17 @@ export default function Teams() {
   const activeLabel =
     categoryOptions.find((c) => c.id === activeCategoryId)?.displayName ?? "All";
 
+  // Heading tracks the selected tag: "All" shows the generic "Team",
+  // any other category shows its display name (e.g. "Meet the Organizer").
+  const headingLabel = activeCategoryId === "all" ? "Team" : activeLabel;
+
   return (
     <SectionContainer as="section" className=" py-10">
       <div className="gap-10 md:flex items-start">
         <div className="md:w-[40%] md:sticky md:top-10 h-fit">
           {/* Heading */}
           <Heading className="text-center font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent md:text-left">
-            Meet the <br /> Team
+            Meet the <br /> {headingLabel}
           </Heading>
 
           {/* Filter options — Desktop */}

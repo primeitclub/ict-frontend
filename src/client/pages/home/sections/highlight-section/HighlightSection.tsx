@@ -14,10 +14,10 @@ import SvgIcon from "../../../../components/icon/svgIcon";
 import { tabs } from "./data";
 import { Button } from "../../../../../shared/design-components";
 import NavButton from "./components/NavButton";
-import { useNavigate } from "react-router-dom";
-import { useVersion } from "../../../../routes/VersionContext";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useHome } from "../../useHome";
+import { useVersion } from "../../../../routes/VersionContext";
 import type { ContentType } from "./types";
 import { slugify } from "../../../../../lib";
 
@@ -168,8 +168,8 @@ export default function HighlightSection() {
           </Swiper>
 
           <div className="custom-pagination flex justify-center lg:hidden mt-8 gap-2"></div>
-
-          <Button
+            <Link to={getPath("/events")}>
+            <Button
             className="flex items-center justify-center mx-auto"
             rightIcon={
               <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
@@ -179,6 +179,8 @@ export default function HighlightSection() {
             label="View more"
             variant="ghost"
           />
+            </Link>
+          
         </div>
       </div>
     </div>
