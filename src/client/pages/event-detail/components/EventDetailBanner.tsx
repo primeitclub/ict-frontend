@@ -1,5 +1,6 @@
 import SectionContainer from "../../../components/sectionContainer";
 import { useNavigate } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
 import type { EventDetailData } from "../useEventDetail";
 
 interface EventDetailBannerProps {
@@ -8,6 +9,7 @@ interface EventDetailBannerProps {
 
 export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const isOpen = event.status === "published";
   const dateLabel = event.date
     ? new Date(event.date).toLocaleDateString("en-US", {
@@ -77,7 +79,7 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
         {/* CTA Button */}
         <div className="w-full md:w-auto md:flex-shrink-0 md:ml-8">
           <button
-            onClick={() => navigate(`/register?eventId=${event.id}`)}
+            onClick={() => navigate(`${getPath("/register")}?eventId=${event.id}`)}
             className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#3571F0" }}
           >

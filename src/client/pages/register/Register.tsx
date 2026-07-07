@@ -11,6 +11,7 @@ import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
 import { useVersionData } from "../../hooks/use-version-data";
+import { useVersion } from "../../routes/VersionContext";
 import { ictClient, ApiError } from "../../../lib";
 
 interface FormState {
@@ -28,6 +29,7 @@ const EDUCATION_LEVELS = ["School", "High School", "Bachelors", "Masters"];
 
 const Register = () => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const [searchParams] = useSearchParams();
   const queryEventId = searchParams.get("eventId");
   const { versionId } = useVersionData();
@@ -100,7 +102,7 @@ const Register = () => {
         data,
       );
       const registrationId = response.data.id;
-      navigate(`/success?id=${registrationId}`);
+      navigate(`${getPath("/success")}?id=${registrationId}`);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         setErrorMsg(

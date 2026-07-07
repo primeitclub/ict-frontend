@@ -15,6 +15,7 @@ import { tabs } from "./data";
 import { Button } from "../../../../../shared/design-components";
 import NavButton from "./components/NavButton";
 import { useNavigate } from "react-router-dom";
+import { useVersion } from "../../../../routes/VersionContext";
 import { motion } from "framer-motion";
 import { useHome } from "../../useHome";
 import type { ContentType } from "./types";
@@ -53,6 +54,7 @@ export default function HighlightSection() {
   };
 
   const navigate = useNavigate();
+  const { getPath } = useVersion();
 
   if (!cards.length) return null;
 
@@ -156,7 +158,7 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
+                    onClick={() => navigate(getPath(`/event-detail/${slugify(item.title)}`))}
                     item={item}
                     eventId={item.id}
                   />

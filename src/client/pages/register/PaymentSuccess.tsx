@@ -1,4 +1,5 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useVersion } from "../../routes/VersionContext";
 import { useState, useEffect } from "react";
 import { Button } from "../../../shared/design-components";
 import { ChevronRight } from "lucide-react";
@@ -51,6 +52,7 @@ const InfoRow = ({
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const [searchParams] = useSearchParams();
   const registrationId = searchParams.get("id");
 
@@ -194,7 +196,7 @@ const PaymentSuccess = () => {
               label="Explore More Events"
               className="flex mx-auto shadow-[0px_0px_6px_0px_#00000033] text-nowrap w-full "
               type="button"
-              onClick={() => navigate("/events")}
+              onClick={() => navigate(getPath("/events"))}
             />{" "}
             <Button
               variant="solid-white"
@@ -202,7 +204,7 @@ const PaymentSuccess = () => {
               label="Contact Support"
               className="flex mx-auto text-[#3571F0] shadow-[0px_0px_6px_0px_#00000033] text-nowrap   w-full"
               type="button"
-              onClick={() => navigate("/contacts")}
+              onClick={() => navigate(getPath("/contacts"))}
             />
           </div>
         </div>

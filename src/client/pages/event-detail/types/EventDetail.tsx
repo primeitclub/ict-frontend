@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
 import { EventDetailBanner } from "../components/EventDetailBanner";
 import { slugify } from "../../../../lib";
 import { SeatsAndQueryCard } from "../components/SeatsAndQueryCard";
@@ -20,6 +21,7 @@ import type { ContentType } from "../../event/types";
 export default function EventsDetail() {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const { event, isLoading, isError } = useEventDetail(eventId);
 
   // Other events: all published events excluding the current one
@@ -101,7 +103,7 @@ export default function EventsDetail() {
                   return (
                     <SwiperSlide key={e.id}>
                       <div
-                        onClick={() => navigate(`/event-detail/${slugify(e.title)}`)}
+                        onClick={() => navigate(getPath(`/event-detail/${slugify(e.title)}`))}
                         className="cursor-pointer"
                       >
                         <Card item={cardItem} />

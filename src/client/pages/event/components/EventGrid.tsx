@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
 import Card from "../../../components/card";
 import type { ApiEvent } from "../useEvents";
 import type { ContentType } from "../types";
@@ -28,6 +29,7 @@ function toCardItem(event: ApiEvent): ContentType {
 
 const EventGrid = ({ events, isLoading }: EventGridProps) => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
 
   if (isLoading) {
     return (
@@ -53,7 +55,7 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
       {events.map((event) => (
         <div
           key={event.id}
-          onClick={() => navigate(`/event-detail/${slugify(event.title)}`)}
+          onClick={() => navigate(getPath(`/event-detail/${slugify(event.title)}`))}
           className="cursor-pointer"
         >
           <Card item={toCardItem(event)} eventId={event.id} />
