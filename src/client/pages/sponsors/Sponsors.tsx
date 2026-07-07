@@ -3,7 +3,10 @@ import SponsorData from "./SponsorData.tsx";
 import GlowCircle from "./GlowCircle.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
-import { Mail, Phone } from "lucide-react";
+import { Heading } from "../../../shared/design-components";
+import { Mail, Phone, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useVersion } from "../../routes/VersionContext";
 
 interface Category {
   id: string;
@@ -48,6 +51,7 @@ interface ContactSettings {
 
 const Sponsors = () => {
   const { versionId, isLoading: versionLoading } = useVersionData();
+  const { getPath } = useVersion();
 
   const { data: categoriesRes, isLoading: categoriesLoading } = useApiQuery(
     "sponsorCategories",
@@ -98,10 +102,19 @@ const Sponsors = () => {
         ? organizerDepts
         : contactData?.contactDepartments?.slice(0, 1) ?? [];
 
+    const email = contactData?.email ?? contactData?.clubEmail ?? null;
+    const phone = contactData?.phoneNumber ?? contactData?.clubPhoneNumber ?? null;
+
+    // The whole card is a single link to the (version-aware) contact page.
+    // Contact details are shown as read-only chips so we don't nest anchors.
     return (
-      <div className="w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl relative overflow-hidden mt-10 flex flex-col gap-6">
+      <Link
+        to={getPath("/contacts")}
+        aria-label="Become a sponsor — go to the contact page"
+        className="group block w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(53,113,240,0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
+      >
         {/* Subtle background glow */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 group-hover:bg-blue-500/20 rounded-full blur-3xl pointer-events-none transition-colors duration-300" />
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-between relative z-10 w-full">
@@ -121,24 +134,25 @@ const Sponsors = () => {
 
           <div className="flex flex-col gap-4 w-full md:w-auto shrink-0 font-sans">
             <div className="flex flex-col gap-3 items-center md:items-start text-sm sm:text-base text-white/95">
-              {(contactData?.email || contactData?.clubEmail) && (
-                <a
-                  href={`mailto:${contactData.email ?? contactData.clubEmail}`}
-                  className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 w-full justify-center md:justify-start"
-                >
+              {email && (
+                <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all duration-300 w-full justify-center md:justify-start">
                   <Mail size={18} className="text-blue-400 shrink-0" />
-                  <span>{contactData.email ?? contactData.clubEmail}</span>
-                </a>
+                  <span className="truncate">{email}</span>
+                </div>
               )}
-              {(contactData?.phoneNumber || contactData?.clubPhoneNumber) && (
-                <a
-                  href={`tel:${contactData.phoneNumber ?? contactData.clubPhoneNumber}`}
-                  className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 w-full justify-center md:justify-start"
-                >
+              {phone && (
+                <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all duration-300 w-full justify-center md:justify-start">
                   <Phone size={18} className="text-blue-400 shrink-0" />
-                  <span>{contactData.phoneNumber ?? contactData.clubPhoneNumber}</span>
-                </a>
+                  <span>{phone}</span>
+                </div>
               )}
+              <span className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#3571F0] group-hover:bg-[#2a5fd6] text-white font-semibold w-full justify-center md:justify-start transition-colors duration-300">
+                Get in Touch
+                <ArrowRight
+                  size={18}
+                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </span>
             </div>
           </div>
         </div>
@@ -157,19 +171,14 @@ const Sponsors = () => {
                     className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-white/5 border border-white/5 text-sm"
                   >
                     <span className="text-white/90 font-medium">{contact.name}</span>
-                    <a
-                      href={`tel:${contact.phone}`}
-                      className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
-                    >
-                      {contact.phone}
-                    </a>
+                    <span className="text-blue-400 font-medium">{contact.phone}</span>
                   </div>
                 ))
               )}
             </div>
           </div>
         )}
-      </div>
+      </Link>
     );
   };
 
@@ -187,18 +196,45 @@ const Sponsors = () => {
     );
   }
 
-  // Group sponsors by category, preserving category sort order.
-  const grouped = categories.map((cat, idx) => ({
-    category: cat,
-    items: sponsors
-      .filter((s) => s.category?.id === cat.id)
-      .slice()
-      .sort((a, b) => a.displayOrder - b.displayOrder),
-    // First category uses the "big" title style; subsequent use the smaller one.
-    big: idx === 0,
-    // Categories with displayOrder ≤ 3 are treated as tier sponsors (larger slots).
-    sponsortier: cat.displayOrder <= 3,
-  })).filter((g) => g.items.length > 0);
+  // Only sponsors that actually have a logo can be rendered.
+  const renderableSponsors = sponsors.filter((s) => !!s.imageUrl);
+
+  // Prefer the authoritative category record (with displayOrder / displayName)
+  // from the categories endpoint, but fall back to the category embedded on the
+  // sponsor — and finally to an "Others" bucket — so newly-added sponsors always
+  // render even when the two endpoints are out of sync.
+  const categoryById = new Map(categories.map((c) => [c.id, c]));
+  const OTHERS_CATEGORY: Category = {
+    id: "__others__",
+    name: "others",
+    displayName: "Our Sponsors",
+    displayOrder: Number.MAX_SAFE_INTEGER,
+  };
+
+  const groupMap = new Map<string, { category: Category; items: Sponsor[] }>();
+  for (const sponsor of renderableSponsors) {
+    const category =
+      (sponsor.category && categoryById.get(sponsor.category.id)) ??
+      sponsor.category ??
+      OTHERS_CATEGORY;
+    const group = groupMap.get(category.id);
+    if (group) {
+      group.items.push(sponsor);
+    } else {
+      groupMap.set(category.id, { category, items: [sponsor] });
+    }
+  }
+
+  const grouped = Array.from(groupMap.values())
+    .sort((a, b) => a.category.displayOrder - b.category.displayOrder)
+    .map((group, idx) => ({
+      category: group.category,
+      items: group.items.slice().sort((a, b) => a.displayOrder - b.displayOrder),
+      // First category uses the "big" title style; subsequent use the smaller one.
+      big: idx === 0,
+      // Categories with displayOrder ≤ 3 are treated as tier sponsors (larger slots).
+      sponsortier: group.category.displayOrder <= 3,
+    }));
 
   return (
     <SectionContainer>

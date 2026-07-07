@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import image from "../../../../../../public/ICT Meet/Arc-1.png"
 import { useHome } from "../../useHome";
 import { Link } from "react-router-dom";
+import { useVersion } from "../../../../routes/VersionContext";
 
 function formatEventDateRange(startDate?: string | null, endDate?: string | null): string {
   if (!startDate || !endDate) return "";
@@ -27,6 +28,7 @@ function formatEventDateRange(startDate?: string | null, endDate?: string | null
 export function LandingSection() {
   const { data: edition } = useHome((d) => d.edition);
   const { data: hero } = useHome((d) => d.sections.hero);
+  const { getPath } = useVersion();
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
 
   return (
@@ -67,7 +69,7 @@ export function LandingSection() {
             </div>{" "}
           </div>
         </div>
-        <div className="relative flex flex-col gap-4 w-[100%] px-[1%]  sm:px-0 sm:w-[80%] md:w-[75%] lg:w-[70%] xl:w-[60%] 2xl:w-[52%] text-center mx-auto  ">
+        <div className="relative flex flex-col gap-4 w-[100%] px-[1%]   sm:px-0 sm:w-[80%] md:w-[75%] lg:w-[70%] xl:w-[60%] 2xl:w-[52%] text-center mx-auto  ">
 
 
           <div className="flex text-[34px] m-auto sm:text-[50px] sm:leading-[46px]  md:text-[64px] 2xl:text-[80px] font-[700] leading-[37px] px-3 md:leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">
@@ -75,7 +77,7 @@ export function LandingSection() {
           </div>
           <Text
             align="center"
-            className="flex px-5 sm:px-9 lg:px-20 my-3 text-[10px] sm:text-[16px]"
+            className="flex px-5 mx-auto  sm:px-9 lg:px-20 my-3 text-[10px] sm:text-[16px]"
           >
             {hero?.paragraph}
           </Text>
@@ -85,7 +87,7 @@ export function LandingSection() {
           </div> */}
         </div>
         <div className="flex sm:flex-row flex-col gap-4 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
-          <Link to={"/register"}>
+          <Link to={getPath("/register")}>
             <Button
               variant="glass"
               className="text-xs sm:text-base"
@@ -93,7 +95,7 @@ export function LandingSection() {
               label="Register Now "
             />
           </Link>
-          <Link to={"/sponsors"}>
+          <Link to={getPath("/sponsors")}>
             <Button
               variant="glass"
               className="text-xs sm:text-base"
