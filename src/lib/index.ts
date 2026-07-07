@@ -22,3 +22,6 @@ export type {
   TemplateVariables,
   HasVariables,
 } from "./types";
+
+// Utils
+export { slugify } from "./utils";
