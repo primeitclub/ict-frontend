@@ -52,7 +52,7 @@ export default function EventsDetail() {
       <SectionContainer className="px-4 md:px-10 py-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
         <EventDetailTabs event={event} />
         <div className="w-full lg:w-72 md:flex-shrink md:pt-14">
-          <SeatsAndQueryCard totalSeats={event.totalSeats} />
+          <SeatsAndQueryCard totalSeats={event.totalSeats} bookedSeats={event.bookedSeats} />
         </div>
       </SectionContainer>
 
@@ -97,7 +97,7 @@ export default function EventsDetail() {
                     price: Number(e.fee) || 0,
                     time: "",
                     place: e.location,
-                    seats: e.totalSeats,
+                    seats: Math.max(e.totalSeats - e.bookedSeats, 0),
                     totalSeats: e.totalSeats,
                   };
                   return (

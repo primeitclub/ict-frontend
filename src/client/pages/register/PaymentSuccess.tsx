@@ -1,25 +1,15 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useVersion } from "../../routes/VersionContext";
-import { useState, useEffect } from "react";
 import { Button } from "../../../shared/design-components";
 import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { Heading } from "../../../shared/design-components";
 import Success from "../register/icons/Success.svg";
+import { useApiQuery } from "../../../lib";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
-
-interface EventRegistrationDetail {
-  id: string;
-  eventId: string;
-  versionId: string;
-  event?: {
-    title: string;
-    date: string | null;
-    location: string;
-    fee: string;
-    feeType: string;
-  } | null;
+interface Envelope<T> {
+  message: string;
+  data: T;
 }
 
 interface EventDetail {
@@ -29,6 +19,22 @@ interface EventDetail {
   location: string;
   fee: string;
   feeType: string;
+}
+
+interface EventRegistrationDetail {
+  id: string;
+  trackingId: string;
+  eventId: string;
+  versionId: string;
+  username: string;
+  email: string;
+  contactNumber: string;
+  event?: EventDetail | null;
+}
+
+interface ContactsData {
+  email?: string | null;
+  clubEmail?: string | null;
 }
 
 const InfoRow = ({
@@ -56,51 +62,35 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const registrationId = searchParams.get("id");
 
-  const [regDetail, setRegDetail] = useState<EventRegistrationDetail | null>(null);
-  const [eventDetail, setEventDetail] = useState<EventDetail | null>(null);
-  const [contactEmail, setContactEmail] = useState("itclubprime@Prime.edu.np");
-  const [isLoading, setIsLoading] = useState(!!registrationId);
+  const { data: regRes, isLoading: isRegLoading } = useApiQuery(
+    "eventRegistrationDetail",
+  )<Envelope<EventRegistrationDetail>>({
+    pathParams: { registrationId: registrationId ?? "" },
+    enabled: !!registrationId,
+  });
+  const regDetail = regRes?.data ?? null;
 
-  useEffect(() => {
-    if (!registrationId) {
-      return;
-    }
-    fetch(`${API_BASE}/event-registrations/${registrationId}`)
+  // The detail endpoint already embeds the full event; only fall back to a
+  // direct lookup if that relation is ever missing.
+  const needsEventFallback = !!regDetail?.eventId && !regDetail?.event?.title;
+  const { data: eventRes, isLoading: isEventFallbackLoading } = useApiQuery(
+    "eventDetail",
+  )<Envelope<EventDetail>>({
+    pathParams: { eventId: regDetail?.eventId ?? "" },
+    enabled: needsEventFallback,
+  });
+  const eventDetail = regDetail?.event ?? eventRes?.data ?? null;
 
+  const { data: contactsRes } = useApiQuery(
+    "settingsContacts",
+  )<Envelope<ContactsData>>({
+    queryParams: { versionId: regDetail?.versionId },
+    enabled: !!regDetail?.versionId,
+  });
+  const contactEmail = contactsRes?.data?.clubEmail || contactsRes?.data?.email || "—";
 
-      .then((r) => r.json())
-
-      .then(async (res) => {
-        const detail: EventRegistrationDetail = res?.data;
-        setRegDetail(detail ?? null);
-
-        // If the relation returned the event, use it directly
-        if (detail?.event?.title) {
-          setEventDetail(detail.event as EventDetail);
-        } else if (detail?.eventId) {
-          // Fallback: fetch event directly using eventId
-          try {
-            const evRes = await fetch(`${API_BASE}/events/${detail.eventId}`);
-            const evJson = await evRes.json();
-            if (evJson?.data) setEventDetail(evJson.data);
-          } catch {/* ignore */}
-        }
-
-        // Fetch contact email using versionId
-        if (detail?.versionId) {
-          fetch(`${API_BASE}/settings/contacts?versionId=${detail.versionId}`)
-            .then((r) => r.json())
-            .then((cr) => {
-              const email = cr?.data?.clubEmail || cr?.data?.email;
-              if (email) setContactEmail(email);
-            })
-            .catch(() => {});
-        }
-      })
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
-  }, [registrationId]);
-
+  const isLoading =
+    isRegLoading || (needsEventFallback && isEventFallbackLoading);
 
   const formatDate = (dateStr?: string | null) => {
     if (!dateStr) return "—";
@@ -130,7 +120,10 @@ const PaymentSuccess = () => {
     );
   }
 
-  const displayId = regDetail?.id ? `ICT_${regDetail.id.split("-")[0].toUpperCase()}` : "—";
+  const displayId = regDetail?.trackingId ?? "—";
+  const displayUsername = regDetail?.username ?? "—";
+  const displayEmail = regDetail?.email ?? "—";
+  const displayContact = regDetail?.contactNumber ?? "—";
   const displayName = eventDetail?.title ?? "—";
   const displayDate = formatDate(eventDetail?.date);
   const displayVenue = eventDetail?.location ?? "—";
@@ -165,6 +158,14 @@ const PaymentSuccess = () => {
           <div className="flex flex-col gap-[8px] md:min-w-[434px] mx-auto text-[10px] lg:text-[12px]">
             <div className="bg-[#F8FAFC] p-[12px] rounded-[6px]">
               <InfoRow label="Registration ID" value={displayId} />
+            </div>
+
+            <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">
+              <span className="text-[#020919] font-medium">Registrant Details</span>
+
+              <InfoRow label="Name" value={displayUsername} />
+              <InfoRow label="Email" value={displayEmail} />
+              <InfoRow label="Contact Number" value={displayContact} />
             </div>
 
             <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">

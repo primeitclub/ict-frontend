@@ -84,6 +84,7 @@ export interface HighlightItem {
   location: string;
   fee: string;
   totalSeats: number;
+  bookedSeats: number;
   status: string;
 }
 

@@ -11,6 +11,8 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
   const isOpen = event.status === "published";
+  const isFull = event.totalSeats - event.bookedSeats <= 0;
+  const canRegister = isOpen && !isFull;
   const dateLabel = event.date
     ? new Date(event.date).toLocaleDateString("en-US", {
         year: "numeric",
@@ -67,10 +69,10 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
             <div className="flex items-center gap-2 text-base md:text-xl">
               <span
                 className="w-2 h-2 rounded-full inline-block"
-                style={{ backgroundColor: isOpen ? "#22c55e" : "#ef4444" }}
+                style={{ backgroundColor: canRegister ? "#22c55e" : "#ef4444" }}
               />
-              <span style={{ color: isOpen ? "#4ade80" : "#f87171" }}>
-                {isOpen ? "Registration Open" : "Registration Closed"}
+              <span style={{ color: canRegister ? "#4ade80" : "#f87171" }}>
+                {!isOpen ? "Registration Closed" : isFull ? "Seats Full" : "Registration Open"}
               </span>
             </div>
           </div>
@@ -79,11 +81,12 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
         {/* CTA Button */}
         <div className="w-full md:w-auto md:flex-shrink-0 md:ml-8">
           <button
-            onClick={() => navigate(`${getPath("/register")}?eventId=${event.id}`)}
-            className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm transition-opacity hover:opacity-90"
+            onClick={() => canRegister && navigate(`${getPath("/register")}?eventId=${event.id}`)}
+            disabled={!canRegister}
+            className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
             style={{ backgroundColor: "#3571F0" }}
           >
-            Register Now
+            {isFull ? "Booked" : "Register Now"}
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>

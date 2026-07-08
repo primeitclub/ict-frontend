@@ -22,7 +22,7 @@ function toCardItem(event: ApiEvent): ContentType {
       ? `${event.startTime}${event.endTime ? ` - ${event.endTime}` : ""}`
       : "",
     place: event.location,
-    seats: event.totalSeats,
+    seats: Math.max(event.totalSeats - event.bookedSeats, 0),
     totalSeats: event.totalSeats,
   };
 }
