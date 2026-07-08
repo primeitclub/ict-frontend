@@ -29,8 +29,8 @@ export default function HighlightSection() {
 
   // TODO(mapping): Card's ContentType diverges from the Event entity. Confirmed
   // fields are wired; the rest are placeholders pending your confirmation:
-  //  - speaker line uses `subtitle`; avatars/time/remaining-seats aren't on the
-  //    aggregate yet (left empty / set to totalSeats).
+  //  - speaker line uses `subtitle`; avatars/time aren't on the aggregate yet
+  //    (left empty).
   //  - price is parsed from `fee` (a string) — confirm the fee format.
   //  - tabs are category-based, but highlights arrive as one flat published
   //    list, so every tab currently shows the same cards. Category grouping is
@@ -45,7 +45,7 @@ export default function HighlightSection() {
     price: Number(e.fee) || 0,
     time: "",
     place: e.location,
-    seats: e.totalSeats,
+    seats: Math.max(e.totalSeats - e.bookedSeats, 0),
     totalSeats: e.totalSeats,
   }));
 
@@ -158,8 +158,9 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
+                    onClick={() => navigate(getPath(`/event-detail/${slugify(item.title)}`))}
                     item={item}
+                    eventId={item.id}
                   />
                 </motion.div>
               </SwiperSlide>

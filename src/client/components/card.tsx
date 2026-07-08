@@ -6,10 +6,12 @@ import { cn } from "../../shared/utils/cn";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
+  eventId?: string;
 }
 
-const Card = ({ item, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
+  const isFull = item.seats <= 0;
   return (
     <div
       className={cn(
@@ -25,7 +27,7 @@ const Card = ({ item, className, ...rest }: CardProps) => {
           className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-          {item.seats} / {item.totalSeats} Seats
+          {isFull ? "Booked" : `${item.seats} / ${item.totalSeats} Seats`}
         </div>
       </div>
 
@@ -68,9 +70,10 @@ const Card = ({ item, className, ...rest }: CardProps) => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/register`);
+            navigate(eventId ? `/register?eventId=${eventId}` : `/register`);
           }}
-          label="Register Now"
+          disabled={isFull}
+          label={isFull ? "Booked" : "Register Now"}
           fullWidth
           rightIcon={
             <ChevronRight

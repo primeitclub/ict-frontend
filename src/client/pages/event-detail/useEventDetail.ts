@@ -13,6 +13,7 @@ export interface EventDetailData {
   feeType: "free" | "paid";
   location: string;
   totalSeats: number;
+  bookedSeats: number;
   status: string;
   registrationDeadline: string | null;
   category: { id: string; name: string; displayName: string };

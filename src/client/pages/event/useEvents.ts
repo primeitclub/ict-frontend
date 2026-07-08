@@ -21,6 +21,7 @@ export interface ApiEvent {
   feeType: "free" | "paid";
   location: string;
   totalSeats: number;
+  bookedSeats: number;
   status: string;
   category: EventCategory;
   speaker?: { id: string; name: string; imageUrl: string | null } | null;

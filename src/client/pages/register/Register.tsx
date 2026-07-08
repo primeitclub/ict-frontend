@@ -11,6 +11,7 @@ import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
 import { useVersionData } from "../../hooks/use-version-data";
+import { useVersion } from "../../routes/VersionContext";
 import { ictClient, ApiError } from "../../../lib";
 
 interface FormState {
@@ -28,6 +29,7 @@ const EDUCATION_LEVELS = ["School", "High School", "Bachelors", "Masters"];
 
 const Register = () => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const [searchParams] = useSearchParams();
   const queryEventId = searchParams.get("eventId");
   const { versionId } = useVersionData();
@@ -66,7 +68,11 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    const selectedEvent = publishedEvents.find((e) => e.id === form.eventId);
+    const selectedEvent = events.find((e) => e.id === form.eventId);
+    if (selectedEvent && selectedEvent.totalSeats - selectedEvent.bookedSeats <= 0) {
+      setErrorMsg("Sorry, this event is fully booked.");
+      return;
+    }
     const isPaid = selectedEvent?.feeType === "paid";
     if (isPaid && !paymentFileRef.current) {
       setErrorMsg("Please upload your payment screenshot.");
@@ -100,25 +106,47 @@ const Register = () => {
         data,
       );
       const registrationId = response.data.id;
-      navigate(`/success?id=${registrationId}`);
+      navigate(`${getPath("/success")}?id=${registrationId}`);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         setErrorMsg(
           "Registration requires an account. Please log in and try again.",
         );
+      } else if (err instanceof ApiError) {
+        const details = (err.data as Record<string, unknown>)?.details as
+          | { path: string[]; message: string }[]
+          | undefined;
+        if (details?.length) {
+          const fieldLabels: Record<string, string> = {
+            username: "Full Name",
+            email: "Email Address",
+            contactNumber: "Contact Number",
+            educationLevel: "Education Level",
+            faculty: "Faculty",
+            year: "Year/Batch",
+            eventId: "Event",
+            versionId: "Version",
+          };
+          const messages = details.map((d) => {
+            const field = d.path[0] ?? "";
+            const label = fieldLabels[field] ?? field;
+            return `${label}: ${d.message}`;
+          });
+          setErrorMsg(messages.join("\n"));
+        } else {
+          setErrorMsg(err.message);
+        }
       } else {
-        setErrorMsg(
-          err instanceof ApiError
-            ? err.message
-            : "Something went wrong. Please try again.",
-        );
+        setErrorMsg("Something went wrong. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const publishedEvents = events.filter((e) => e.status === "published");
+  const publishedEvents = events.filter(
+    (e) => e.status === "published" && e.totalSeats - e.bookedSeats > 0,
+  );
 
   return (
     <div className="py-0">
@@ -260,7 +288,11 @@ const Register = () => {
           </div>
 
           {errorMsg && (
-            <p className="text-red-500 text-sm text-center">{errorMsg}</p>
+            <div className="text-red-500 text-sm text-center space-y-1">
+              {errorMsg.split("\n").map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </div>
           )}
 
           <Button
