@@ -2,6 +2,7 @@ import { Mail, Phone } from "lucide-react";
 import DepartmentCard from "./components/DepartmentCard";
 import { useApiQuery } from "../../../lib";
 import { useVersionData } from "../../hooks/use-version-data";
+import { useSiteSettings } from "../../hooks/use-site-settings";
 
 interface ContactDepartment {
   department: string;
@@ -11,9 +12,6 @@ interface ContactDepartment {
 interface ContactSettings {
   email: string | null;
   phoneNumber: string | null;
-  teamName: string | null;
-  clubEmail: string | null;
-  clubPhoneNumber: string | null;
   contactDepartments: ContactDepartment[] | null;
 }
 
@@ -26,6 +24,7 @@ const ContactUs = () => {
     queryParams: { versionId: versionId ?? undefined },
     enabled: !!versionId,
   });
+  const { data: siteSettings } = useSiteSettings();
 
   const contactData = contactsRes?.data;
 
@@ -51,22 +50,22 @@ const ContactUs = () => {
             featured on this site.
           </p>
           <div className="flex flex-col gap-3 mt-2 text-center sm:text-left">
-            {contactData?.clubEmail && (
+            {siteSettings?.clubEmail && (
               <a
-                href={`mailto:${contactData.clubEmail}`}
+                href={`mailto:${siteSettings.clubEmail}`}
                 className="flex items-center justify-center sm:justify-start gap-2 text-white/90 text-sm sm:text-base hover:text-white transition-colors"
               >
                 <Mail size={16} className="shrink-0" />
-                {contactData.clubEmail}
+                {siteSettings.clubEmail}
               </a>
             )}
-            {contactData?.clubPhoneNumber && (
+            {siteSettings?.clubPhoneNumber && (
               <a
-                href={`tel:${contactData.clubPhoneNumber}`}
+                href={`tel:${siteSettings.clubPhoneNumber}`}
                 className="flex items-center justify-center sm:justify-start gap-2 text-white/90 text-sm sm:text-base hover:text-white transition-colors"
               >
                 <Phone size={16} className="shrink-0" />
-                {contactData.clubPhoneNumber}
+                {siteSettings.clubPhoneNumber}
               </a>
             )}
           </div>

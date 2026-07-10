@@ -6,6 +6,7 @@ import TopBgContent from "../../components/bg-content";
 import { Heading } from "../../../shared/design-components";
 import Success from "../register/icons/Success.svg";
 import { useApiQuery } from "../../../lib";
+import { useSiteSettings } from "../../hooks/use-site-settings";
 
 interface Envelope<T> {
   message: string;
@@ -34,7 +35,6 @@ interface EventRegistrationDetail {
 
 interface ContactsData {
   email?: string | null;
-  clubEmail?: string | null;
 }
 
 const InfoRow = ({
@@ -87,7 +87,8 @@ const PaymentSuccess = () => {
     queryParams: { versionId: regDetail?.versionId },
     enabled: !!regDetail?.versionId,
   });
-  const contactEmail = contactsRes?.data?.clubEmail || contactsRes?.data?.email || "—";
+  const { data: siteSettings } = useSiteSettings();
+  const contactEmail = siteSettings?.clubEmail || contactsRes?.data?.email || "—";
 
   const isLoading =
     isRegLoading || (needsEventFallback && isEventFallbackLoading);

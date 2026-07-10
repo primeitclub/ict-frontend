@@ -61,8 +61,10 @@ export const API_ROUTES = {
   settings: "/settings",
   settingDetail: "/settings/${settingId}",
   settingsContacts: "/settings/contacts",
-  settingsSocialMedia: "/settings/social-media",
-  settingsPayments: "/settings/payments",
+
+  // ─── Site Settings ────────────────────────────────────────────────────────
+  // Global, non-versioned record (club contact, social links, payment QR code).
+  siteSettings: "/site-settings",
 } as const;
 
 /**

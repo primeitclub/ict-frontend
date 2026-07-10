@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Upload } from "lucide-react";
-import { useApiQuery } from "../../../../lib";
-import { useVersionData } from "../../../hooks/use-version-data";
+import { useSiteSettings } from "../../../hooks/use-site-settings";
 import { getImageUrl } from "../../../../lib/imageUtils";
 
 interface PaymentProps {
@@ -12,24 +11,13 @@ interface PaymentProps {
   } | null;
 }
 
-interface PaymentSettings {
-  qrCodeUrl: string | null;
-}
-
 export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const { versionId } = useVersionData();
 
-  const { data: paymentsRes } = useApiQuery("settingsPayments")<{
-    message: string;
-    data: PaymentSettings;
-  }>({
-    queryParams: { versionId: versionId ?? undefined },
-    enabled: !!versionId,
-  });
+  const { data: siteSettings } = useSiteSettings();
 
-  const qrCodeUrl = paymentsRes?.data?.qrCodeUrl ?? null;
+  const qrCodeUrl = siteSettings?.qrCodeUrl ?? null;
 
   const handleBoxClick = () => {
     fileInputRef.current?.click();
