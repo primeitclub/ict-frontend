@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import AboutLogo from "../../../../../../assets/about-img.png";
 import { useHome } from "../../../useHome";
+import { getImageUrl } from "../../../../../../lib/imageUtils";
 
 const AboutImage = () => {
   const { data: about } = useHome((d) => d.sections.about);
@@ -14,7 +15,7 @@ const AboutImage = () => {
       */}
       <motion.img
         className="w-full h-auto object-contain"
-        src={about?.imageUrl ?? AboutLogo}
+        src={about?.imageUrl ? getImageUrl(about.imageUrl) : AboutLogo}
         alt="About"
         initial={{ opacity: 0, y: 80 }}
         whileInView={{ opacity: 1, y: 0 }}

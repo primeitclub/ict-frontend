@@ -60,7 +60,7 @@ const GallerySection = () => {
             return (
               <GalleryCard
                 key={img.id}
-                img={img.cloudImageUrl}
+                img={img.imagePath}
                 index={i}
                 total={Math.min(gallery.length, positions.length)}
                 pos={positions[i]}

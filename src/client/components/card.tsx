@@ -3,6 +3,7 @@ import type { ContentType } from "../pages/home/sections/highlight-section/types
 import { Button } from "../../shared/design-components";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
+import { getImageUrl } from "../../lib/imageUtils";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
@@ -22,7 +23,7 @@ const Card = ({ item, eventId, className, ...rest }: CardProps) => {
     >
       <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
-          src={item.image}
+          src={getImageUrl(item.image)}
           alt={item.title}
           className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
@@ -41,7 +42,7 @@ const Card = ({ item, eventId, className, ...rest }: CardProps) => {
               key={i}
               className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
             >
-              <img src={av} alt="Speaker" className="w-8 h-8 rounded-full " />
+              <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
             </div>
           ))}
         </div>

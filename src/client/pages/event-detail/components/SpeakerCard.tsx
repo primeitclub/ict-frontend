@@ -1,4 +1,5 @@
 import type { ISpeaker } from "../types";
+import { getImageUrl } from "../../../../lib/imageUtils";
 
 export const SpeakerCard = ({
   name,
@@ -12,7 +13,7 @@ export const SpeakerCard = ({
     <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-6 py-8 px-6 border-b border-gray-200 last:border-none max-w-[650px]">
       {/* Avatar */}
       <img
-        src={image}
+        src={getImageUrl(image)}
         alt={name}
         className="w-36 h-36 sm:w-[200px] sm:h-[200px] rounded-full object-cover flex-shrink-0"
       />

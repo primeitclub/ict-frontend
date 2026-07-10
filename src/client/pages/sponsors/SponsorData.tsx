@@ -1,4 +1,6 @@
 
+import { getImageUrl } from "../../../lib/imageUtils";
+
 type TitleProps = {
   title: string;
   imgUrl: string[];
@@ -42,7 +44,7 @@ const SponsorTitle = (props: TitleProps) => {
               }`}
             >
               <img
-                src={el}
+                src={getImageUrl(el)}
                 alt={altdata}
                 className={`w-full h-full object-contain ${
                   sponsortier ? "rounded-xl" : "rounded-lg"
