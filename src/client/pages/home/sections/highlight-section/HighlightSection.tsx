@@ -24,6 +24,7 @@ import { motion } from "framer-motion";
 import { useHome } from "../../useHome";
 import { useVersion } from "../../../../routes/VersionContext";
 import type { ContentType } from "./types";
+import { slugify } from "../../../../../lib";
 
 export default function HighlightSection() {
   const [activeCategoryId, setActiveCategoryId] = useState<string>("all");
@@ -157,7 +158,7 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(getPath(`/event-detail/${item.id}`))}
+                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
                     item={item}
                   />
                 </motion.div>

@@ -3,10 +3,10 @@ import SponsorData from "./SponsorData.tsx";
 import GlowCircle from "./GlowCircle.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
-import { Heading } from "../../../shared/design-components";
 import { Mail, Phone, ArrowRight } from "lucide-react";
+import { Heading } from "../../../shared/design-components";
 import { Link } from "react-router-dom";
-import { useVersion } from "../../routes/VersionContext";
+import { useVersion } from "../../routes/VersionContext.tsx";
 
 interface Category {
   id: string;
@@ -111,7 +111,7 @@ const Sponsors = () => {
       <Link
         to={getPath("/contacts")}
         aria-label="Become a sponsor — go to the contact page"
-        className="group block w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(53,113,240,0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
+        className="group w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(53,113,240,0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
       >
         {/* Subtle background glow */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 group-hover:bg-blue-500/20 rounded-full blur-3xl pointer-events-none transition-colors duration-300" />
