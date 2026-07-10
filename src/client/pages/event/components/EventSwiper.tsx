@@ -11,6 +11,7 @@ import "swiper/css";
 
 import TopBgContent from "../../../components/bg-content";
 import type { ApiEvent } from "../useEvents";
+import { getImageUrl } from "../../../../lib/imageUtils";
 
 interface EventSwiperProps {
   events: ApiEvent[];
@@ -46,7 +47,7 @@ const EventSwiper = ({ events }: EventSwiperProps) => {
               >
                 <div className="overflow-hidden h-[240px] md:h-[515px]">
                   <img
-                    src={event.imageUrl!}
+                    src={getImageUrl(event.imageUrl)}
                     alt={event.title}
                     className="w-full h-full object-cover block rounded-t-lg image-reflect transition-transform duration-500 group-hover:scale-105"
                   />

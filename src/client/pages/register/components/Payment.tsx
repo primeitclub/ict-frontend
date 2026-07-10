@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import Upload from "../icons/Upload";
+import { Upload } from "lucide-react";
 import { useSiteSettings } from "../../../hooks/use-site-settings";
+import { getImageUrl } from "../../../../lib/imageUtils";
 
 interface PaymentProps {
   onFileChange?: (file: File | null) => void;
@@ -107,7 +108,7 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
           <div className="flex flex-col items-center text-center">
             <div className="border p-3 bg-white rounded-lg shadow-sm">
               <img
-                src={qrCodeUrl}
+                src={getImageUrl(qrCodeUrl)}
                 alt="Payment QR Code"
                 className="w-40 h-40 object-contain"
               />
