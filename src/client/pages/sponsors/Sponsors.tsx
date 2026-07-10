@@ -121,7 +121,7 @@ const Sponsors = () => {
           <div className="flex flex-col gap-4 text-center md:text-left max-w-lg">
             <Heading
               level="h2"
-              className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent !mb-2"
+              className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent whitespace-nowrap leading-normal py-1 !mb-2"
             >
               Become a Sponsor
             </Heading>
@@ -186,7 +186,6 @@ const Sponsors = () => {
     return (
       <SectionContainer>
         <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
-          <p className="text-center text-white/60 py-20">No sponsors available.</p>
           {renderBecomeSponsorCard()}
           <GlowCircle x="top-0" y="-left-[20%]" />
           <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />

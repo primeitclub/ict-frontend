@@ -1,3 +1,4 @@
+import { formatEventTime } from "../../../components/event-card-format";
 import type { EventDetailData } from "../useEventDetail";
 
 interface EventsOverviewProps {
@@ -24,8 +25,9 @@ export const EventsOverview = ({ event }: EventsOverviewProps) => {
         <div className="flex flex-col gap-1 text-base text-[#2d2d2d]">
           {event.startTime && (
             <p>
-              <span className="font-medium">Start Time:</span> {event.startTime}
-              {event.endTime ? ` – ${event.endTime}` : ""}
+              <span className="font-medium">Start Time:</span>{" "}
+              {formatEventTime(event.startTime)}
+              {event.endTime ? ` – ${formatEventTime(event.endTime)}` : ""}
             </p>
           )}
           {registrationDeadline && (

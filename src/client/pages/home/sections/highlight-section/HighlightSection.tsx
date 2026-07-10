@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { CircleArrowRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
@@ -10,8 +10,13 @@ import "swiper/css/navigation";
 
 import SectionHeader from "../../../../components/section-header";
 import Card from "../../../../components/card";
+import {
+  formatEventTimeRange,
+  remainingSeats,
+} from "../../../../components/event-card-format";
 import SvgIcon from "../../../../components/icon/svgIcon";
-import { tabs } from "./data";
+import CategoryTabs from "../../../event/components/CategoryTabs";
+import { useEventCategories } from "../../../event/useEvents";
 import { Button } from "../../../../../shared/design-components";
 import NavButton from "./components/NavButton";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,32 +26,37 @@ import { useVersion } from "../../../../routes/VersionContext";
 import type { ContentType } from "./types";
 
 export default function HighlightSection() {
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("all");
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { data: highlights = [] } = useHome((d) => d.sections.highlights);
+  const { categories, isLoading: categoriesLoading } = useEventCategories();
 
   // TODO(mapping): Card's ContentType diverges from the Event entity. Confirmed
   // fields are wired; the rest are placeholders pending your confirmation:
-  //  - speaker line uses `subtitle`; avatars/time/remaining-seats aren't on the
-  //    aggregate yet (left empty / set to totalSeats).
+  //  - speaker line uses `subtitle`; avatars aren't on the aggregate yet (left empty).
+  //  - time is formatted from start/end; remaining seats = totalSeats − registeredCount.
   //  - price is parsed from `fee` (a string) — confirm the fee format.
-  //  - tabs are category-based, but highlights arrive as one flat published
-  //    list, so every tab currently shows the same cards. Category grouping is
-  //    deferred until we confirm the category shape on the payload.
-  const cards: (ContentType & { id: string })[] = highlights.map((e) => ({
-    id: e.id,
-    image: e.imageUrl ?? "",
-    title: e.title,
-    speaker: e.subtitle ?? "",
-    avatar: [],
-    date: e.date ?? "",
-    price: Number(e.fee) || 0,
-    time: "",
-    place: e.location,
-    seats: e.totalSeats,
-    totalSeats: e.totalSeats,
-  }));
+  const cards: (ContentType & { id: string; categoryId: string | null })[] =
+    highlights.map((e) => ({
+      id: e.id,
+      categoryId: e.category?.id ?? null,
+      image: e.imageUrl ?? "",
+      title: e.title,
+      speaker: e.subtitle ?? "",
+      avatar: [],
+      date: e.date ?? "",
+      price: Number(e.fee) || 0,
+      time: formatEventTimeRange(e.startTime, e.endTime),
+      place: e.location,
+      seats: remainingSeats(e),
+      totalSeats: e.totalSeats,
+    }));
+
+  const visibleCards =
+    activeCategoryId === "all"
+      ? cards
+      : cards.filter((c) => c.categoryId === activeCategoryId);
 
   const scrollToSection = () => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -78,29 +88,13 @@ export default function HighlightSection() {
           className="justify-start"
         />
 
-        {/* tabs */}
-        <div className="hidden lg:flex lg:flex-wrap gap-x-12 gap-y-6 text-xl font-bold pb-4">
-          {tabs.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveTab(index)}
-              className={`group  transition-transform duration-200 flex gap-3 items-center whitespace-nowrap 
-                hover:text-[#3571F0] ${
-                  activeTab === index ? "text-[#3571F0]" : "text-black"
-                }`}
-            >
-              <CircleArrowRight
-                size={24}
-                className={`transition-transform duration-700 ${
-                  activeTab === index
-                    ? "text-[#3571F0]"
-                    : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
-                }`}
-              />
-              {tab.title}
-            </button>
-          ))}
-        </div>
+        {/* category tabs — dynamic + interactive, shared with the events page */}
+        <CategoryTabs
+          categories={categories}
+          activeCategoryId={activeCategoryId}
+          onSelect={setActiveCategoryId}
+          isLoading={categoriesLoading}
+        />
 
         {/* swiper items */}
         <div className="relative space-y-8 md:space-y-8">
@@ -117,7 +111,13 @@ export default function HighlightSection() {
           </div>
 
           {/* swiper items */}
+          {visibleCards.length === 0 ? (
+            <p className="text-center text-gray-400 py-16">
+              No events in this category yet.
+            </p>
+          ) : (
           <Swiper
+            key={activeCategoryId}
             modules={[Navigation, Autoplay, Pagination]}
             spaceBetween={20}
             slidesPerView={1}
@@ -139,8 +139,8 @@ export default function HighlightSection() {
             }}
             className="pb-16"
           >
-            {cards.map((item, index) => (
-              <SwiperSlide key={index} className="py-2">
+            {visibleCards.map((item, index) => (
+              <SwiperSlide key={item.id} className="py-2">
                 {/*
                   Each card uses its loop index as a stagger delay (index * 0.1s),
                   so the row reveals left-to-right instead of all at once — that
@@ -164,6 +164,7 @@ export default function HighlightSection() {
               </SwiperSlide>
             ))}
           </Swiper>
+          )}
 
           <div className="custom-pagination flex justify-center lg:hidden mt-8 gap-2"></div>
             <Link to={getPath("/events")}>
