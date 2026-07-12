@@ -121,10 +121,17 @@ const Sponsors = () => {
           <div className="flex flex-col gap-4 text-center md:text-left max-w-lg">
             <Heading
               level="h2"
-              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent leading-relaxed py-1 !mb-2"
+              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text  text-transparent leading-relaxed py-1 "
             >
-              Become a Sponsor
+              Become a 
             </Heading>
+            <Heading
+              level="h2"
+              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent leading-relaxed py-1 !mb-2"
+            >
+              Sponsor
+            </Heading>
+            
             <p className="text-white/70 text-sm sm:text-base leading-relaxed font-sans">
               Partner with ICT MeetUp and showcase your brand to a vibrant
               community of tech enthusiasts and developers. Get a chance to be
