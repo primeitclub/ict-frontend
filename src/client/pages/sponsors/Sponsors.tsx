@@ -43,9 +43,6 @@ interface ContactDepartment {
 interface ContactSettings {
   email: string | null;
   phoneNumber: string | null;
-  teamName: string | null;
-  clubEmail: string | null;
-  clubPhoneNumber: string | null;
   contactDepartments: ContactDepartment[] | null;
 }
 
@@ -73,6 +70,7 @@ const Sponsors = () => {
     queryParams: { versionId: versionId ?? undefined },
     enabled: !!versionId,
   });
+  const { data: siteSettings } = useSiteSettings();
 
   const categories = (categoriesRes?.data?.items ?? []).slice().sort(
     (a, b) => a.displayOrder - b.displayOrder,
@@ -102,8 +100,8 @@ const Sponsors = () => {
         ? organizerDepts
         : contactData?.contactDepartments?.slice(0, 1) ?? [];
 
-    const email = contactData?.email ?? contactData?.clubEmail ?? null;
-    const phone = contactData?.phoneNumber ?? contactData?.clubPhoneNumber ?? null;
+    const email = contactData?.email ?? siteSettings?.clubEmail ?? null;
+    const phone = contactData?.phoneNumber ?? siteSettings?.clubPhoneNumber ?? null;
 
     // The whole card is a single link to the (version-aware) contact page.
     // Contact details are shown as read-only chips so we don't nest anchors.

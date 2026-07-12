@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { GalleryPosition } from "../types";
+import { getImageUrl } from "../../../../../../lib/imageUtils";
 
 interface GalleryCardProps {
   img: string;
@@ -63,7 +64,7 @@ const GalleryCard = ({
       }}
     >
       <img
-        src={img}
+        src={getImageUrl(img)}
         alt={`Gallery image ${index + 1}`}
         className="w-full h-full rounded-[24px] md:rounded-[36px] object-cover shadow-2xl"
       />

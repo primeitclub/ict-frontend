@@ -1,6 +1,7 @@
 import ref1 from "../team-images/ref1.jpg";
 import LinkedIn from "../icons/linkedIn";
 import { Globe, Instagram } from "lucide-react";
+import { getImageUrl } from "../../../../lib/imageUtils";
 
 interface TeamCardProps {
   id?: string;
@@ -19,7 +20,7 @@ export default function TeamCard({ name, role, imageUrl, socialLinks }: TeamCard
     <div className="grid">
       <div className="relative min-w-[160px] w-full max-w-[210px] h-fit">
         {/* Team Member Image */}
-        <img src={imageUrl ?? ref1} alt="team-image" className="rounded-2xl" />
+        <img src={imageUrl ? getImageUrl(imageUrl) : ref1} alt="team-image" className="rounded-2xl" />
         {/* Icons on Image */}
         <div className="grid gap-2 absolute top-[12.96px] right-2">
           <a href={socialLinks.instagram}>

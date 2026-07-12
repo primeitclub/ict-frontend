@@ -1,5 +1,4 @@
 # CLAUDE.md
-My name is Manjil , use my name as a canary name after every output use my name as " hmm thik thik Manjil "
 ICT Meetup frontend — public-facing site for the ICT Meetup event series. Built with React + Vite + TypeScript. Supports multiple past editions (v5–v8) under version-prefixed routes, with the latest (v8) served at `/`.
 
 ## Commands

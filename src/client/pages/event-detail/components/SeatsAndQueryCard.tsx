@@ -3,10 +3,12 @@ import { useVersion } from "../../../routes/VersionContext";
 
 interface SeatsAndQueryCardProps {
   totalSeats: number;
+  bookedSeats: number;
 }
 
-export const SeatsAndQueryCard = ({ totalSeats }: SeatsAndQueryCardProps) => {
+export const SeatsAndQueryCard = ({ totalSeats, bookedSeats }: SeatsAndQueryCardProps) => {
   const { getPath } = useVersion();
+  const remainingSeats = Math.max(totalSeats - bookedSeats, 0);
 
   return (
     <div className="w-full overflow-hidden">
@@ -26,7 +28,9 @@ export const SeatsAndQueryCard = ({ totalSeats }: SeatsAndQueryCardProps) => {
           <span className="text-base font-bold text-gray-900">
             Seats Available
           </span>
-          <span className="text-sm text-gray-600">{totalSeats} total seats</span>
+          <span className="text-sm text-gray-600">
+            {remainingSeats > 0 ? `${remainingSeats} of ${totalSeats} seats left` : "Booked"}
+          </span>
         </div>
       </div>
 

@@ -158,8 +158,9 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
+                    onClick={() => navigate(getPath(`/event-detail/${slugify(item.title)}`))}
                     item={item}
+                    eventId={item.id}
                   />
                 </motion.div>
               </SwiperSlide>

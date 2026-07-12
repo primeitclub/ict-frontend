@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
 import { EventDetailBanner } from "../components/EventDetailBanner";
 import { slugify } from "../../../../lib";
 import { SeatsAndQueryCard } from "../components/SeatsAndQueryCard";
@@ -20,6 +21,7 @@ import type { ContentType } from "../../event/types";
 export default function EventsDetail() {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
+  const { getPath } = useVersion();
   const { event, isLoading, isError } = useEventDetail(eventId);
 
   // Other events: all published events excluding the current one
@@ -50,7 +52,7 @@ export default function EventsDetail() {
       <SectionContainer className="px-4 md:px-10 py-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
         <EventDetailTabs event={event} />
         <div className="w-full lg:w-72 md:flex-shrink md:pt-14">
-          <SeatsAndQueryCard totalSeats={event.totalSeats} />
+          <SeatsAndQueryCard totalSeats={event.totalSeats} bookedSeats={event.bookedSeats} />
         </div>
       </SectionContainer>
 
@@ -95,13 +97,13 @@ export default function EventsDetail() {
                     price: Number(e.fee) || 0,
                     time: "",
                     place: e.location,
-                    seats: e.totalSeats,
+                    seats: Math.max(e.totalSeats - e.bookedSeats, 0),
                     totalSeats: e.totalSeats,
                   };
                   return (
                     <SwiperSlide key={e.id}>
                       <div
-                        onClick={() => navigate(`/event-detail/${slugify(e.title)}`)}
+                        onClick={() => navigate(getPath(`/event-detail/${slugify(e.title)}`))}
                         className="cursor-pointer"
                       >
                         <Card item={cardItem} />

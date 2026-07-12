@@ -7,9 +7,10 @@ import { useVersion } from "../routes/VersionContext";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
+  eventId?: string;
 }
 
-const Card = ({ item, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
   return (
@@ -22,12 +23,12 @@ const Card = ({ item, className, ...rest }: CardProps) => {
     >
       <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
-          src={item.image}
+          src={getImageUrl(item.image)}
           alt={item.title}
           className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-          {item.seats} / {item.totalSeats} Seats
+          {isFull ? "Booked" : `${item.seats} / ${item.totalSeats} Seats`}
         </div>
       </div>
 
@@ -43,7 +44,7 @@ const Card = ({ item, className, ...rest }: CardProps) => {
               key={i}
               className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
             >
-              <img src={av} alt="Speaker" className="w-8 h-8 rounded-full " />
+              <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
             </div>
           ))}
         </div>
@@ -76,7 +77,8 @@ const Card = ({ item, className, ...rest }: CardProps) => {
               getPath(item.id ? `/register?eventId=${item.id}` : "/register"),
             );
           }}
-          label="Register Now"
+          disabled={isFull}
+          label={isFull ? "Booked" : "Register Now"}
           fullWidth
           rightIcon={
             <ChevronRight

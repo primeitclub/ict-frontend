@@ -1,5 +1,6 @@
 import logo2 from "../../../../assets/logo@2x.png";
 import { cn } from "../../../../shared/utils/cn";
+import { getImageUrl } from "../../../../lib/imageUtils";
 
 interface Logo2Props {
   className?: string;
@@ -16,7 +17,7 @@ const SIZE_CLASS: Record<NonNullable<Logo2Props["size"]>, string> = {
 export default function Logo2({ className, size = "md", src }: Logo2Props) {
   return (
     <img
-      src={src ?? logo2}
+      src={src ? getImageUrl(src) : logo2}
       alt="logo"
       className={cn("object-contain w-auto", SIZE_CLASS[size], className)}
     />

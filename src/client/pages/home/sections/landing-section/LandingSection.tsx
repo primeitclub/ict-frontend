@@ -26,9 +26,9 @@ function formatEventDateRange(startDate?: string | null, endDate?: string | null
 }
 
 export function LandingSection() {
+  const { getPath } = useVersion();
   const { data: edition } = useHome((d) => d.edition);
   const { data: hero } = useHome((d) => d.sections.hero);
-  const { getPath } = useVersion();
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
 
   return (

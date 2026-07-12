@@ -35,7 +35,7 @@ const Navbar = () => {
         width="navbar"
         className="flex items-center justify-between h-full w-full !py-0"
       >
-        <div className="hover:cursor-pointer" onClick={() => navigate("/")}>
+        <div className="hover:cursor-pointer" onClick={() => navigate(getPath("/"))}>
           <Logo2 src={logo} />
         </div>
 
