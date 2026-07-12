@@ -5,14 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
 
+/** Returns the src string as-is; kept as a named helper so callers are explicit. */
+function getImageUrl(src: string): string {
+  return src;
+}
+
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
   eventId?: string;
 }
 
-const Card = ({ item, eventId, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId: _eventId, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
+  const isFull = item.seats <= 0;
   return (
     <div
       className={cn(

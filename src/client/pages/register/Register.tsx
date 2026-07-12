@@ -69,7 +69,7 @@ const Register = () => {
       return;
     }
     const selectedEvent = events.find((e) => e.id === form.eventId);
-    if (selectedEvent && selectedEvent.totalSeats - selectedEvent.bookedSeats <= 0) {
+    if (selectedEvent && (selectedEvent.availableSeats ?? selectedEvent.totalSeats - (selectedEvent.registeredCount ?? 0)) <= 0) {
       setErrorMsg("Sorry, this event is fully booked.");
       return;
     }
@@ -145,7 +145,7 @@ const Register = () => {
   };
 
   const publishedEvents = events.filter(
-    (e) => e.status === "published" && e.totalSeats - e.bookedSeats > 0,
+    (e) => e.status === "published" && (e.availableSeats ?? e.totalSeats - (e.registeredCount ?? 0)) > 0,
   );
 
   return (

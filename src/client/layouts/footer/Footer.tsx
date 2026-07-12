@@ -11,16 +11,8 @@ import { useSiteSettings } from "../../hooks/use-site-settings";
 export const Footer = () => {
   const navigate = useNavigate();
   const { getPath, version } = useVersion();
-  const { versionId } = useVersionData();
 
   const editionLabel = version.toUpperCase();
-
-  const { data: contactsRes } = useApiQuery("settingsContacts")<
-    Envelope<ContactSettings>
-  >({
-    queryParams: { versionId: versionId ?? undefined },
-    enabled: !!versionId,
-  });
 
   const { data: siteSettings } = useSiteSettings();
 

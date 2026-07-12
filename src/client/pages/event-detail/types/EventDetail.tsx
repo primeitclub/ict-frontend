@@ -97,7 +97,7 @@ export default function EventsDetail() {
                     price: Number(e.fee) || 0,
                     time: "",
                     place: e.location,
-                    seats: Math.max(e.totalSeats - e.bookedSeats, 0),
+                    seats: Math.max(e.availableSeats ?? (e.totalSeats - (e.registeredCount ?? 0)), 0),
                     totalSeats: e.totalSeats,
                   };
                   return (

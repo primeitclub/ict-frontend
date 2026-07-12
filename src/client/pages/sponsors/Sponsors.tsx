@@ -3,6 +3,7 @@ import SponsorData from "./SponsorData.tsx";
 import GlowCircle from "./GlowCircle.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
+import { useSiteSettings } from "../../hooks/use-site-settings.ts";
 import { Mail, Phone, ArrowRight } from "lucide-react";
 import { Heading } from "../../../shared/design-components";
 import { Link } from "react-router-dom";
