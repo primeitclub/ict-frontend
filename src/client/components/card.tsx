@@ -4,11 +4,7 @@ import { Button } from "../../shared/design-components";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
-
-/** Returns the src string as-is; kept as a named helper so callers are explicit. */
-function getImageUrl(src: string): string {
-  return src;
-}
+import { getImageUrl } from "../../lib/imageUtils";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
