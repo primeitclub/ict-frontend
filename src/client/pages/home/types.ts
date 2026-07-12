@@ -81,11 +81,18 @@ export interface HighlightItem {
   description: string;
   imageUrl: string | null;
   date: string | null;
+  startTime: string | null;
+  endTime: string | null;
   location: string;
   fee: string;
   totalSeats: number;
-  bookedSeats: number;
+  /** Seats still open — sent by the backend and drops as people register. */
+  availableSeats?: number;
+  /** Count of confirmed registrations; used to derive remaining seats. */
+  registeredCount?: number;
   status: string;
+  /** Category the event belongs to; drives the landing-page category tabs. */
+  category?: { id: string; name: string; displayName: string } | null;
 }
 
 export interface HomeContent {

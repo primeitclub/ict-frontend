@@ -3,7 +3,7 @@ import type { ContentType } from "../pages/home/sections/highlight-section/types
 import { Button } from "../../shared/design-components";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
-import { getImageUrl } from "../../lib/imageUtils";
+import { useVersion } from "../routes/VersionContext";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
@@ -12,7 +12,7 @@ interface CardProps extends React.HTMLAttributes<HTMLElement> {
 
 const Card = ({ item, eventId, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
-  const isFull = item.seats <= 0;
+  const { getPath } = useVersion();
   return (
     <div
       className={cn(
@@ -33,8 +33,10 @@ const Card = ({ item, eventId, className, ...rest }: CardProps) => {
       </div>
 
       <div className="mt-3">
-        <h3 className="text-[20px] font-semibold mb-1">{item.title}</h3>
-        <p className="text-[12px] mb-2">{item.speaker}</p>
+        <h3 className="text-[20px] font-semibold mb-1 truncate">{item.title}</h3>
+        <p className="text-[12px] mb-2 truncate" title={item.speaker}>
+          {item.speaker}
+        </p>
 
         <div className="flex -space-x-3 mb-6">
           {item.avatar.map((av, i) => (
@@ -71,7 +73,9 @@ const Card = ({ item, eventId, className, ...rest }: CardProps) => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(eventId ? `/register?eventId=${eventId}` : `/register`);
+            navigate(
+              getPath(item.id ? `/register?eventId=${item.id}` : "/register"),
+            );
           }}
           disabled={isFull}
           label={isFull ? "Booked" : "Register Now"}

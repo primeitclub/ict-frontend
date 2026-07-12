@@ -21,7 +21,10 @@ export interface ApiEvent {
   feeType: "free" | "paid";
   location: string;
   totalSeats: number;
-  bookedSeats: number;
+  /** Seats still open — sent by the backend and drops as people register. */
+  availableSeats?: number;
+  /** Count of confirmed registrations; used to derive remaining seats. */
+  registeredCount?: number;
   status: string;
   category: EventCategory;
   speaker?: { id: string; name: string; imageUrl: string | null } | null;
