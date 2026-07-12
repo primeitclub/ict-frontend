@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
+
 interface SeatsAndQueryCardProps {
   totalSeats: number;
 }
 
 export const SeatsAndQueryCard = ({ totalSeats }: SeatsAndQueryCardProps) => {
+  const { getPath } = useVersion();
+
   return (
     <div className="w-full overflow-hidden">
       {/* Seats Available */}
@@ -26,7 +31,10 @@ export const SeatsAndQueryCard = ({ totalSeats }: SeatsAndQueryCardProps) => {
       </div>
 
       {/* Got Any Queries */}
-      <button className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-[#3571F0] hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none">
+      <Link
+        to={getPath("/contacts")}
+        className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-[#3571F0] hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-6 h-6 text-white flex-shrink-0"
@@ -44,7 +52,7 @@ export const SeatsAndQueryCard = ({ totalSeats }: SeatsAndQueryCardProps) => {
         <span className="text-white text-lg font-semibold">
           Got Any Queries?
         </span>
-      </button>
+      </Link>
     </div>
   );
 };

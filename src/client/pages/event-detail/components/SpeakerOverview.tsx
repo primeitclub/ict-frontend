@@ -29,7 +29,7 @@ export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
     name: speaker.name,
     role: speaker.designation,
     company: speaker.company ?? undefined,
-    bio: speaker.bio,
+    bio: speaker.description ?? undefined,
     image: speaker.imageUrl ?? "",
     socials: speaker.socialLinks
       ? {

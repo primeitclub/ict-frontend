@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Card from "../../../components/card";
+import {
+  formatEventTimeRange,
+  remainingSeats,
+} from "../../../components/event-card-format";
 import type { ApiEvent } from "../useEvents";
 import type { ContentType } from "../types";
+import { slugify } from "../../../../lib";
 
 interface EventGridProps {
   events: ApiEvent[];
@@ -10,17 +15,16 @@ interface EventGridProps {
 
 function toCardItem(event: ApiEvent): ContentType {
   return {
+    id: event.id,
     image: event.imageUrl ?? "",
     title: event.title,
     speaker: event.subtitle ?? "",
     avatar: event.speaker?.imageUrl ? [event.speaker.imageUrl] : [],
     date: event.date ?? "",
     price: Number(event.fee) || 0,
-    time: event.startTime
-      ? `${event.startTime}${event.endTime ? ` - ${event.endTime}` : ""}`
-      : "",
+    time: formatEventTimeRange(event.startTime, event.endTime),
     place: event.location,
-    seats: event.totalSeats,
+    seats: remainingSeats(event),
     totalSeats: event.totalSeats,
   };
 }
@@ -52,7 +56,7 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
       {events.map((event) => (
         <div
           key={event.id}
-          onClick={() => navigate(`/event-detail/${event.id}`)}
+          onClick={() => navigate(`/event-detail/${slugify(event.title)}`)}
           className="cursor-pointer"
         >
           <Card item={toCardItem(event)} />

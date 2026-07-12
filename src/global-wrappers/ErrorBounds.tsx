@@ -21,7 +21,7 @@ class ErrorBoundry extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
-    console.log("error caught", error, info.componentStack);
+    console.error("error caught", error, info.componentStack);
   }
 
   render() {

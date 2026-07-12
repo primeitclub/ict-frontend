@@ -1,4 +1,5 @@
 export type ContentType = {
+  id?: string;
   image: string;
   title: string;
   speaker: string;

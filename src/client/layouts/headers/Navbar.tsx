@@ -6,16 +6,22 @@ import { Menu, X } from "lucide-react";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
 import { useHome } from "../../pages/home/useHome";
+import { useEventsList } from "../../pages/event/useEvents";
 
 const Navbar = () => {
   const { getPath } = useVersion();
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const { data: logo } = useHome((d) => d.edition.logoPath ?? d.edition.logo);
+  const { events, isLoading: eventsLoading } = useEventsList();
+
+  // Only surface the Events link when this edition actually has events.
+  // Keep it while loading to avoid a flash, hide it once confirmed empty.
+  const hasEvents = eventsLoading || events.length > 0;
 
   const pages = [
     { path: "/", label: "Home" },
-    { path: "/events", label: "Events" },
+    ...(hasEvents ? [{ path: "/events", label: "Events" }] : []),
     { path: "/teams", label: "Teams" },
     { path: "/sponsors", label: "Sponsors" },
     { path: "/contacts", label: "Contacts" },
@@ -61,6 +67,7 @@ const Navbar = () => {
                         }`
                       }
                       to={getPath(path)}
+                      end={path === "/"}
                       onClick={() => setToggle(false)}
                     >
                       {label}
@@ -97,6 +104,7 @@ const Navbar = () => {
             <NavLink
               key={`${label}-${path}`}
               to={getPath(path)}
+              end={path === "/"}
               className={({ isActive }) =>
                 `transition-colors duration-300 ${
                   isActive
