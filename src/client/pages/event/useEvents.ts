@@ -8,6 +8,8 @@ export interface EventCategory {
   displayOrder: number;
 }
 
+export type EventType = "SINGLE" | "GROUP";
+
 export interface ApiEvent {
   id: string;
   title: string;
@@ -25,6 +27,8 @@ export interface ApiEvent {
   status: string;
   category: EventCategory;
   speaker?: { id: string; name: string; imageUrl: string | null } | null;
+  eventType: EventType;
+  maxParticipants: number | null;
 }
 
 interface PaginatedResult<T> {
