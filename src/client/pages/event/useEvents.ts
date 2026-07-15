@@ -29,9 +29,11 @@ export interface ApiEvent {
   registeredCount?: number;
   status: string;
   category: EventCategory;
-  speaker?: { id: string; name: string; imageUrl: string | null } | null;
+  speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
   eventType: EventType;
   maxParticipants: number | null;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink: string | null;
 }
 
 interface PaginatedResult<T> {

@@ -106,7 +106,7 @@ export default function EventsDetail() {
                         onClick={() => navigate(getPath(`/event-detail/${slugify(e.title)}`))}
                         className="cursor-pointer"
                       >
-                        <Card item={cardItem} />
+                        <Card item={cardItem} registerLink={e.registerLink} />
                       </div>
                     </SwiperSlide>
                   );

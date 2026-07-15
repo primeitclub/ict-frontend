@@ -20,7 +20,9 @@ function toCardItem(event: ApiEvent): ContentType {
     image: event.imageUrl ?? "",
     title: event.title,
     speaker: event.subtitle ?? "",
-    avatar: event.speaker?.imageUrl ? [event.speaker.imageUrl] : [],
+    avatar: (event.speakers ?? [])
+      .map((speaker) => speaker.imageUrl)
+      .filter((url): url is string => Boolean(url)),
     date: event.date ?? "",
     price: Number(event.fee) || 0,
     time: formatEventTimeRange(event.startTime, event.endTime),
@@ -61,7 +63,11 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
           onClick={() => navigate(getPath(`/event-detail/${slugify(event.title)}`))}
           className="cursor-pointer"
         >
-          <Card item={toCardItem(event)} eventId={event.id} />
+          <Card
+            item={toCardItem(event)}
+            eventId={event.id}
+            registerLink={event.registerLink}
+          />
         </div>
       ))}
     </div>

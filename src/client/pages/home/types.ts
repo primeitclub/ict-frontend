@@ -93,6 +93,8 @@ export interface HighlightItem {
   status: string;
   /** Category the event belongs to; drives the landing-page category tabs. */
   category?: { id: string; name: string; displayName: string } | null;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink: string | null;
 }
 
 export interface HomeContent {

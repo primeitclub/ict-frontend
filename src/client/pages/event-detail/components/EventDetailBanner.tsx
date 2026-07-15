@@ -2,6 +2,7 @@ import SectionContainer from "../../../components/sectionContainer";
 import { useNavigate } from "react-router-dom";
 import { useVersion } from "../../../routes/VersionContext";
 import type { EventDetailData } from "../useEventDetail";
+import { goToRegistration } from "../../../../lib/registration";
 
 interface EventDetailBannerProps {
   event: EventDetailData;
@@ -81,7 +82,14 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
         {/* CTA Button */}
         <div className="w-full md:w-auto md:flex-shrink-0 md:ml-8">
           <button
-            onClick={() => canRegister && navigate(`${getPath("/register")}?eventId=${event.id}`)}
+            onClick={() =>
+              canRegister &&
+              goToRegistration(
+                event.registerLink,
+                `${getPath("/register")}?eventId=${event.id}`,
+                navigate,
+              )
+            }
             disabled={!canRegister}
             className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
             style={{ backgroundColor: "#3571F0" }}
