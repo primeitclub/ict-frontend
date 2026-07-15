@@ -25,15 +25,16 @@ export function formatEventTimeRange(
   return end ? `${startLabel} - ${formatEventTime(end)}` : startLabel;
 }
 
-/** Remaining seats — prefers availableSeats, else totalSeats − registeredCount, else totalSeats. */
+/**
+ * Remaining seats = totalSeats − bookedSeats.
+ *
+ * `bookedSeats` is the only seat-usage field the API sends: it is computed per
+ * request from the approved registration count (see the event service's
+ * `itemsWithSeats` mapping) and is present on both /events and /content.
+ */
 export function remainingSeats(input: {
   totalSeats: number;
-  availableSeats?: number;
-  registeredCount?: number;
+  bookedSeats: number;
 }): number {
-  if (typeof input.availableSeats === "number") return input.availableSeats;
-  if (typeof input.registeredCount === "number") {
-    return Math.max(input.totalSeats - input.registeredCount, 0);
-  }
-  return input.totalSeats;
+  return Math.max(input.totalSeats - input.bookedSeats, 0);
 }

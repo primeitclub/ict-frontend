@@ -86,13 +86,11 @@ export interface HighlightItem {
   location: string;
   fee: string;
   totalSeats: number;
-  /** Seats still open — sent by the backend and drops as people register. */
-  availableSeats?: number;
-  /** Count of confirmed registrations; used to derive remaining seats. */
-  registeredCount?: number;
+  /** Approved registrations for this event; remaining = totalSeats − bookedSeats. */
+  bookedSeats: number;
   status: string;
   /** Category the event belongs to; drives the landing-page category tabs. */
-  category?: { id: string; name: string; displayName: string } | null;
+  categoryId: string;
   /** External registration URL; takes precedence over the in-app form. */
   registerLink: string | null;
 }

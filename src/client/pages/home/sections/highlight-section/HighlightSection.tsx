@@ -40,11 +40,11 @@ export default function HighlightSection() {
   const cards: (ContentType & {
     id: string;
     registerLink: string | null;
-    categoryId: string | null;
+    categoryId: string;
   })[] = highlights.map((e) => ({
     id: e.id,
     registerLink: e.registerLink ?? null,
-    categoryId: e.category?.id ?? null,
+    categoryId: e.categoryId,
     image: e.imageUrl ?? "",
     title: e.title,
     speaker: e.subtitle ?? "",
