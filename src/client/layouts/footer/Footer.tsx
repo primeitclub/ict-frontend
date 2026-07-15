@@ -10,7 +10,9 @@ import { useSiteSettings } from "../../hooks/use-site-settings";
 
 export const Footer = () => {
   const navigate = useNavigate();
-  const { getPath } = useVersion();
+  const { getPath, version } = useVersion();
+
+  const editionLabel = version.toUpperCase();
 
   const { data: siteSettings } = useSiteSettings();
 
@@ -50,9 +52,9 @@ export const Footer = () => {
           >
             <div className="flex flex-col items-center lg:items-start w-[164px]">
               <Logo2 size="lg" className="h-9 sm:h-11 md:h-16 lg:h-20" />
-              <p className="mt-2 text-lg font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
+              {/* <p className="mt-2 text-lg font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
                 Fusion Of Tech Talent & Creativity
-              </p>
+              </p> */}
             </div>
           </div>
           <button
@@ -270,12 +272,14 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
         <div
           className="absolute bottom-0 left-0 w-full
               h-[clamp(45px,12vw,800px)]
-               bg-gradient-to-t from-[#020919] to-transparent pointer-events-none"
+               bg-gradient-to-t from-[#000] to-transparent pointer-events-none"
         ></div>
       </div>
 
       <div className="my-6 mb-12 text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
-        <p>© 2026 ICT Meetup V8 | Prime IT Club, Prime College</p>
+        <p>
+          © ICT Meetup {editionLabel} | Prime IT Club, Prime College
+        </p>
       </div>
     </SectionContainer>
   );

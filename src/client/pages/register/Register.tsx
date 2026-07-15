@@ -66,7 +66,11 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    const selectedEvent = publishedEvents.find((e) => e.id === form.eventId);
+    const selectedEvent = events.find((e) => e.id === form.eventId);
+    if (selectedEvent && (selectedEvent.availableSeats ?? selectedEvent.totalSeats - (selectedEvent.registeredCount ?? 0)) <= 0) {
+      setErrorMsg("Sorry, this event is fully booked.");
+      return;
+    }
     const isPaid = selectedEvent?.feeType === "paid";
     if (isPaid && !paymentFileRef.current) {
       setErrorMsg("Please upload your payment screenshot.");
@@ -118,7 +122,9 @@ const Register = () => {
     }
   };
 
-  const publishedEvents = events.filter((e) => e.status === "published");
+  const publishedEvents = events.filter(
+    (e) => e.status === "published" && (e.availableSeats ?? e.totalSeats - (e.registeredCount ?? 0)) > 0,
+  );
 
   return (
     <div className="py-0">

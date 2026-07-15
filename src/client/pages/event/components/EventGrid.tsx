@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useVersion } from "../../../routes/VersionContext";
 import Card from "../../../components/card";
+import {
+  formatEventTimeRange,
+  remainingSeats,
+} from "../../../components/event-card-format";
 import type { ApiEvent } from "../useEvents";
 import type { ContentType } from "../types";
 import { slugify } from "../../../../lib";
@@ -12,17 +16,16 @@ interface EventGridProps {
 
 function toCardItem(event: ApiEvent): ContentType {
   return {
+    id: event.id,
     image: event.imageUrl ?? "",
     title: event.title,
     speaker: event.subtitle ?? "",
     avatar: event.speaker?.imageUrl ? [event.speaker.imageUrl] : [],
     date: event.date ?? "",
     price: Number(event.fee) || 0,
-    time: event.startTime
-      ? `${event.startTime}${event.endTime ? ` - ${event.endTime}` : ""}`
-      : "",
+    time: formatEventTimeRange(event.startTime, event.endTime),
     place: event.location,
-    seats: Math.max(event.totalSeats - event.bookedSeats, 0),
+    seats: remainingSeats(event),
     totalSeats: event.totalSeats,
   };
 }
