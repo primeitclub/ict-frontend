@@ -11,14 +11,7 @@ import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
 import { useVersionData } from "../../hooks/use-version-data";
-import { useVersion } from "../../routes/VersionContext";
 import { ictClient, ApiError } from "../../../lib";
-
-interface Participant {
-  fullName: string;
-  email: string;
-  phone: string;
-}
 
 interface FormState {
   fullName: string;
@@ -29,20 +22,12 @@ interface FormState {
   faculty: string;
   year: string;
   eventId: string;
-  // Group event fields
-  teamName: string;
-  numParticipants: string;
-  participants: Participant[];
 }
 
 const EDUCATION_LEVELS = ["School", "High School", "Bachelors", "Masters"];
 
-const makeParticipants = (n: number): Participant[] =>
-  Array.from({ length: n }, () => ({ fullName: "", email: "", phone: "" }));
-
 const Register = () => {
   const navigate = useNavigate();
-  const { getPath } = useVersion();
   const [searchParams] = useSearchParams();
   const queryEventId = searchParams.get("eventId");
   const { versionId } = useVersionData();
@@ -58,9 +43,6 @@ const Register = () => {
     faculty: "",
     year: "",
     eventId: queryEventId || "",
-    teamName: "",
-    numParticipants: "",
-    participants: [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -70,36 +52,6 @@ const Register = () => {
 
   const handleFileChange = (file: File | null) => {
     paymentFileRef.current = file;
-  };
-
-  const selectedEvent = events.find((e) => e.id === form.eventId);
-  const isGroup = selectedEvent?.eventType === "GROUP";
-  const maxParticipants = selectedEvent?.maxParticipants ?? 1;
-
-  // Build the options array for the "Number of Participants" dropdown
-  const participantCountOptions = Array.from({ length: maxParticipants }, (_, i) =>
-    String(i + 1),
-  );
-
-  const handleNumParticipantsChange = (val: string) => {
-    const n = parseInt(val, 10);
-    setForm((prev) => ({
-      ...prev,
-      numParticipants: val,
-      participants: makeParticipants(isNaN(n) ? 0 : n),
-    }));
-  };
-
-  const updateParticipant = (
-    index: number,
-    field: keyof Participant,
-    value: string,
-  ) => {
-    setForm((prev) => {
-      const updated = [...prev.participants];
-      updated[index] = { ...updated[index], [field]: value };
-      return { ...prev, participants: updated };
-    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -114,14 +66,7 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    if (
-      selectedEvent &&
-      (selectedEvent.availableSeats ??
-        selectedEvent.totalSeats - (selectedEvent.registeredCount ?? 0)) <= 0
-    ) {
-      setErrorMsg("Sorry, this event is fully booked.");
-      return;
-    }
+    const selectedEvent = publishedEvents.find((e) => e.id === form.eventId);
     const isPaid = selectedEvent?.feeType === "paid";
     if (isPaid && !paymentFileRef.current) {
       setErrorMsg("Please upload your payment screenshot.");
@@ -130,27 +75,6 @@ const Register = () => {
     if (!versionId) {
       setErrorMsg("Unable to determine current event version. Try refreshing.");
       return;
-    }
-
-    // Group event validation
-    if (isGroup) {
-      if (!form.teamName.trim()) {
-        setErrorMsg("Please enter your team name.");
-        return;
-      }
-      if (!form.numParticipants) {
-        setErrorMsg("Please select the number of participants.");
-        return;
-      }
-      const emptyParticipant = form.participants.findIndex(
-        (p) => !p.fullName.trim() || !p.email.trim(),
-      );
-      if (emptyParticipant !== -1) {
-        setErrorMsg(
-          `Please fill in Full Name and Email for participant ${emptyParticipant + 1}.`,
-        );
-        return;
-      }
     }
 
     const data = new FormData();
@@ -168,11 +92,6 @@ const Register = () => {
     if (paymentFileRef.current) {
       data.append("image", paymentFileRef.current);
     }
-    // Group-specific fields
-    if (isGroup) {
-      data.append("teamName", form.teamName.trim());
-      data.append("participants", JSON.stringify(form.participants));
-    }
 
     setIsSubmitting(true);
     try {
@@ -181,55 +100,25 @@ const Register = () => {
         data,
       );
       const registrationId = response.data.id;
-      navigate(`${getPath("/success")}?id=${registrationId}`);
+      navigate(`/success?id=${registrationId}`);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         setErrorMsg(
           "Registration requires an account. Please log in and try again.",
         );
-      } else if (err instanceof ApiError) {
-        const details = (err.data as Record<string, unknown>)?.details as
-          | { path: string[]; message: string }[]
-          | undefined;
-        if (details?.length) {
-          const fieldLabels: Record<string, string> = {
-            username: "Full Name",
-            email: "Email Address",
-            contactNumber: "Contact Number",
-            educationLevel: "Education Level",
-            faculty: "Faculty",
-            year: "Year/Batch",
-            eventId: "Event",
-            versionId: "Version",
-            teamName: "Team Name",
-            participants: "Participants",
-          };
-          const messages = details.map((d) => {
-            const field = d.path[0] ?? "";
-            const label = fieldLabels[field] ?? field;
-            return `${label}: ${d.message}`;
-          });
-          setErrorMsg(messages.join("\n"));
-        } else {
-          setErrorMsg(err.message);
-        }
       } else {
-        setErrorMsg("Something went wrong. Please try again.");
+        setErrorMsg(
+          err instanceof ApiError
+            ? err.message
+            : "Something went wrong. Please try again.",
+        );
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const publishedEvents = events.filter(
-    (e) =>
-      e.status === "published" &&
-      (e.availableSeats ?? e.totalSeats - (e.registeredCount ?? 0)) > 0,
-  );
-
-  const inputStyles =
-    "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-[10px] md:text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
-  const labelStyles = "font-medium text-[10px] md:text-sm text-gray-700";
+  const publishedEvents = events.filter((e) => e.status === "published");
 
   return (
     <div className="py-0">
@@ -361,16 +250,7 @@ const Register = () => {
               }
               onChange={(title) => {
                 const found = publishedEvents.find((e) => e.title === title);
-                if (found) {
-                  setForm((prev) => ({
-                    ...prev,
-                    eventId: found.id,
-                    // Reset group fields when event changes
-                    teamName: "",
-                    numParticipants: "",
-                    participants: [],
-                  }));
-                }
+                if (found) set("eventId", found.id);
               }}
             />
             <Payment
@@ -379,134 +259,8 @@ const Register = () => {
             />
           </div>
 
-          {/* Team Details — shown only for GROUP events */}
-          {isGroup && (
-            <div className="space-y-6">
-              <span className="flex items-center gap-2">
-                {/* Reuse the Events icon or a simple group icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1E67FF"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-                <legend className="font-semibold text-sm md:text-xl">
-                  Team Details
-                </legend>
-              </span>
-
-              {/* Team Name */}
-              <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="teamName" className={labelStyles}>
-                  Team Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="teamName"
-                  type="text"
-                  className={inputStyles}
-                  placeholder="Enter your team name"
-                  value={form.teamName}
-                  onChange={(e) => set("teamName", e.target.value)}
-                />
-              </div>
-
-              {/* Number of Participants */}
-              <InputBox
-                inputName="Number of Participants"
-                placeHolder="Select number of participants"
-                variant="select"
-                options={participantCountOptions}
-                value={form.numParticipants}
-                onChange={handleNumParticipantsChange}
-              />
-
-              {/* Dynamic Participant Fields */}
-              {form.participants.map((participant, index) => (
-                <div
-                  key={index}
-                  className="border border-[#00000014] rounded-lg p-4 space-y-4"
-                >
-                  <p className="font-semibold text-sm text-[#1E67FF]">
-                    Participant {index + 1}
-                  </p>
-                  <div className="space-y-4 md:space-y-0 md:flex gap-4">
-                    <div className="flex flex-col gap-2 w-full">
-                      <label
-                        htmlFor={`participant-name-${index}`}
-                        className={labelStyles}
-                      >
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        id={`participant-name-${index}`}
-                        type="text"
-                        className={inputStyles}
-                        placeholder="Enter full name"
-                        value={participant.fullName}
-                        onChange={(e) =>
-                          updateParticipant(index, "fullName", e.target.value)
-                        }
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                      <label
-                        htmlFor={`participant-email-${index}`}
-                        className={labelStyles}
-                      >
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        id={`participant-email-${index}`}
-                        type="email"
-                        className={inputStyles}
-                        placeholder="example@domain.com"
-                        value={participant.email}
-                        onChange={(e) =>
-                          updateParticipant(index, "email", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2 w-full md:w-1/2">
-                    <label
-                      htmlFor={`participant-phone-${index}`}
-                      className={labelStyles}
-                    >
-                      Phone Number{" "}
-                      <span className="text-gray-400 text-xs">(optional)</span>
-                    </label>
-                    <input
-                      id={`participant-phone-${index}`}
-                      type="tel"
-                      className={inputStyles}
-                      placeholder="+977- "
-                      value={participant.phone}
-                      onChange={(e) =>
-                        updateParticipant(index, "phone", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
           {errorMsg && (
-            <div className="text-red-500 text-sm text-center space-y-1">
-              {errorMsg.split("\n").map((line, i) => (
-                <p key={i}>{line}</p>
-              ))}
-            </div>
+            <p className="text-red-500 text-sm text-center">{errorMsg}</p>
           )}
 
           <Button
