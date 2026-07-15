@@ -17,15 +17,19 @@ export interface EventDetailData {
   status: string;
   registrationDeadline: string | null;
   category: { id: string; name: string; displayName: string };
-  speaker?: {
-    id: string;
-    name: string;
-    designation: string;
-    company: string | null;
-    description?: string | null;
-    imageUrl: string | null;
-    socialLinks: { instagram?: string; linkedin?: string; portfolio?: string } | null;
-  } | null;
+  speakers?: EventDetailSpeaker[] | null;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink: string | null;
+}
+
+export interface EventDetailSpeaker {
+  id: string;
+  name: string;
+  designation: string;
+  company: string | null;
+  description?: string | null;
+  imageUrl: string | null;
+  socialLinks: { instagram?: string; linkedin?: string; portfolio?: string } | null;
 }
 
 interface Envelope<T> {

@@ -20,6 +20,13 @@ interface EventDetail {
   location: string;
   fee: string;
   feeType: string;
+  eventType?: "SINGLE" | "GROUP";
+}
+
+interface Participant {
+  fullName: string;
+  email: string;
+  phoneNumber?: string | null;
 }
 
 interface EventRegistrationDetail {
@@ -30,6 +37,8 @@ interface EventRegistrationDetail {
   username: string;
   email: string;
   contactNumber: string;
+  teamName?: string | null;
+  participants?: Participant[] | null;
   event?: EventDetail | null;
 }
 
@@ -125,6 +134,8 @@ const PaymentSuccess = () => {
   const displayUsername = regDetail?.username ?? "—";
   const displayEmail = regDetail?.email ?? "—";
   const displayContact = regDetail?.contactNumber ?? "—";
+  const participants = regDetail?.participants ?? [];
+  const isGroup = participants.length > 0 || !!regDetail?.teamName;
   const displayName = eventDetail?.title ?? "—";
   const displayDate = formatDate(eventDetail?.date);
   const displayVenue = eventDetail?.location ?? "—";
@@ -168,6 +179,35 @@ const PaymentSuccess = () => {
               <InfoRow label="Email" value={displayEmail} />
               <InfoRow label="Contact Number" value={displayContact} />
             </div>
+
+            {isGroup && (
+              <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">
+                <span className="text-[#020919] font-medium">Team Details</span>
+
+                <InfoRow label="Team Name" value={regDetail?.teamName ?? "—"} />
+                <InfoRow
+                  label="Total Members"
+                  value={String(participants.length)}
+                />
+
+                {participants.map((participant, index) => (
+                  <div
+                    key={`${participant.email}-${index}`}
+                    className="mt-[8px] border-t border-[#E2E8F0] pt-[8px]"
+                  >
+                    <span className="text-[#3571F0] font-medium">
+                      Member {index + 1}
+                    </span>
+                    <InfoRow label="Name" value={participant.fullName || "—"} />
+                    <InfoRow label="Email" value={participant.email || "—"} />
+                    <InfoRow
+                      label="Phone Number"
+                      value={participant.phoneNumber || "—"}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="bg-[#F8FAFC] px-[16px] py-[10px] mx-[2px] rounded-[6px]">
               <span className="text-[#020919] font-medium">Event Details</span>

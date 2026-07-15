@@ -5,13 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
 import { getImageUrl } from "../../lib/imageUtils";
+import { goToRegistration } from "../../lib/registration";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
   eventId?: string;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink?: string | null;
 }
 
-const Card = ({ item, eventId: _eventId, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
   const isFull = item.seats <= 0;
@@ -75,8 +78,11 @@ const Card = ({ item, eventId: _eventId, className, ...rest }: CardProps) => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(
-              getPath(item.id ? `/register?eventId=${item.id}` : "/register"),
+            const id = eventId ?? item.id;
+            goToRegistration(
+              registerLink,
+              getPath(id ? `/register?eventId=${id}` : "/register"),
+              navigate,
             );
           }}
           disabled={isFull}

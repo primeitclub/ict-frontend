@@ -8,7 +8,7 @@ type TabId = "events" | "speaker";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "events", label: "Events Overview" },
-  { id: "speaker", label: "Speaker Overview" },
+  { id: "speaker", label: "Speakers Overview" },
 ];
 
 interface EventDetailTabsProps {

@@ -7,6 +7,7 @@ import { EventDetailTabs } from "../components/EventDetailTabs";
 import SectionContainer from "../../../components/sectionContainer";
 import { useEventDetail } from "../useEventDetail";
 import { useEventsList } from "../../event/useEvents";
+import { remainingSeats } from "../../../components/event-card-format";
 import Card from "../../../components/card";
 import SectionHeader from "../../../components/section-header";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -97,7 +98,7 @@ export default function EventsDetail() {
                     price: Number(e.fee) || 0,
                     time: "",
                     place: e.location,
-                    seats: Math.max(e.availableSeats ?? (e.totalSeats - (e.registeredCount ?? 0)), 0),
+                    seats: remainingSeats(e),
                     totalSeats: e.totalSeats,
                   };
                   return (
@@ -106,7 +107,7 @@ export default function EventsDetail() {
                         onClick={() => navigate(getPath(`/event-detail/${slugify(e.title)}`))}
                         className="cursor-pointer"
                       >
-                        <Card item={cardItem} />
+                        <Card item={cardItem} registerLink={e.registerLink} />
                       </div>
                     </SwiperSlide>
                   );

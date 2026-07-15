@@ -10,34 +10,34 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import { SpeakerCard } from "./SpeakerCard";
-import type { EventDetailData } from "../useEventDetail";
+import type { EventDetailData, EventDetailSpeaker } from "../useEventDetail";
 
 interface SpeakerOverviewProps {
   event: EventDetailData;
 }
 
-export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
-  const speaker = event.speaker;
+const toCardProps = (speaker: EventDetailSpeaker) => ({
+  name: speaker.name,
+  role: speaker.designation,
+  company: speaker.company ?? undefined,
+  bio: speaker.description ?? undefined,
+  image: speaker.imageUrl ?? "",
+  socials: speaker.socialLinks
+    ? {
+        instagram: speaker.socialLinks.instagram,
+        linkedin: speaker.socialLinks.linkedin,
+      }
+    : undefined,
+});
 
-  if (!speaker) {
+export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
+  const speakers = event.speakers ?? [];
+
+  if (speakers.length === 0) {
     return (
       <p className="text-gray-500 py-4">No speaker information available.</p>
     );
   }
-
-  const speakerCardProps = {
-    name: speaker.name,
-    role: speaker.designation,
-    company: speaker.company ?? undefined,
-    bio: speaker.description ?? undefined,
-    image: speaker.imageUrl ?? "",
-    socials: speaker.socialLinks
-      ? {
-          instagram: speaker.socialLinks.instagram,
-          linkedin: speaker.socialLinks.linkedin,
-        }
-      : undefined,
-  };
 
   return (
     <>
@@ -55,15 +55,22 @@ export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
           pagination={{ clickable: true, dynamicBullets: false }}
           className="!pb-10"
         >
-          <SwiperSlide className="rounded-2xl overflow-hidden shadow-xl bg-white">
-            <SpeakerCard {...speakerCardProps} />
-          </SwiperSlide>
+          {speakers.map((speaker) => (
+            <SwiperSlide
+              key={speaker.id}
+              className="rounded-2xl overflow-hidden shadow-xl bg-white"
+            >
+              <SpeakerCard {...toCardProps(speaker)} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
 
       {/* Desktop: list */}
-      <div className="hidden sm:block">
-        <SpeakerCard {...speakerCardProps} />
+      <div className="hidden sm:flex sm:flex-col sm:gap-6">
+        {speakers.map((speaker) => (
+          <SpeakerCard key={speaker.id} {...toCardProps(speaker)} />
+        ))}
       </div>
     </>
   );

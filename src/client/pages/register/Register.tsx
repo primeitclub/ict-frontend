@@ -10,9 +10,15 @@ import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
+import { remainingSeats } from "../../components/event-card-format";
 import { useVersionData } from "../../hooks/use-version-data";
-import { useVersion } from "../../routes/VersionContext";
 import { ictClient, ApiError } from "../../../lib";
+
+interface Participant {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+}
 
 interface FormState {
   fullName: string;
@@ -23,13 +29,25 @@ interface FormState {
   faculty: string;
   year: string;
   eventId: string;
+  teamName: string;
+  numParticipants: string;
+  participants: Participant[];
 }
 
 const EDUCATION_LEVELS = ["School", "High School", "Bachelors", "Masters"];
 
+/** Mirrors the API's own fallback when an event sets no maxParticipants. */
+const DEFAULT_MAX_PARTICIPANTS = 20;
+
+const labelStyles = "font-medium text-[10px] md:text-sm text-gray-700";
+const inputStyles =
+  "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-[10px] md:text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
+
+const makeParticipants = (n: number): Participant[] =>
+  Array.from({ length: n }, () => ({ fullName: "", email: "", phoneNumber: "" }));
+
 const Register = () => {
   const navigate = useNavigate();
-  const { getPath } = useVersion();
   const [searchParams] = useSearchParams();
   const queryEventId = searchParams.get("eventId");
   const { versionId } = useVersionData();
@@ -45,12 +63,44 @@ const Register = () => {
     faculty: "",
     year: "",
     eventId: queryEventId || "",
+    teamName: "",
+    numParticipants: "",
+    participants: [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const set = (key: keyof FormState, value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  const selectedEvent = events.find((e) => e.id === form.eventId);
+  const isGroup = selectedEvent?.eventType === "GROUP";
+
+  const participantCountOptions = Array.from(
+    { length: selectedEvent?.maxParticipants ?? DEFAULT_MAX_PARTICIPANTS },
+    (_, i) => String(i + 1),
+  );
+
+  const handleNumParticipantsChange = (value: string) => {
+    setForm((prev) => ({
+      ...prev,
+      numParticipants: value,
+      participants: makeParticipants(Number(value) || 0),
+    }));
+  };
+
+  const updateParticipant = (
+    index: number,
+    key: keyof Participant,
+    value: string,
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      participants: prev.participants.map((p, i) =>
+        i === index ? { ...p, [key]: value } : p,
+      ),
+    }));
+  };
 
   const handleFileChange = (file: File | null) => {
     paymentFileRef.current = file;
@@ -68,8 +118,7 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    const selectedEvent = events.find((e) => e.id === form.eventId);
-    if (selectedEvent && (selectedEvent.availableSeats ?? selectedEvent.totalSeats - (selectedEvent.registeredCount ?? 0)) <= 0) {
+    if (selectedEvent && remainingSeats(selectedEvent) <= 0) {
       setErrorMsg("Sorry, this event is fully booked.");
       return;
     }
@@ -77,6 +126,24 @@ const Register = () => {
     if (isPaid && !paymentFileRef.current) {
       setErrorMsg("Please upload your payment screenshot.");
       return;
+    }
+    if (isGroup) {
+      // Mirrors the API's own GROUP checks so the user sees them inline.
+      if (form.teamName.trim().length < 3) {
+        setErrorMsg("Please enter a team name of at least 3 characters.");
+        return;
+      }
+      if (!form.participants.length) {
+        setErrorMsg("Please select the number of participants.");
+        return;
+      }
+      const incomplete = form.participants.some(
+        (p) => !p.fullName.trim() || !p.email.trim(),
+      );
+      if (incomplete) {
+        setErrorMsg("Please give every participant a full name and email.");
+        return;
+      }
     }
     if (!versionId) {
       setErrorMsg("Unable to determine current event version. Try refreshing.");
@@ -95,6 +162,20 @@ const Register = () => {
     }
     data.append("eventId", form.eventId);
     data.append("versionId", versionId);
+    if (isGroup) {
+      data.append("teamName", form.teamName.trim());
+      // The API JSON.parses this field back out of the multipart body.
+      data.append(
+        "participants",
+        JSON.stringify(
+          form.participants.map((p) => ({
+            fullName: p.fullName.trim(),
+            email: p.email.trim(),
+            phoneNumber: p.phoneNumber.trim() || null,
+          })),
+        ),
+      );
+    }
     if (paymentFileRef.current) {
       data.append("image", paymentFileRef.current);
     }
@@ -106,38 +187,18 @@ const Register = () => {
         data,
       );
       const registrationId = response.data.id;
-      navigate(`${getPath("/success")}?id=${registrationId}`);
+      navigate(`/success?id=${registrationId}`);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         setErrorMsg(
           "Registration requires an account. Please log in and try again.",
         );
-      } else if (err instanceof ApiError) {
-        const details = (err.data as Record<string, unknown>)?.details as
-          | { path: string[]; message: string }[]
-          | undefined;
-        if (details?.length) {
-          const fieldLabels: Record<string, string> = {
-            username: "Full Name",
-            email: "Email Address",
-            contactNumber: "Contact Number",
-            educationLevel: "Education Level",
-            faculty: "Faculty",
-            year: "Year/Batch",
-            eventId: "Event",
-            versionId: "Version",
-          };
-          const messages = details.map((d) => {
-            const field = d.path[0] ?? "";
-            const label = fieldLabels[field] ?? field;
-            return `${label}: ${d.message}`;
-          });
-          setErrorMsg(messages.join("\n"));
-        } else {
-          setErrorMsg(err.message);
-        }
       } else {
-        setErrorMsg("Something went wrong. Please try again.");
+        setErrorMsg(
+          err instanceof ApiError
+            ? err.message
+            : "Something went wrong. Please try again.",
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -145,7 +206,7 @@ const Register = () => {
   };
 
   const publishedEvents = events.filter(
-    (e) => e.status === "published" && (e.availableSeats ?? e.totalSeats - (e.registeredCount ?? 0)) > 0,
+    (e) => e.status === "published" && remainingSeats(e) > 0,
   );
 
   return (
@@ -287,12 +348,130 @@ const Register = () => {
             />
           </div>
 
-          {errorMsg && (
-            <div className="text-red-500 text-sm text-center space-y-1">
-              {errorMsg.split("\n").map((line, i) => (
-                <p key={i}>{line}</p>
+          {/* Team Details — shown only for GROUP events */}
+          {isGroup && (
+            <div className="space-y-6">
+              <span className="flex items-center gap-2">
+                {/* Reuse the Events icon or a simple group icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1E67FF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <legend className="font-semibold text-sm md:text-xl">
+                  Team Details
+                </legend>
+              </span>
+
+              {/* Team Name */}
+              <div className="flex flex-col gap-2 w-full">
+                <label htmlFor="teamName" className={labelStyles}>
+                  Team Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="teamName"
+                  type="text"
+                  className={inputStyles}
+                  placeholder="Enter your team name"
+                  value={form.teamName}
+                  onChange={(e) => set("teamName", e.target.value)}
+                />
+              </div>
+
+              {/* Number of Participants */}
+              <InputBox
+                inputName="Number of Participants"
+                placeHolder="Select number of participants"
+                variant="select"
+                options={participantCountOptions}
+                value={form.numParticipants}
+                onChange={handleNumParticipantsChange}
+              />
+
+              {/* Dynamic Participant Fields */}
+              {form.participants.map((participant, index) => (
+                <div
+                  key={index}
+                  className="border border-[#00000014] rounded-lg p-4 space-y-4"
+                >
+                  <p className="font-semibold text-sm text-[#1E67FF]">
+                    Participant {index + 1}
+                  </p>
+                  <div className="space-y-4 md:space-y-0 md:flex gap-4">
+                    <div className="flex flex-col gap-2 w-full">
+                      <label
+                        htmlFor={`participant-name-${index}`}
+                        className={labelStyles}
+                      >
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id={`participant-name-${index}`}
+                        type="text"
+                        className={inputStyles}
+                        placeholder="Enter full name"
+                        value={participant.fullName}
+                        onChange={(e) =>
+                          updateParticipant(index, "fullName", e.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2 w-full">
+                      <label
+                        htmlFor={`participant-email-${index}`}
+                        className={labelStyles}
+                      >
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id={`participant-email-${index}`}
+                        type="email"
+                        className={inputStyles}
+                        placeholder="example@domain.com"
+                        value={participant.email}
+                        onChange={(e) =>
+                          updateParticipant(index, "email", e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 w-full md:w-1/2">
+                    <label
+                      htmlFor={`participant-phone-${index}`}
+                      className={labelStyles}
+                    >
+                      Phone Number{" "}
+                      <span className="text-gray-400 text-xs">(optional)</span>
+                    </label>
+                    <input
+                      id={`participant-phone-${index}`}
+                      type="tel"
+                      className={inputStyles}
+                      placeholder="+977- "
+                      value={participant.phoneNumber}
+                      onChange={(e) =>
+                        updateParticipant(index, "phoneNumber", e.target.value)
+                      }
+                    />
+                  </div>
+                </div>
               ))}
             </div>
+          )}
+
+          {errorMsg && (
+            <p className="text-red-500 text-sm text-center">{errorMsg}</p>
           )}
 
           <Button
