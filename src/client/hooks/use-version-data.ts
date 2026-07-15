@@ -19,14 +19,14 @@ interface Envelope<T> {
 }
 
 export function useVersionData() {
-  const { isLatest, version } = useVersion();
+  const { isLatest, slug } = useVersion();
 
   const currentQuery = useApiQuery("currentVersion")<Envelope<VersionRecord>>({
     enabled: isLatest,
   });
 
   const slugQuery = useApiQuery("versionBySlug")<Envelope<VersionRecord>>({
-    pathParams: { slug: version },
+    pathParams: { slug },
     enabled: !isLatest,
   });
 
