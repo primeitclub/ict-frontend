@@ -6,49 +6,20 @@ import PrimeITClub from "../../../assets/PrimeITClub.svg";
 import PrimeCollege from "../../../assets/PrimeCollege.svg";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
-import { useApiQuery } from "../../../lib";
-import { useVersionData } from "../../hooks/use-version-data";
-
-interface Envelope<T> {
-  status: string;
-  message: string;
-  data: T;
-}
-
-interface ContactSettings {
-  clubEmail: string | null;
-  clubPhoneNumber: string | null;
-}
-
-interface SocialMediaSettings {
-  socialMediaLinks: { platform: string; link: string }[] | null;
-}
+import { useSiteSettings } from "../../hooks/use-site-settings";
 
 export const Footer = () => {
   const navigate = useNavigate();
   const { getPath, version } = useVersion();
-  const { versionId } = useVersionData();
 
   const editionLabel = version.toUpperCase();
 
-  const { data: contactsRes } = useApiQuery("settingsContacts")<
-    Envelope<ContactSettings>
-  >({
-    queryParams: { versionId: versionId ?? undefined },
-    enabled: !!versionId,
-  });
+  const { data: siteSettings } = useSiteSettings();
 
-  const { data: socialRes } = useApiQuery("settingsSocialMedia")<
-    Envelope<SocialMediaSettings>
-  >({
-    queryParams: { versionId: versionId ?? undefined },
-    enabled: !!versionId,
-  });
+  const clubEmail = siteSettings?.clubEmail || "itclub.prime@prime.edu.np";
+  const clubPhone = siteSettings?.clubPhoneNumber || "+123 45 6 789";
 
-  const clubEmail = contactsRes?.data?.clubEmail || "itclub.prime@prime.edu.np";
-  const clubPhone = contactsRes?.data?.clubPhoneNumber || "+123 45 6 789";
-
-  const socialLinks = socialRes?.data?.socialMediaLinks ?? [];
+  const socialLinks = siteSettings?.socialMediaLinks ?? [];
   const facebookLink = socialLinks.find(
     (l) => l.platform.toLowerCase() === "facebook",
   )?.link || "#";

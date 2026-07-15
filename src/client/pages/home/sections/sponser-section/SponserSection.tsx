@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import SectionContainer from "../../../../components/sectionContainer";
 import SectionHeader from "../../../../components/section-header";
 import { useHome } from "../../useHome";
+import { getImageUrl } from "../../../../../lib/imageUtils";
 
 export default function SponserSection() {
   const { data: sponsors = [] } = useHome((d) => d.sections.sponsors);
@@ -37,7 +38,7 @@ export default function SponserSection() {
                 transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.04 }}
               >
                 <img
-                  src={sponsor.imageUrl ?? undefined}
+                  src={sponsor.imageUrl ? getImageUrl(sponsor.imageUrl) : undefined}
                   alt={sponsor.name}
                   className="w-full h-full object-cover md:rounded-2xl"
                 />

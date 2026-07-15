@@ -3,6 +3,7 @@ import SponsorData from "./SponsorData.tsx";
 import GlowCircle from "./GlowCircle.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
+import { useSiteSettings } from "../../hooks/use-site-settings.ts";
 import { Mail, Phone, ArrowRight } from "lucide-react";
 import { Heading } from "../../../shared/design-components";
 import { Link } from "react-router-dom";
@@ -43,9 +44,6 @@ interface ContactDepartment {
 interface ContactSettings {
   email: string | null;
   phoneNumber: string | null;
-  teamName: string | null;
-  clubEmail: string | null;
-  clubPhoneNumber: string | null;
   contactDepartments: ContactDepartment[] | null;
 }
 
@@ -73,6 +71,7 @@ const Sponsors = () => {
     queryParams: { versionId: versionId ?? undefined },
     enabled: !!versionId,
   });
+  const { data: siteSettings } = useSiteSettings();
 
   const categories = (categoriesRes?.data?.items ?? []).slice().sort(
     (a, b) => a.displayOrder - b.displayOrder,
@@ -102,8 +101,8 @@ const Sponsors = () => {
         ? organizerDepts
         : contactData?.contactDepartments?.slice(0, 1) ?? [];
 
-    const email = contactData?.email ?? contactData?.clubEmail ?? null;
-    const phone = contactData?.phoneNumber ?? contactData?.clubPhoneNumber ?? null;
+    const email = contactData?.email ?? siteSettings?.clubEmail ?? null;
+    const phone = contactData?.phoneNumber ?? siteSettings?.clubPhoneNumber ?? null;
 
     // The whole card is a single link to the (version-aware) contact page.
     // Contact details are shown as read-only chips so we don't nest anchors.
@@ -121,10 +120,17 @@ const Sponsors = () => {
           <div className="flex flex-col gap-4 text-center md:text-left max-w-lg">
             <Heading
               level="h2"
-              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent leading-relaxed py-1 !mb-2"
+              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text  text-transparent leading-relaxed py-1 "
             >
-              Become a Sponsor
+              Become a 
             </Heading>
+            <Heading
+              level="h2"
+              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent leading-relaxed py-1 !mb-2"
+            >
+              Sponsor
+            </Heading>
+            
             <p className="text-white/70 text-sm sm:text-base leading-relaxed font-sans">
               Partner with ICT MeetUp and showcase your brand to a vibrant
               community of tech enthusiasts and developers. Get a chance to be

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useVersion } from "../../../routes/VersionContext";
 import Card from "../../../components/card";
 import {
   formatEventTimeRange,
@@ -19,7 +20,9 @@ function toCardItem(event: ApiEvent): ContentType {
     image: event.imageUrl ?? "",
     title: event.title,
     speaker: event.subtitle ?? "",
-    avatar: event.speaker?.imageUrl ? [event.speaker.imageUrl] : [],
+    avatar: (event.speakers ?? [])
+      .map((speaker) => speaker.imageUrl)
+      .filter((url): url is string => Boolean(url)),
     date: event.date ?? "",
     price: Number(event.fee) || 0,
     time: formatEventTimeRange(event.startTime, event.endTime),
@@ -31,6 +34,7 @@ function toCardItem(event: ApiEvent): ContentType {
 
 const EventGrid = ({ events, isLoading }: EventGridProps) => {
   const navigate = useNavigate();
+  const { getPath } = useVersion();
 
   if (isLoading) {
     return (
@@ -56,10 +60,14 @@ const EventGrid = ({ events, isLoading }: EventGridProps) => {
       {events.map((event) => (
         <div
           key={event.id}
-          onClick={() => navigate(`/event-detail/${slugify(event.title)}`)}
+          onClick={() => navigate(getPath(`/event-detail/${slugify(event.title)}`))}
           className="cursor-pointer"
         >
-          <Card item={toCardItem(event)} />
+          <Card
+            item={toCardItem(event)}
+            eventId={event.id}
+            registerLink={event.registerLink}
+          />
         </div>
       ))}
     </div>

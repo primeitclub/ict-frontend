@@ -4,14 +4,20 @@ import { Button } from "../../shared/design-components";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
+import { getImageUrl } from "../../lib/imageUtils";
+import { goToRegistration } from "../../lib/registration";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
+  eventId?: string;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink?: string | null;
 }
 
-const Card = ({ item, className, ...rest }: CardProps) => {
+const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
+  const isFull = item.seats <= 0;
   return (
     <div
       className={cn(
@@ -22,12 +28,12 @@ const Card = ({ item, className, ...rest }: CardProps) => {
     >
       <div className="relative h-[180px] md:h-[155px] w-full rounded-[9px] overflow-hidden">
         <img
-          src={item.image}
+          src={getImageUrl(item.image)}
           alt={item.title}
           className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-          {item.seats} / {item.totalSeats} Seats
+          {isFull ? "Booked" : `${item.seats} / ${item.totalSeats} Seats`}
         </div>
       </div>
 
@@ -43,7 +49,7 @@ const Card = ({ item, className, ...rest }: CardProps) => {
               key={i}
               className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
             >
-              <img src={av} alt="Speaker" className="w-8 h-8 rounded-full " />
+              <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
             </div>
           ))}
         </div>
@@ -72,11 +78,15 @@ const Card = ({ item, className, ...rest }: CardProps) => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(
-              getPath(item.id ? `/register?eventId=${item.id}` : "/register"),
+            const id = eventId ?? item.id;
+            goToRegistration(
+              registerLink,
+              getPath(id ? `/register?eventId=${id}` : "/register"),
+              navigate,
             );
           }}
-          label="Register Now"
+          disabled={isFull}
+          label={isFull ? "Booked" : "Register Now"}
           fullWidth
           rightIcon={
             <ChevronRight

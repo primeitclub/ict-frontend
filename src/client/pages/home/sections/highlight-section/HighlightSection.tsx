@@ -36,23 +36,26 @@ export default function HighlightSection() {
   // TODO(mapping): Card's ContentType diverges from the Event entity. Confirmed
   // fields are wired; the rest are placeholders pending your confirmation:
   //  - speaker line uses `subtitle`; avatars aren't on the aggregate yet (left empty).
-  //  - time is formatted from start/end; remaining seats = totalSeats − registeredCount.
   //  - price is parsed from `fee` (a string) — confirm the fee format.
-  const cards: (ContentType & { id: string; categoryId: string | null })[] =
-    highlights.map((e) => ({
-      id: e.id,
-      categoryId: e.category?.id ?? null,
-      image: e.imageUrl ?? "",
-      title: e.title,
-      speaker: e.subtitle ?? "",
-      avatar: [],
-      date: e.date ?? "",
-      price: Number(e.fee) || 0,
-      time: formatEventTimeRange(e.startTime, e.endTime),
-      place: e.location,
-      seats: remainingSeats(e),
-      totalSeats: e.totalSeats,
-    }));
+  const cards: (ContentType & {
+    id: string;
+    registerLink: string | null;
+    categoryId: string;
+  })[] = highlights.map((e) => ({
+    id: e.id,
+    registerLink: e.registerLink ?? null,
+    categoryId: e.categoryId,
+    image: e.imageUrl ?? "",
+    title: e.title,
+    speaker: e.subtitle ?? "",
+    avatar: [],
+    date: e.date ?? "",
+    price: Number(e.fee) || 0,
+    time: formatEventTimeRange(e.startTime, e.endTime),
+    place: e.location,
+    seats: remainingSeats(e),
+    totalSeats: e.totalSeats,
+  }));
 
   const visibleCards =
     activeCategoryId === "all"
@@ -158,8 +161,10 @@ export default function HighlightSection() {
                 >
                   <Card
                     className="hover:cursor-pointer "
-                    onClick={() => navigate(`/event-detail/${slugify(item.title)}`)}
+                    onClick={() => navigate(getPath(`/event-detail/${slugify(item.title)}`))}
                     item={item}
+                    eventId={item.id}
+                    registerLink={item.registerLink}
                   />
                 </motion.div>
               </SwiperSlide>

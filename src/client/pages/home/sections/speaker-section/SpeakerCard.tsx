@@ -1,5 +1,6 @@
 import Speakers from "./../../../../../assets/speaker-1.png";
 import type { Speaker } from "../../types";
+import { getImageUrl } from "../../../../../lib/imageUtils";
 
 interface SpeakerCardProps {
   speaker: Speaker;
@@ -167,7 +168,7 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
         {/* Speaker Image — sits naturally at the bottom */}
         <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px]">
           <img
-            src={speaker.imageUrl ?? Speakers}
+            src={speaker.imageUrl ? getImageUrl(speaker.imageUrl) : Speakers}
             alt={speaker.name}
             className="object-contain object-top max-h-[220px] w-auto"
           />

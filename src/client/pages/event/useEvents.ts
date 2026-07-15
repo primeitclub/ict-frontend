@@ -8,6 +8,8 @@ export interface EventCategory {
   displayOrder: number;
 }
 
+export type EventType = "SINGLE" | "GROUP";
+
 export interface ApiEvent {
   id: string;
   title: string;
@@ -21,13 +23,16 @@ export interface ApiEvent {
   feeType: "free" | "paid";
   location: string;
   totalSeats: number;
-  /** Seats still open — sent by the backend and drops as people register. */
-  availableSeats?: number;
-  /** Count of confirmed registrations; used to derive remaining seats. */
-  registeredCount?: number;
+  /** Approved registrations for this event; remaining = totalSeats − bookedSeats. */
+  bookedSeats: number;
   status: string;
+  categoryId: string;
   category: EventCategory;
-  speaker?: { id: string; name: string; imageUrl: string | null } | null;
+  speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
+  eventType: EventType;
+  maxParticipants: number | null;
+  /** External registration URL; takes precedence over the in-app form. */
+  registerLink: string | null;
 }
 
 interface PaginatedResult<T> {
