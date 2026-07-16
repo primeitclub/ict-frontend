@@ -42,9 +42,9 @@ export default {
         'primary': '#F5F5F5',      
         'secondary': '#D4D4D4',    
         'tertiary': '#A3A3A3',     
-        'nav-default': '#F5F5F5',  
-        'nav-hover': '#A3A3A3',    
-        'nav-active': '#3B82F6',   
+        'nav-default': '#F5F5F5',
+        'nav-hover': '#60A5FA',    // secondary accent — hover state
+        'nav-active': '#3B82F6',   // primary accent — active state
       },
       spacing: {
         'page-margin': '2rem',

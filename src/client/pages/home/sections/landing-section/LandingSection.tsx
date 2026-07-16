@@ -32,52 +32,59 @@ export function LandingSection() {
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
 
   return (
-    <div className="landing_section relative w-full min-h-screen overflow-hidden pt-32 sm:pt-40">
+    <div className="landing_section relative w-full sm:min-h-screen pt-32 sm:pt-40 pb-[calc(32vw+56px)] sm:pb-0">
       {/*
-        Same position/size as before — we only animate opacity + filter
-        brightness so the arc "lights up" out of the dark. No transform/scale,
-        so layout is untouched.
+        Mobile: the hero used to force a full 100svh, but the arc is anchored to
+        the buttons and only fills the upper part — leaving a huge black gap
+        before the next section. Instead we let the section hug its content and
+        reserve just enough bottom space (scaled to the arc's width-driven
+        height) for the arc's visible masked area. Desktop keeps min-h-screen.
       */}
-      <figure className="pointer-events-none absolute -bottom-[240px] left-1/2 -translate-x-1/2 z-0 w-full">
-        <motion.img
-          src={image}
-          alt=""
-          className="w-full select-none"
-          initial={{ opacity: 0, filter: "brightness(0.15)" }}
-          animate={{ opacity: 1, filter: "brightness(1)" }}
-          transition={{ duration: 2.2, ease: "easeOut" }}
-        />
-      </figure>
-
       {/*
-        Content fades up slightly after the background starts glowing (delay),
-        so the eye lands on the arc first, then the copy resolves in.
+        Content + arc share this wrapper so the arc can anchor to the BUTTONS
+        (the wrapper's bottom edge) instead of the section bottom — that keeps
+        the arc the same distance below the buttons at every screen size. The
+        -mt nudges the whole hero up.
       */}
-      <motion.div
-        className="flex flex-col  space-y-4 relative z-20"
+      <div className="relative z-10 -mt-[60px]">
+        {/*
+          Content fades up slightly after the background starts glowing (delay),
+          so the eye lands on the arc first, then the copy resolves in.
+        */}
+        <motion.div
+          className="flex flex-col  space-y-4 relative z-20"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
       >
         <div className="items-center flex justify-center text-center">
-          <div className="flex items-center gap-2 border-1 p-2 rounded-full  bg-white/5  ">
-            <div className="flex rounded-full bg-btn-primary text-[14px] py-[2px] px-[14px]">
-              Event on
+          <Link to={getPath("/events")}>
+            <div className="flex items-center gap-2 border-1 p-2 rounded-full  bg-white/5 transition-colors hover:bg-white/10 cursor-pointer">
+              <div className="flex rounded-full bg-btn-primary text-[14px] md:text-[16px] py-[2px] px-[14px]">
+                Event on
+              </div>
+              <div className="flex text-[14px] md:text-[16px] items-center gap-2 leading-3 font-normal -tracking-[0.598px]">
+                {dateLabel || "Coming Soon"}
+                <motion.span
+                  className="flex"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
+                >
+                  <ArrowRight size={20} />
+                </motion.span>
+              </div>{" "}
             </div>
-            <div className="flex text-[14px] items-center gap-2 leading-3 font-normal -tracking-[0.598px]">
-              {dateLabel || "Coming Soon"} <ArrowRight size={20} />{" "}
-            </div>{" "}
-          </div>
+          </Link>
         </div>
         <div className="relative flex flex-col gap-4 w-[100%] px-[1%]   sm:px-0 sm:w-[80%] md:w-[75%] lg:w-[70%] xl:w-[60%] 2xl:w-[52%] text-center mx-auto  ">
 
 
-          <div className="flex text-[34px] m-auto sm:text-[50px] sm:leading-[46px]  md:text-[64px] 2xl:text-[80px] font-[700] leading-[37px] px-3 md:leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">
+          <div className="flex text-[34px] m-auto sm:text-[50px] sm:leading-[46px]  md:text-[64px] 2xl:text-[80px] font-[700] leading-[37px] px-3 pb-2 md:leading-[73px] bg-gradient-to-r from-[#DBF5FF]  to-[#51A7FF] bg-clip-text text-transparent -tracking-[2px] ">
             {hero?.heading}
           </div>
           <Text
             align="center"
-            className="flex px-5 mx-auto  sm:px-9 lg:px-20 my-3 text-[10px] sm:text-[16px]"
+            className="flex px-5 mx-auto  sm:px-9 lg:px-20 my-3 text-[14px] md:text-[16px]"
           >
             {hero?.paragraph}
           </Text>
@@ -88,25 +95,88 @@ export function LandingSection() {
         </div>
         <div className="flex sm:flex-row flex-col gap-4 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
           <Link to={getPath("/register")}>
-            <Button
-              variant="glass"
-              className="text-xs sm:text-base"
-              rightIcon={<ChevronRight />}
-              label="Register Now "
-            />
+            {/* Old glass button, but the whitish hover fill is kept ON always
+                (!bg-glow-secondary + black text) so Register Now stays the light
+                primary CTA. Wrapper scales up on hover only (no idle pulse). */}
+            <motion.div
+              className="inline-block"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Button
+                variant="glass"
+                className="!w-fit text-xs sm:text-base !bg-glow-secondary !text-black"
+                rightIcon={
+                  <motion.span
+                    className="flex"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
+                  >
+                    <ChevronRight />
+                  </motion.span>
+                }
+                label="Register Now "
+              />
+            </motion.div>
           </Link>
           <Link to={getPath("/sponsors")}>
-            <Button
-              variant="glass"
-              className="text-xs sm:text-base"
-              rightIcon={<ChevronRight />}
-              label="Be a Sponsor"
-            />
+            <motion.div
+              className="inline-block"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Button
+                variant="glass"
+                className="!w-fit text-xs sm:text-base"
+                rightIcon={
+                  <motion.span
+                    className="flex"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
+                  >
+                    <ChevronRight />
+                  </motion.span>
+                }
+                label="Be a Sponsor"
+              />
+            </motion.div>
           </Link>
         </div>
-      </motion.div>
+        </motion.div>
 
-      {/* <div className=" bg-transparent mx-auto w-1/2 blur-xs h-full backdrop:blur-xl  border-4 border-white rounded-full "></div> */}
+        {/*
+          Arc sits just below the buttons at the SAME gap on every screen size.
+          It is placed at the content's bottom edge (top-full) and lifted by 48%
+          of its height (where the bright burst sits in the PNG) minus a fixed
+          56px gap — the % tracks the image as it scales, the px is the constant
+          gap. The image is NOT clipped; it renders in full and a bottom mask
+          gradient (see the img style) fades its lower half into the page so the
+          glow dissolves smoothly instead of ending on a hard edge.
+        */}
+        <figure
+          className="pointer-events-none absolute top-full left-1/2 w-[140%] sm:w-full -z-10"
+          style={{ transform: "translate(-50%, calc(-48% + 56px))" }}
+        >
+          <motion.img
+            src={image}
+            alt=""
+            className="w-full select-none"
+            style={{
+              // Fade the lower half of the arc to true transparency so the glow
+              // dissolves into the page background instead of ending on a hard
+              // rectangular edge. Nothing is cropped now — the image renders in
+              // full and the mask does the blending.
+              maskImage:
+                "linear-gradient(to bottom, #000 0%, #000 48%, transparent 82%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, #000 0%, #000 48%, transparent 82%)",
+            }}
+            initial={{ opacity: 0, filter: "brightness(0.15)" }}
+            animate={{ opacity: 1, filter: "brightness(1)" }}
+            transition={{ duration: 2.2, ease: "easeOut" }}
+          />
+        </figure>
+      </div>
     </div>
   );
 }

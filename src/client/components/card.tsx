@@ -21,7 +21,7 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
   return (
     <div
       className={cn(
-        "rounded-3xl border border-black/5 bg-[#FEFEFE] p-4 group h-full font-sans w-[280px] mx-auto sm:w-[280px] md:w-auto shadow-[0_2px_8px_rgba(15,23,42,0.06),0_8px_18px_rgba(15,23,42,0.08)] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08),0_14px_28px_rgba(15,23,42,0.12)]",
+        "flex flex-col rounded-3xl border border-black/5 bg-[#FEFEFE] p-4 group h-full font-sans w-[280px] mx-auto sm:w-[280px] md:w-auto shadow-[0_2px_8px_rgba(15,23,42,0.06),0_8px_18px_rgba(15,23,42,0.08)] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08),0_14px_28px_rgba(15,23,42,0.12)]",
         className,
       )}
       {...rest}
@@ -37,41 +37,58 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
         </div>
       </div>
 
-      <div className="mt-3">
-        <h3 className="text-[20px] font-semibold mb-1 truncate">{item.title}</h3>
-        <p className="text-[12px] mb-2 truncate" title={item.speaker}>
-          {item.speaker}
-        </p>
+      <div className="mt-3 flex flex-col flex-1">
+        <h3
+          className="text-[20px] font-semibold mb-1 truncate"
+          title={item.title}
+        >
+          {item.title}
+        </h3>
+        {/* Speaker line: hard-coded "with" + comma-separated names. Rendered
+            only when there is at least one speaker. */}
+        {item.speaker ? (
+          <p className="text-[12px] mb-2 truncate" title={`with ${item.speaker}`}>
+            with {item.speaker}
+          </p>
+        ) : null}
 
-        <div className="flex -space-x-3 mb-6">
-          {item.avatar.map((av, i) => (
-            <div
-              key={i}
-              className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
-            >
-              <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
-            </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-2 gap-y-4 gap-x-2  mb-8">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 " />
-            <span className="text-[12px] font-medium">{item.date}</span>
+        {item.avatar.length > 0 && (
+          <div className="flex -space-x-3 mb-4">
+            {item.avatar.map((av, i) => (
+              <div
+                key={i}
+                className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
+              >
+                <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
+              </div>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
-            <Banknote className="w-4 h-4  text-[#10B981] " />
-            <span className="text-[#10B981] text-[12px] font-medium">
-              Rs. {item.price}
+        )}
+
+        {/* mt-auto pins the info grid + button to the bottom so buttons align
+            across cards regardless of how much text is above. Each cell
+            truncates to one line so a long location can't blow up the height
+            or shrink the icon. */}
+        <div className="grid grid-cols-2 gap-y-4 gap-x-2 mt-auto pt-4 mb-6">
+          <div className="flex items-center gap-2 min-w-0">
+            <Calendar className="w-4 h-4 shrink-0" />
+            <span className="text-[12px] font-medium truncate">{item.date}</span>
+          </div>
+          <div className="flex items-center gap-2 min-w-0">
+            <Banknote className="w-4 h-4 text-[#10B981] shrink-0" />
+            <span className="text-[#10B981] text-[12px] font-medium truncate">
+              {item.price > 0 ? `Rs. ${item.price}` : "Free"}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4  " />
-            <span className="text-[12px] font-medium">{item.time}</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <Clock className="w-4 h-4 shrink-0" />
+            <span className="text-[12px] font-medium truncate">{item.time}</span>
           </div>
-          <div className="flex items-center gap-2 font-medium">
-            <MapPin className="w-4 h-4  " />
-            <span className="text-[12px] font-medium">{item.place}</span>
+          <div className="flex items-center gap-2 min-w-0 font-medium">
+            <MapPin className="w-4 h-4 shrink-0" />
+            <span className="text-[12px] font-medium truncate" title={item.place}>
+              {item.place}
+            </span>
           </div>
         </div>
 

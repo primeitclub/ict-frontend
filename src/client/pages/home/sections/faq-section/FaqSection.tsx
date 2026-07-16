@@ -20,27 +20,15 @@ const FAQSection = () => {
 
   return (
     <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12">
-      {/* Mobile: short title */}
-      <div className="block sm:hidden">
-        <SectionHeader
-          titleNormal=""
-          titleHighlight="FAQs"
-          varient="primary"
-          align="center"
-          className="mb-4"
-        />
-      </div>
-
-      {/* Desktop: full title */}
-      <div className="hidden sm:block">
-        <SectionHeader
-          titleNormal="Frequently"
-          titleHighlight="Asked Questions"
-          varient="primary"
-          align="center"
-          className="mb-4"
-        />
-      </div>
+      {/* Same full title on every breakpoint (mobile used to abbreviate to
+          "FAQs"); at the 30px mobile size it simply wraps, centered. */}
+      <SectionHeader
+        titleNormal="Frequently"
+        titleHighlight="Asked Questions"
+        varient="primary"
+        align="center"
+        className="mb-4"
+      />
 
       {/* FAQ List */}
       <div className="flex flex-col gap-4 max-w-4xl mx-auto">

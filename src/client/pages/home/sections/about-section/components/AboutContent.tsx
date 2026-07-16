@@ -21,7 +21,7 @@ const AboutContent = () => {
         {/* `content` is sanitized HTML from the backend — rendered via RichText
             (DOMPurify) rather than as a plain string. */}
         <RichText
-          className="my-1 md:my-2 xl:my-2 space-y-4 text-[#DFDFDF]"
+          className="my-1 md:my-2 xl:my-2 space-y-4 text-left text-[#DFDFDF]"
           html={about?.content}
         />
       </div>

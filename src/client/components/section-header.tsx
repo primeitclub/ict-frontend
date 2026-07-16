@@ -37,7 +37,11 @@ export default function SectionHeader({
     <div className={cn("w-full flex", alignStyles[align], className)}>
       <h2
         className={cn(
-          " text-[40px] md:text-[60px] font-[650] tracking-[-2.4px] w-fit ",
+          // Mobile size stays below the hero title (34px) so the hero remains
+          // the largest text on the page; desktop is unchanged. Mobile tracking
+          // is a middle value — the -2.4px desktop tracking is too cramped at
+          // 30px, but 0 reads too loose.
+          " text-[30px] md:text-[60px] font-[650] tracking-[-1px] md:tracking-[-2.4px] w-fit ",
           reversePosition ? "flex gap-2 flex-row-reverse" : "",
           varientStyles[varient || "primary"],
         )}
