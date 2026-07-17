@@ -79,8 +79,19 @@ export function useEventsList(categoryId?: string) {
     enabled: !!versionId,
   });
 
+  // "All" mixes every category, so order by the category's displayOrder first
+  // (workshop → competition → session, etc.). The sort is stable, so within a
+  // category the backend's own ordering is preserved. For a single-category
+  // query all keys are equal and the list is untouched.
+  const items = data?.data?.items ?? [];
+  const events = [...items].sort(
+    (a, b) =>
+      (a.category?.displayOrder ?? Number.MAX_SAFE_INTEGER) -
+      (b.category?.displayOrder ?? Number.MAX_SAFE_INTEGER),
+  );
+
   return {
-    events: data?.data?.items ?? [],
+    events,
     isLoading,
   };
 }

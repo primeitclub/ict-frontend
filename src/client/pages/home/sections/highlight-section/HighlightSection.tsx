@@ -114,7 +114,13 @@ export default function HighlightSection() {
                 slidesPerView: 4,
               },
             }}
-            className="pb-16"
+            // The swiper clips at its own box (overflow: hidden), which used to
+            // slice the card drop-shadows off in a hard line at the edges. The
+            // padding gives the shadows room to fade out; the negative margins
+            // cancel it so the cards stay aligned with the section. Keep the
+            // padding smaller than spaceBetween (20px) or the neighbouring
+            // off-screen slide peeks in.
+            className="pb-16 !px-3 !-mx-3 !pt-2 !-mt-2"
           >
             {highlights.map((event, index) => (
               // !h-auto lets the flex slides stretch to the tallest card so every
