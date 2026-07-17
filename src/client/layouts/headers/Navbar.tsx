@@ -173,32 +173,38 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent my-10" />
+          {/* Hidden entirely when there are no published editions — matches
+              the desktop rail, which also renders nothing in that case. */}
+          {versions.length > 0 && (
+            <>
+              <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent my-10" />
 
-          <div className="flex flex-col items-center w-full">
-            <h3 className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent font-semibold text-2xl mb-6 tracking-wide">
-              Versions
-            </h3>
-            <div className="flex flex-col items-center gap-6 text-lg font-normal text-gray-400">
-              {versions.map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  className={`uppercase transition-colors duration-300 ${
-                    version === v
-                      ? "text-white font-semibold"
-                      : "hover:text-white"
-                  }`}
-                  onClick={() => {
-                    navigateToVersion(v);
-                    setToggle(false);
-                  }}
-                >
-                  {v}
-                </button>
-              ))}
-            </div>
-          </div>
+              <div className="flex flex-col items-center w-full">
+                <h3 className="bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent font-semibold text-2xl mb-6 tracking-wide">
+                  Versions
+                </h3>
+                <div className="flex flex-col items-center gap-6 text-lg font-normal text-gray-400">
+                  {versions.map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      className={`uppercase transition-colors duration-300 ${
+                        version === v
+                          ? "text-white font-semibold"
+                          : "hover:text-white"
+                      }`}
+                      onClick={() => {
+                        navigateToVersion(v);
+                        setToggle(false);
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
           </div>
         </div>
       )}

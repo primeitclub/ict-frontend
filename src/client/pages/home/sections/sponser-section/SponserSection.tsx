@@ -40,7 +40,7 @@ export default function SponserSection() {
                 <img
                   src={sponsor.imageUrl ? getImageUrl(sponsor.imageUrl) : undefined}
                   alt={sponsor.name}
-                  className="w-full h-full object-cover md:rounded-2xl"
+                  className="w-full h-full object-contain md:rounded-2xl"
                 />
               </motion.a>
             ))}

@@ -33,7 +33,7 @@ const CategoryTabs = ({
   if (isLoading) return null;
 
   return (
-    <div className="mt-0 mb-8 sm:mb-12 px-1 sm:px-4">
+    <div className="mt-0 px-1 sm:px-4">
       {/* --- MOBILE DROPDOWN --- */}
       <div
         className={`md:hidden relative max-w-[300px] sm:max-w-none ${
@@ -80,7 +80,7 @@ const CategoryTabs = ({
 
       {/* --- DESKTOP TABS --- */}
       <div
-        className={`hidden md:flex flex-wrap gap-x-12 gap-y-6 text-xl font-bold pb-4 ${
+        className={`hidden md:flex flex-wrap gap-x-12 gap-y-6 text-xl font-bold ${
           align === "start" ? "justify-start" : "justify-center"
         }`}
       >
