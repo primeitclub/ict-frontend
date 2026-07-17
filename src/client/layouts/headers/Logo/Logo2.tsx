@@ -6,6 +6,12 @@ interface Logo2Props {
   className?: string;
   size?: "sm" | "md" | "lg";
   src?: string | null;
+  /**
+   * When true, the edition logo hasn't resolved yet. We render an invisible,
+   * space-reserving placeholder instead of the bundled fallback so the real
+   * logo doesn't flash a different image on reload.
+   */
+  loading?: boolean;
 }
 
 const SIZE_CLASS: Record<NonNullable<Logo2Props["size"]>, string> = {
@@ -14,7 +20,15 @@ const SIZE_CLASS: Record<NonNullable<Logo2Props["size"]>, string> = {
   lg: "h-10 sm:h-12 lg:h-14",
 };
 
-export default function Logo2({ className, size = "md", src }: Logo2Props) {
+export default function Logo2({ className, size = "md", src, loading }: Logo2Props) {
+  if (loading) {
+    return (
+      <div
+        aria-hidden
+        className={cn("w-[120px] max-w-full", SIZE_CLASS[size], className)}
+      />
+    );
+  }
   return (
     <img
       src={src ? getImageUrl(src) : logo2}

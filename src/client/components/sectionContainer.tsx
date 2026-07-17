@@ -22,7 +22,12 @@ const SectionContainer = React.forwardRef<HTMLDivElement, PageLayoutProps>(
         case "full":
           return "w-full max-w-screen-2xl mx-auto ";
         case "container":
-          return "max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 my-[60px] md:my-[120px] lg:my-[160px] xl:my-[180px]";
+          // Vertical spacing for every section — PADDING only (no margins),
+          // identical across all sections so the rhythm is consistent on mobile
+          // and desktop. Bottom padding is deliberately larger than the top to
+          // give each section more breathing room before the next. Full-bleed
+          // sections (Highlight/Gallery) mirror this `pb` on their own root.
+          return "max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-16 pb-28 md:pt-24 md:pb-40";
       }
     }
 

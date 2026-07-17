@@ -1,39 +1,12 @@
-import { VERSIONS } from "../../routes/route-type";
 import { cn } from "../../../shared/utils/cn";
 import "../../../App.css";
 import { useVersion } from "../../routes/VersionContext";
-import { useApiQuery } from "../../../lib/use-api-query";
-
-interface VersionItem {
-  id: string;
-  version_number: string;
-  status: "active" | "archived" | "draft";
-}
-
-interface VersionsResponse {
-  status: string;
-  data: { items: VersionItem[] };
-}
-
-/** Converts API version_number to route key: "8.0" → "v8", "7.5" → "v7.5" */
-function toRouteVersion(versionNumber: string): string {
-  const n = parseFloat(versionNumber);
-  return `v${n % 1 === 0 ? Math.floor(n) : n}`;
-}
+import { useVersions } from "../../hooks/use-versions";
 
 export default function VersionNavigate() {
   const { navigateToVersion, version } = useVersion();
 
-  const { data } = useApiQuery("versions")<VersionsResponse>({
-    queryParams: { limit: 50 },
-  });
-
-  const versions: string[] = data?.data?.items
-    ? data.data.items
-        .filter((v) => v.status !== "draft")
-        .map((v) => toRouteVersion(v.version_number))
-        .filter((v, i, arr) => arr.indexOf(v) === i) // deduplicate
-    : VERSIONS;
+  const versions = useVersions();
 
   const MAX_VISIBLE = 5;
   const ITEM_HEIGHT = 28; // px, matches button height (py-1 + text-sm line-height)

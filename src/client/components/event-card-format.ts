@@ -3,6 +3,8 @@
  * and the home hero (HighlightSection) so they render time and seats the same way.
  */
 
+import type { ContentType } from "../pages/home/sections/highlight-section/types";
+
 /** "10:00:00" | "10:00" → "10:00 AM"; returns "" for empty and echoes unknown formats. */
 export function formatEventTime(value: string | null | undefined): string {
   if (!value) return "";
@@ -37,4 +39,50 @@ export function remainingSeats(input: {
   bookedSeats: number;
 }): number {
   return Math.max(input.totalSeats - input.bookedSeats, 0);
+}
+
+/**
+ * Minimal event shape the Card needs. Both `ApiEvent` (events page) and
+ * `HighlightItem` (home page) structurally satisfy this, so a single mapper
+ * feeds the same Card in both places.
+ */
+export interface EventCardSource {
+  id: string;
+  title: string;
+  imageUrl: string | null;
+  date: string | null;
+  startTime: string | null;
+  endTime: string | null;
+  location: string;
+  fee: string;
+  totalSeats: number;
+  bookedSeats: number;
+  speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
+}
+
+/**
+ * Maps a raw event to the Card's `ContentType`. This is the single source of
+ * truth for how an event becomes a card — the home events section and the
+ * events page both call it so their cards are identical.
+ */
+export function toEventCardItem(event: EventCardSource): ContentType {
+  return {
+    id: event.id,
+    image: event.imageUrl ?? "",
+    title: event.title,
+    // "with <names>" is assembled in the Card; here we just join speaker names.
+    speaker: (event.speakers ?? [])
+      .map((speaker) => speaker.name)
+      .filter(Boolean)
+      .join(", "),
+    avatar: (event.speakers ?? [])
+      .map((speaker) => speaker.imageUrl)
+      .filter((url): url is string => Boolean(url)),
+    date: event.date ?? "",
+    price: Number(event.fee) || 0,
+    time: formatEventTimeRange(event.startTime, event.endTime),
+    place: event.location,
+    seats: remainingSeats(event),
+    totalSeats: event.totalSeats,
+  };
 }
