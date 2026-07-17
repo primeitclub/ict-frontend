@@ -6,12 +6,15 @@ interface ByContentProps {
   position?: "relative" | "absolute";
   children?: React.ReactNode;
   className?: string;
+  /** Extra classes for the gradient banner itself (e.g. to hide it on mobile). */
+  bannerClassName?: string;
 }
 
 const TopBgContent = ({
   position = "relative",
   children,
   className,
+  bannerClassName,
 }: ByContentProps): React.ReactNode => {
   const child = children as React.ReactNode;
 
@@ -21,7 +24,10 @@ const TopBgContent = ({
         style={{
           background: `linear-gradient(180deg, #020919 12.28%, #3571F0 209.51%)`,
         }}
-        className={`${position}  h-[250px] md:h-[300px] w-full flex items-center`}
+        className={cn(
+          `${position} h-[250px] md:h-[300px] w-full flex items-center`,
+          bannerClassName
+        )}
       >
         <SectionContainer as="div" key={"eventPage"} className="w-full">
           {position === "relative" && child}

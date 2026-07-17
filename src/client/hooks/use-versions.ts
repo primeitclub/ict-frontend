@@ -1,12 +1,12 @@
 /**
  * Route-version keys (e.g. ["v8", "v7", "v7.5"]) for every published edition,
- * newest first. Falls back to the static VERSIONS list until the request
- * resolves. Shared by the desktop version rail (VersionNavigate) and the
- * mobile hamburger menu (Navbar) so both always show the same editions instead
- * of a hardcoded list.
+ * newest first. Returns [] until the request resolves (and when the backend
+ * has no published editions) — callers hide their version UI when the list is
+ * empty rather than showing a stale hardcoded fallback. Shared by the desktop
+ * version rail (VersionNavigate) and the mobile hamburger menu (Navbar) so
+ * both always show the same editions.
  */
 import { useApiQuery } from "../../lib";
-import { VERSIONS } from "../routes/route-type";
 
 interface VersionItem {
   id: string;
@@ -35,5 +35,5 @@ export function useVersions(): string[] {
         .filter((v) => v.status !== "draft")
         .map((v) => toRouteVersion(v.version_number))
         .filter((v, i, arr) => arr.indexOf(v) === i) // deduplicate
-    : VERSIONS;
+    : [];
 }
