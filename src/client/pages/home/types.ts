@@ -91,6 +91,8 @@ export interface HighlightItem {
   status: string;
   /** Category the event belongs to; drives the landing-page category tabs. */
   categoryId: string;
+  /** Speakers for this event; used for the "with <names>" line + avatars. */
+  speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
   /** External registration URL; takes precedence over the in-app form. */
   registerLink: string | null;
 }

@@ -27,13 +27,23 @@ const GallerySection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = () => {
-    sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = sectionRef.current;
+    if (!el) return;
+    // Offset by the sticky navbar height (h-[63px]) so the section's top edge
+    // lands just below the navbar instead of scrolling underneath it.
+    const NAVBAR_HEIGHT = 63;
+    const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT;
+    window.scrollTo({ top, behavior: "smooth" });
   };
+
+  // Gallery images carry per-image links (set in the admin). The "View More"
+  // button opens the first available link in a new tab.
+  const viewMoreLink = gallery.find((g) => g.link)?.link ?? null;
 
   if (!gallery.length) return null;
 
   return (
-    <div ref={sectionRef} className="w-full py-24 bg-white relative">
+    <div ref={sectionRef} className="w-full pt-16 pb-28 md:pt-24 md:pb-40 bg-white relative">
       <button
         className="absolute -top-5 left-[50%] transform -translate-x-1/2 z-56 cursor-pointer bg-white rounded-full p-2 drop-shadow-xl"
         onClick={scrollToSection}
@@ -76,7 +86,16 @@ const GallerySection = () => {
         </div>
 
         <div className="flex justify-center mt-16">
-          <Button label="View More" rightIcon={<ChevronRight size={18} />} />
+          <Button
+            label="View More"
+            rightIcon={<ChevronRight size={18} />}
+            disabled={!viewMoreLink}
+            onClick={() => {
+              if (viewMoreLink) {
+                window.open(viewMoreLink, "_blank", "noopener,noreferrer");
+              }
+            }}
+          />
         </div>
       </div>
     </div>

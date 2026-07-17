@@ -17,8 +17,49 @@
 
   body {
     @apply bg-primary text-primary font-sans;
-    overflow-x: hidden;
+    /* Do NOT put overflow-x on body/html: the navbar carries a backdrop-filter
+       (backdrop-blur), and a fixed/sticky element with its own backdrop-filter
+       gets CLIPPED by any non-visible-overflow ancestor in Chromium's
+       compositor — the bar vanished mid-scroll. Horizontal overflow (the wide
+       hero arc etc.) is clipped on <main> in PageLayout instead, which is not
+       an ancestor of the header. */
   }
+}
+
+/* Modern scrollbar — slim, rounded, dark-themed with a subtle blue accent.
+   WebKit (Chrome/Edge/Safari) uses the pseudo-elements; Firefox uses the
+   scrollbar-* properties. Applied globally so every scroll surface matches. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(53, 113, 240, 0.55) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Accent color #3571F0 */
+  background-color: rgba(53, 113, 240, 0.5);
+  border-radius: 9999px;
+  /* Transparent border creates padding around the thumb so it reads as a
+     slim floating pill rather than a full-width bar. */
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(53, 113, 240, 0.85);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @layer components {
@@ -66,4 +107,18 @@
 
 .react-datepicker__input-container input {
   @apply w-full;
+}
+
+/* Speaker section swiper dots sit on the near-black section background, where
+   Swiper's default translucent-dark bullets vanish. Force a greyish inactive
+   dot and a blue active dot so the indicator is always visible. */
+.custom-pagination-speaker .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background-color: #adadad;
+  opacity: 1;
+}
+
+.custom-pagination-speaker .swiper-pagination-bullet-active {
+  background-color: #51a7ff;
 }

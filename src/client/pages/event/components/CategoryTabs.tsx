@@ -7,6 +7,8 @@ interface CategoryTabsProps {
   activeCategoryId: string;
   onSelect: (id: string) => void;
   isLoading?: boolean;
+  /** Horizontal alignment of the tabs. Defaults to "center". */
+  align?: "start" | "center";
 }
 
 const CategoryTabs = ({
@@ -14,6 +16,7 @@ const CategoryTabs = ({
   activeCategoryId,
   onSelect,
   isLoading,
+  align = "center",
 }: CategoryTabsProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,9 +33,13 @@ const CategoryTabs = ({
   if (isLoading) return null;
 
   return (
-    <div className="mt-0 sm:mt-20 mb-12 px-1 sm:px-4">
+    <div className="mt-0 mb-8 sm:mb-12 px-1 sm:px-4">
       {/* --- MOBILE DROPDOWN --- */}
-      <div className="md:hidden relative mx-auto max-w-[300px] sm:max-w-none">
+      <div
+        className={`md:hidden relative max-w-[300px] sm:max-w-none ${
+          align === "start" ? "mr-auto" : "mx-auto"
+        }`}
+      >
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-full h-[34px] bg-[#3571F0] hover:bg-[#184EBF] text-white px-4 rounded-full flex items-center justify-between transition-colors duration-200 text-sm font-semibold shadow-md"
@@ -72,7 +79,11 @@ const CategoryTabs = ({
       </div>
 
       {/* --- DESKTOP TABS --- */}
-      <div className="hidden md:flex flex-wrap gap-x-12 gap-y-6 text-xl justify-center font-bold pb-4">
+      <div
+        className={`hidden md:flex flex-wrap gap-x-12 gap-y-6 text-xl font-bold pb-4 ${
+          align === "start" ? "justify-start" : "justify-center"
+        }`}
+      >
         {options.map((opt) => (
           <button
             key={opt.id}

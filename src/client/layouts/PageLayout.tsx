@@ -10,7 +10,7 @@ export default function PageLayout() {
     <div className="app-layout">
       <ScrollToTop />
       <Navbar />
-      <main>
+      <main className="overflow-x-clip">
         <VersionNavigate />
         <Outlet />
       </main>

@@ -16,7 +16,7 @@ export const AboutSection = () => {
           backgroundColor: "#010005",
         }}
       >
-        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 md:gap-6 lg:gap-16 xl:gap-20 mt-12 mb-48">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 md:gap-6 lg:gap-16 xl:gap-20">
           {/* Mobile Title */}
           <SectionHeader
             titleHighlight="This Year's"

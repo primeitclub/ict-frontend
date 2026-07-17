@@ -26,6 +26,8 @@ export interface ApiEvent {
   /** Approved registrations for this event; remaining = totalSeats − bookedSeats. */
   bookedSeats: number;
   status: string;
+  /** Whether this event is flagged as a highlight (top swiper on the events page). */
+  isHighlighted?: boolean;
   categoryId: string;
   category: EventCategory;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;

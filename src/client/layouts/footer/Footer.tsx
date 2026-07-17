@@ -7,6 +7,7 @@ import PrimeCollege from "../../../assets/PrimeCollege.svg";
 import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
 import { useSiteSettings } from "../../hooks/use-site-settings";
+import { useHome } from "../../pages/home/useHome";
 
 export const Footer = () => {
   const navigate = useNavigate();
@@ -15,6 +16,10 @@ export const Footer = () => {
   const editionLabel = version.toUpperCase();
 
   const { data: siteSettings } = useSiteSettings();
+  // Same edition logo the navbar shows, instead of a hard-coded bundled asset.
+  const { data: logo, isLoading: logoLoading } = useHome(
+    (d) => d.edition.logoPath ?? d.edition.logo,
+  );
 
   const clubEmail = siteSettings?.clubEmail || "itclub.prime@prime.edu.np";
   const clubPhone = siteSettings?.clubPhoneNumber || "+123 45 6 789";
@@ -51,7 +56,12 @@ export const Footer = () => {
             onClick={() => navigate(getPath("/"))}
           >
             <div className="flex flex-col items-center lg:items-start w-[164px]">
-              <Logo2 size="lg" className="h-9 sm:h-11 md:h-16 lg:h-20" />
+              <Logo2
+                size="lg"
+                src={logo}
+                loading={logoLoading}
+                className="h-9 sm:h-11 md:h-16 lg:h-20"
+              />
               {/* <p className="mt-2 text-lg font-semibold font-mona bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent text-center lg:text-left">
                 Fusion Of Tech Talent & Creativity
               </p> */}
@@ -219,13 +229,17 @@ export const Footer = () => {
       <div className="mt-9 border-[0.8px] border-[#353535]"></div>
 
       <div className="flex flex-col items-center w-full gap-6 lg:flex-row lg:justify-between mt-9 lg:gap-0">
-        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-md font-semibold lg:justify-start lg:gap-8 lg:text-lg lg:w-auto">
+        <nav className="flex flex-wrap justify-center w-full gap-4 font-sans text-md lg:justify-start lg:gap-8 lg:text-lg lg:w-auto">
           {pages.map(({ label, path }) => (
             <NavLink
               key={`${label}-${path}`}
               to={getPath(path)}
               className={({ isActive }) =>
-                isActive ? "text-blue-400" : "hover:text-blue-400"
+                `transition-colors duration-300 ${
+                  isActive
+                    ? "text-nav-active font-semibold"
+                    : "text-nav-default hover:text-nav-hover font-normal"
+                }`
               }
             >
               {label}
