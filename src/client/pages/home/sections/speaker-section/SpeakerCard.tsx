@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
+import { CircleArrowRight } from "lucide-react";
 import Speakers from "./../../../../../assets/speaker-1.png";
 import type { Speaker } from "../../types";
 import { getImageUrl } from "../../../../../lib/imageUtils";
+import { slugify } from "../../../../../lib";
+import { useHome } from "../../useHome";
+import { useVersion } from "../../../../routes/VersionContext";
 
 interface SpeakerCardProps {
   speaker: Speaker;
@@ -21,6 +26,15 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
   const instagram = normalizeUrl(speaker.socialLinks?.instagram);
   const portfolio = normalizeUrl(speaker.socialLinks?.portfolio);
   const linkedin = normalizeUrl(speaker.socialLinks?.linkedin);
+
+  const { getPath } = useVersion();
+  // The Speaker entity carries no event relation, but each highlight event
+  // lists its speakers — match by id to surface the speaker's related event.
+  const { data: relatedEvent } = useHome((d) =>
+    d.sections.highlights.find((event) =>
+      event.speakers?.some((s) => s.id === speaker.id)
+    )
+  );
 
   return (
     <div
@@ -60,19 +74,25 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
             </span>
             <span className="text-xs text-[#BBC0CC]">{speaker.company}</span>
           </div>
-          {/* TODO(mapping): the talk topic ("AI in Finance") has no field on the
-              Speaker entity. Hardcoded for now — confirm where this comes from
-              (talk/session relation?) before wiring. */}
-          <div className="flex items-center gap-2 mt-1">
-            {/* <img src={Rightarrow} alt="Arrow" /> */}
-            <span className="text-[13px] font-semibold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
-             
-            </span>
-          </div>
+          {relatedEvent && (
+            <Link
+              to={getPath(`/event-detail/${slugify(relatedEvent.title)}`)}
+              className="group relative z-20 flex items-center gap-2 mt-1"
+            >
+              <CircleArrowRight
+                size={18}
+                className="shrink-0 text-[#51A7FF] -rotate-45 transition-transform duration-700 group-hover:rotate-0"
+              />
+              <span className="text-left text-sm font-normal sm:font-medium font-primary bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent">
+                {relatedEvent.title}
+              </span>
+            </Link>
+          )}
         </div>
 
-        {/* Social Icons */}
-        <div className="flex gap-3 ">
+        {/* Social Icons — kept above the speaker photo (which is pulled up
+            over this row by its negative margin) so they stay clickable */}
+        <div className="relative z-20 flex gap-3 ">
           {instagram && (
             <a
               href={instagram}
@@ -166,7 +186,9 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
         </div>
 
         {/* Speaker Image — sits naturally at the bottom */}
-        <div className="flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px]">
+        {/* -mr-2 cancels the wrapper's pr-2 so the photo touches the card's
+            right border */}
+        <div className="relative z-0 pointer-events-none flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px] -mr-2">
           <img
             src={speaker.imageUrl ? getImageUrl(speaker.imageUrl) : Speakers}
             alt={speaker.name}
