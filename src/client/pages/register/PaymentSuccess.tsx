@@ -195,7 +195,7 @@ const PaymentSuccess = () => {
                     key={`${participant.email}-${index}`}
                     className="mt-[8px] border-t border-[#E2E8F0] pt-[8px]"
                   >
-                    <span className="text-[#3571F0] font-medium">
+                    <span className="text-accent font-medium">
                       Member {index + 1}
                     </span>
                     <InfoRow label="Name" value={participant.fullName || "—"} />
@@ -244,7 +244,7 @@ const PaymentSuccess = () => {
               variant="solid-white"
               rightIcon={<ChevronRight />}
               label="Contact Support"
-              className="flex mx-auto text-[#3571F0] shadow-[0px_0px_6px_0px_#00000033] text-nowrap   w-full"
+              className="flex mx-auto text-accent shadow-[0px_0px_6px_0px_#00000033] text-nowrap   w-full"
               type="button"
               onClick={() => navigate(getPath("/contacts"))}
             />

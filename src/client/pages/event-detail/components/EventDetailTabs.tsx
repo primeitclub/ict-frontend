@@ -28,7 +28,7 @@ export const EventDetailTabs = ({ event }: EventDetailTabsProps) => {
             onClick={() => setActiveTab(tab.id)}
             className={`group flex items-center gap-2 px-4 py-3 text-[15px] lg:text-xl font-semibold transition-colors border-b-2 -mb-px ${
               activeTab === tab.id
-                ? "text-[#3571F0] border-[#3571F0]"
+                ? "text-accent border-accent"
                 : "text-gray-800 border-transparent"
             }`}
           >
@@ -36,8 +36,8 @@ export const EventDetailTabs = ({ event }: EventDetailTabsProps) => {
               size={24}
               className={`transition-transform duration-700 ${
                 activeTab === tab.id
-                  ? "text-[#3571F0]"
-                  : "text-black -rotate-45 group-hover:rotate-0 hover:text-[#3571F0]"
+                  ? "text-accent"
+                  : "text-black -rotate-45 group-hover:rotate-0 hover:text-accent"
               }`}
             />
             {tab.label}

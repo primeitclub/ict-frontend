@@ -14,13 +14,13 @@ const ViewMoreButton: React.FC<ViewMoreButtonProps> = ({
   return (
     <button
       className={cn(
-        "flex items-center justify-center gap-2 mt-16 font-medium group transition-colors hover:text-[#3571F0]",
+        "flex items-center justify-center gap-2 mt-16 font-medium group transition-colors hover:text-accent",
         className
       )}
       {...props}
     >
       {label}
-      <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full group-hover:bg-blue-700 transition-colors">
+      <div className="bg-accent text-white px-1 py-1 rounded-full group-hover:bg-blue-700 transition-colors">
         <ArrowRight size={15} strokeWidth={2} />
       </div>
     </button>

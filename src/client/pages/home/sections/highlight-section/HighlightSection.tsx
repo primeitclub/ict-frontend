@@ -68,7 +68,7 @@ export default function HighlightSection() {
               <Button
                 className="flex items-center justify-center whitespace-nowrap"
                 rightIcon={
-                  <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+                  <div className="bg-accent text-white px-1 py-1 rounded-full">
                     <ArrowRight size={15} strokeWidth={2} />
                   </div>
                 }
@@ -163,7 +163,7 @@ export default function HighlightSection() {
               <Button
                 className="flex items-center justify-center whitespace-nowrap"
                 rightIcon={
-                  <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+                  <div className="bg-accent text-white px-1 py-1 rounded-full">
                     <ArrowRight size={15} strokeWidth={2} />
                   </div>
                 }

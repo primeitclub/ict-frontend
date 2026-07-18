@@ -42,7 +42,7 @@ const CategoryTabs = ({
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full h-[34px] bg-[#3571F0] hover:bg-[#184EBF] text-white px-4 rounded-full flex items-center justify-between transition-colors duration-200 text-sm font-semibold shadow-md"
+          className="w-full h-[34px] bg-accent hover:bg-[#184EBF] text-white px-4 rounded-full flex items-center justify-between transition-colors duration-200 text-sm font-semibold shadow-md"
         >
           <span className="truncate pr-2">{activeLabel}</span>
           <ChevronDown
@@ -59,7 +59,7 @@ const CategoryTabs = ({
                 onClick={() => handleSelect(opt.id)}
                 className={`w-full h-[34px] text-left px-3 rounded-2xl flex items-center gap-2 transition-colors mb-1 last:mb-0 ${
                   activeCategoryId === opt.id
-                    ? "text-white bg-[#3571F0]"
+                    ? "text-white bg-accent"
                     : "text-black hover:bg-gray-50"
                 }`}
               >
@@ -88,16 +88,16 @@ const CategoryTabs = ({
           <button
             key={opt.id}
             onClick={() => onSelect(opt.id)}
-            className={`group transition-transform duration-200 flex gap-3 items-center whitespace-nowrap hover:text-[#3571F0] ${
-              activeCategoryId === opt.id ? "text-[#3571F0]" : "text-black"
+            className={`group transition-transform duration-200 flex gap-3 items-center whitespace-nowrap hover:text-accent ${
+              activeCategoryId === opt.id ? "text-accent" : "text-black"
             }`}
           >
             <CircleArrowRight
               size={24}
               className={`transition-transform duration-700 ${
                 activeCategoryId === opt.id
-                  ? "text-[#3571F0]"
-                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-[#3571F0]"
+                  ? "text-accent"
+                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-accent"
               }`}
             />
             {opt.displayName}

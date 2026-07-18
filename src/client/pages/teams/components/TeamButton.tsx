@@ -25,12 +25,12 @@ const FilterButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ label, variant = "active", leftIcon, className = "", ...props }, ref) => {
     // Base styles - consistent across all buttons
     const baseStyles =
-      "group font-sans text-xs px-[11.62px] py-[5.86px] flex w-fit overflow-hidden font-medium rounded-full transition-all duration-300 inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0";
+      "group relative font-sans text-xs px-[11.62px] py-[5.86px] flex w-fit overflow-hidden font-medium rounded-full transition-[transform,background-color,box-shadow,color,opacity] duration-300 [-webkit-tap-highlight-color:transparent] inline-flex items-center justify-center focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5 active:translate-y-0";
 
     // Variant styles
     const variantStyles: Record<ButtonVariant, string> = {
       active:
-        "bg-btn-primary hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg focus:ring-btn-primary border border-transparent",
+        "bg-accent hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg border border-transparent",
       inactive:
         "bg-white/10 backdrop-blur-md border-[0.15px] border-white/30 text-white hover:bg-white/20 shadow-lg hover:shadow-xl bg-transparent",
     };
@@ -46,7 +46,7 @@ const FilterButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={combinedClassName}
           {...props}
         >
-          <div className="absolute inset-[-2.1px] rounded-[inherit] z-[2] shadow-[inset_2px_2px_2px_#4e81ef,inset_-2px_-2px_1px_#4e81ef]"></div>
+          <div className="absolute inset-0 rounded-[inherit] z-[2] shadow-[inset_0_0_3px_rgba(78,129,239,0.45)]"></div>
           <div className="relative gap-[8.72px] flex items-center ">
             {leftIcon} {label}
           </div>

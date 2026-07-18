@@ -9,6 +9,7 @@ export interface VersionRecord {
   id: string;
   slug: string;
   version_name: string;
+  version_number: string;
   is_current: boolean;
 }
 
@@ -34,6 +35,9 @@ export function useVersionData() {
 
   return {
     versionId: active.data?.data?.id ?? null,
+    versionSlug: active.data?.data?.slug ?? null,
+    versionName: active.data?.data?.version_name ?? null,
+    versionNumber: active.data?.data?.version_number ?? null,
     isLoading: active.isLoading,
   };
 }

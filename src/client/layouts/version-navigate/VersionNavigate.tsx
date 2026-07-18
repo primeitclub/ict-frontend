@@ -35,7 +35,7 @@ export default function VersionNavigate() {
           >
             {version === item && (
               <div
-                className="absolute inset-0 rounded-xl bg-btn-primary"
+                className="absolute inset-0 rounded-xl bg-accent"
                 style={{ zIndex: -1 }}
               />
             )}

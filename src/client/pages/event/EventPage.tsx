@@ -30,10 +30,10 @@ export default function EventsPage() {
   const hasMore = events.length > visibleCount;
 
   return (
-    <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA] pb-12 md:pb-16">
+    <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventSwiper events={highlightedEvents} />
       <div className="bg-[#F2F5FA] text-black">
-        <div className="mx-auto max-w-7xl px-4 pt-2 pb-10 sm:pt-12 sm:pb-24 md:space-y-10 space-y-12">
+        <div className="mx-auto max-w-7xl px-4 pt-2 pb-12 sm:pt-12 md:pb-24 md:space-y-10 space-y-12">
           <CategoryTabs
             categories={categories}
             activeCategoryId={activeCategoryId}
@@ -46,7 +46,7 @@ export default function EventsPage() {
               className="flex items-center justify-center mx-auto"
               onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
               rightIcon={
-                <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+                <div className="bg-accent text-white px-1 py-1 rounded-full">
                   <ArrowRight size={15} strokeWidth={2} />
                 </div>
               }

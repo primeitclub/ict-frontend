@@ -80,7 +80,7 @@ const Navbar = () => {
         bright section the bar looked washed-out against the black menu.
       */}
       <header
-        className={`fixed top-0 inset-x-0 z-50 w-full h-[63px] backdrop-blur-md border-b border-white/10 transition-all duration-300 ${
+        className={`fixed top-0 inset-x-0 z-50 w-full h-[63px] backdrop-blur-md transition-all duration-300 ${
           toggle ? "bg-[#010005]/95" : "bg-[#010005]/70"
         }`}
       >

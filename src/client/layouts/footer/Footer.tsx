@@ -40,13 +40,14 @@ export const Footer = () => {
     { path: "/events", label: "Events" },
     { path: "/teams", label: "Teams" },
     { path: "/sponsors", label: "Sponsors" },
+    { path: "/contacts", label: "Contacts" },
     { path: "/contributors", label: "Contributors" },
   ];
 
   return (
     <SectionContainer
       width="navbar"
-      className="px-4 sm:px-6 !pt-20"
+      className="px-4 sm:px-6 !pt-20 !pb-12"
       as="footer"
     >
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:items-start lg:gap-0">
@@ -94,7 +95,7 @@ export const Footer = () => {
         </div>
 
         <div className="text-center lg:text-left ">
-          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+          <h1 className="text-accent-secondary font-sans font-semibold sm:text-xl text-lg">
             Contact Us
           </h1>
           <ul className="lg:mt-[16px] text-sm lg:text-base">
@@ -105,7 +106,7 @@ export const Footer = () => {
           </ul>
         </div>
         <div className="text-center lg:text-left ">
-          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+          <h1 className="text-accent-secondary font-sans font-semibold sm:text-xl text-lg">
             Connect
           </h1>
           <div>
@@ -290,7 +291,7 @@ rounded-full bg-gradient-to-tr from-[#007AFF] to-[#DBF5FF]"
         ></div>
       </div>
 
-      <div className="my-6 mb-12 text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
+      <div className="mt-6 text-xs text-center text-[#FFFFFF] lg:text-sm font-regular font-sans">
         <p>
           © ICT Meetup {editionLabel} | Prime IT Club, Prime College
         </p>

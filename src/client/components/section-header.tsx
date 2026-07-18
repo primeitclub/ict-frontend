@@ -31,7 +31,7 @@ export default function SectionHeader({
   const highlightColor =
     varient === "primary"
       ? "bg-gradient-to-b from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent"
-      : "text-[#3571F0]";
+      : "text-accent";
 
   return (
     <div className={cn("w-full flex", alignStyles[align], className)}>
