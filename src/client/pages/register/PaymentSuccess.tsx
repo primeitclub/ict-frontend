@@ -122,7 +122,7 @@ const PaymentSuccess = () => {
   if (isLoading) {
     return (
       <div className="py-0">
-        <TopBgContent className="z-0"></TopBgContent>
+        <TopBgContent className="z-0" variant="black-glow"></TopBgContent>
         <div className="bg-[#F2F5FA] font-sans p-10 min-h-[500px] flex items-center justify-center">
           <p className="text-center text-[#64748B] text-lg">Loading registration details...</p>
         </div>
@@ -143,7 +143,7 @@ const PaymentSuccess = () => {
 
   return (
     <div className="py-0">
-      <TopBgContent className="z-0"></TopBgContent>
+      <TopBgContent className="z-0" variant="black-glow"></TopBgContent>
       <div className="bg-[#F2F5FA] font-sans p-10">
         <div className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-60 flex flex-col gap-2 sm:gap-7 px-2 py-6 md:px-8 md:py-7 space-y-6 rounded-lg shadow-[0px_8.66px_34.64px_-8.66px_#00000029] ">
           <div className="space-y-5">
