@@ -27,7 +27,11 @@ const EventSwiper = ({ events }: EventSwiperProps) => {
   const slides = events.filter((e) => e.imageUrl);
 
   return (
-    <TopBgContent position="absolute" bannerClassName="hidden md:flex">
+    <TopBgContent
+      position="absolute"
+      variant="black-glow"
+      bannerClassName="hidden md:flex"
+    >
       <div className="max-w-[1200px] mx-auto px-0 sm:px-4 pt-0 md:pt-16 md:min-h-[500px] flex items-center justify-center">
         {slides.length === 0 ? null : (
           <Swiper
