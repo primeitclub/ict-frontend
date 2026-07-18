@@ -156,12 +156,13 @@ const PaymentSuccess = () => {
                 align="center"
                 className="text-[#16A34A] text-[14px] md:text-[14px] lg:text-[20px] mb-0 font-semibold"
               >
-                Registration Successful!
+                Registration Submitted
               </Heading>
 
               <p className="font-normal text-center text-[#64748B] text-[12px] lg:text-[16px] px-[13px]">
-                Your registration has been completed successfully. You will
-                receive a confirmation with further details shortly.
+                Your registration has been received and is pending approval.
+                We'll send you a confirmation email once it's approved. Please
+                allow a few hours for the review process.
               </p>
             </div>
           </div>
