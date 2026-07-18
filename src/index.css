@@ -8,6 +8,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* ── Global accent color ─────────────────────────────────────────────
+     Single source of truth for the site accent (#3571F0). Tailwind's
+     `accent` color (tailwind.config.js) and the tokens that alias it
+     (btn-primary, primary-cyan, nav-active) all read these variables, so
+     retheming the site is a one-line change here.
+     The -rgb variant is the same color as space-separated channels; it
+     exists so Tailwind opacity modifiers (e.g. bg-accent/50) work. */
+  --color-accent: #3571F0;
+  --color-accent-rgb: 53 113 240;
+
+  /* Secondary accent — a lighter blue with enough contrast for use on dark
+     surfaces (nav active state, footer headings). */
+  --color-accent-secondary: #50A6FE;
+  --color-accent-secondary-rgb: 80 166 254;
 }
 
 @layer base {
@@ -31,7 +45,7 @@
    scrollbar-* properties. Applied globally so every scroll surface matches. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(53, 113, 240, 0.55) transparent;
+  scrollbar-color: rgb(var(--color-accent-rgb) / 0.55) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -44,8 +58,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  /* Accent color #3571F0 */
-  background-color: rgba(53, 113, 240, 0.5);
+  background-color: rgb(var(--color-accent-rgb) / 0.5);
   border-radius: 9999px;
   /* Transparent border creates padding around the thumb so it reads as a
      slim floating pill rather than a full-width bar. */
@@ -55,7 +68,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(53, 113, 240, 0.85);
+  background-color: rgb(var(--color-accent-rgb) / 0.85);
 }
 
 ::-webkit-scrollbar-corner {

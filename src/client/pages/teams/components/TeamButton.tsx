@@ -30,7 +30,7 @@ const FilterButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Variant styles
     const variantStyles: Record<ButtonVariant, string> = {
       active:
-        "bg-btn-primary hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg border border-transparent",
+        "bg-accent hover:bg-btn-primary-hover text-white shadow-md hover:shadow-lg border border-transparent",
       inactive:
         "bg-white/10 backdrop-blur-md border-[0.15px] border-white/30 text-white hover:bg-white/20 shadow-lg hover:shadow-xl bg-transparent",
     };

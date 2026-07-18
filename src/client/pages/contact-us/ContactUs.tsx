@@ -38,7 +38,7 @@ const ContactUs = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-12 py-8 text-center sm:text-left">
-      <div className="bg-[#3060E8] sm:rounded-2xl px-6 sm:px-10 lg:px-14 py-8 sm:py-10 lg:py-16 flex flex-col lg:flex-row gap-8 lg:gap-10">
+      <div className="bg-accent sm:rounded-2xl px-6 sm:px-10 lg:px-14 py-8 sm:py-10 lg:py-16 flex flex-col lg:flex-row gap-8 lg:gap-10">
         {/* Left: Any Queries */}
         <div className="flex flex-col gap-4 lg:max-w-[456px] shrink-0 justify-center">
           <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">

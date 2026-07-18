@@ -19,7 +19,7 @@ export const SpeakerCard = ({
       />
       {/* Info */}
       <div className="flex flex-col gap-1">
-        <h3 className="text-xl lg:text-2xl font-bold text-[#3571F0]">{name}</h3>
+        <h3 className="text-xl lg:text-2xl font-bold text-accent">{name}</h3>
         <p className="text-sm lg:text-base font-bold text-gray-900">{role}</p>
         <p className="text-sm text-gray-500">{company}</p>
         <p className="text-sm text-gray-600 mt-1 leading-relaxed text-justify">
@@ -34,7 +34,7 @@ export const SpeakerCard = ({
                 href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-accent flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"
@@ -50,7 +50,7 @@ export const SpeakerCard = ({
                 href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-accent flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"
@@ -66,7 +66,7 @@ export const SpeakerCard = ({
                 href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-6 h-6 rounded-full bg-[#3571F0] flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-full bg-accent flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <svg
                   className="w-4 h-4 text-white"

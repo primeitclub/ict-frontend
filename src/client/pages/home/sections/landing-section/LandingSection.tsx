@@ -60,7 +60,7 @@ export function LandingSection() {
         <div className="items-center flex justify-center text-center">
           <Link to={getPath("/events")}>
             <div className="flex items-center gap-2 border-1 p-2 rounded-full  bg-white/5 transition-colors hover:bg-white/10 cursor-pointer">
-              <div className="flex rounded-full bg-btn-primary text-[14px] md:text-[16px] py-[2px] px-[14px]">
+              <div className="flex rounded-full bg-accent text-[14px] md:text-[16px] py-[2px] px-[14px]">
                 Event on
               </div>
               <div className="flex text-[14px] md:text-[16px] items-center gap-2 leading-3 font-normal -tracking-[0.598px]">

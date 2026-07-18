@@ -46,7 +46,7 @@ export default function EventsPage() {
               className="flex items-center justify-center mx-auto"
               onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
               rightIcon={
-                <div className="bg-[#3571F0] text-white px-1 py-1 rounded-full">
+                <div className="bg-accent text-white px-1 py-1 rounded-full">
                   <ArrowRight size={15} strokeWidth={2} />
                 </div>
               }

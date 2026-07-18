@@ -22,7 +22,7 @@ const TopBgContent = ({
     <div className={cn("w-full", className)}>
       <div
         style={{
-          background: `linear-gradient(180deg, #020919 12.28%, #3571F0 209.51%)`,
+          background: `linear-gradient(180deg, #020919 12.28%, var(--color-accent) 209.51%)`,
         }}
         className={cn(
           `${position} h-[250px] md:h-[300px] w-full flex items-center`,

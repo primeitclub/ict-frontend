@@ -67,7 +67,7 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
         {/* Upload Box */}
         <div
           onClick={handleBoxClick}
-          className="relative border-2 border-dashed border-[#3571F0]/30 rounded-lg h-64 flex items-center justify-center cursor-pointer bg-[#E9F0FF] hover:bg-[#dee9ff] hover:border-[#3571F0] overflow-hidden"
+          className="relative border-2 border-dashed border-accent/30 rounded-lg h-64 flex items-center justify-center cursor-pointer bg-[#E9F0FF] hover:bg-[#dee9ff] hover:border-accent overflow-hidden"
         >
           {preview ? (
             <>
@@ -116,7 +116,7 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
             <p className="text-[#BBC0CC] mt-3">
               Accepted via eSewa / Khalti / Bank Transfer
             </p>
-            <p className="text-[#3571F0] font-medium mt-1 text-[10px] md:text-sm">
+            <p className="text-accent font-medium mt-1 text-[10px] md:text-sm">
               Amount: {getAmountText()}
             </p>
           </div>

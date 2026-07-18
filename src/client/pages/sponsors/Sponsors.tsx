@@ -110,7 +110,7 @@ const Sponsors = () => {
       <Link
         to={getPath("/contacts")}
         aria-label="Become a sponsor — go to the contact page"
-        className="group w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(53,113,240,0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
+        className="group w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgb(var(--color-accent-rgb)/0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
       >
         {/* Subtle background glow */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 group-hover:bg-blue-500/20 rounded-full blur-3xl pointer-events-none transition-colors duration-300" />
@@ -152,7 +152,7 @@ const Sponsors = () => {
                   <span>{phone}</span>
                 </div>
               )}
-              <span className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#3571F0] group-hover:bg-[#2a5fd6] text-white font-semibold w-full justify-center md:justify-start transition-colors duration-300">
+              <span className="flex items-center gap-2 px-5 py-3 rounded-xl bg-accent group-hover:bg-[#2a5fd6] text-white font-semibold w-full justify-center md:justify-start transition-colors duration-300">
                 Get in Touch
                 <ArrowRight
                   size={18}

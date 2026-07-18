@@ -94,7 +94,7 @@ export const Footer = () => {
         </div>
 
         <div className="text-center lg:text-left ">
-          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+          <h1 className="text-accent-secondary font-sans font-semibold sm:text-xl text-lg">
             Contact Us
           </h1>
           <ul className="lg:mt-[16px] text-sm lg:text-base">
@@ -105,7 +105,7 @@ export const Footer = () => {
           </ul>
         </div>
         <div className="text-center lg:text-left ">
-          <h1 className="text-[#50A6FE] font-sans font-semibold sm:text-xl text-lg">
+          <h1 className="text-accent-secondary font-sans font-semibold sm:text-xl text-lg">
             Connect
           </h1>
           <div>
