@@ -1,7 +1,7 @@
 export { default as EventsDetail } from "../types/EventDetail";
 export interface ISpeakerSocials {
   instagram?: string;
-  github?: string;
+  portfolio?: string;
   linkedin?: string;
 }
 

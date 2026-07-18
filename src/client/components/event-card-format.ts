@@ -17,6 +17,16 @@ export function formatEventTime(value: string | null | undefined): string {
   return `${hour12}:${String(minutes).padStart(2, "0")} ${period}`;
 }
 
+/** "2026-03-14" | ISO datetime → "Saturday, 2026-03-14"; "" for empty, echoes unparseable values. */
+export function formatEventDate(value: string | null | undefined): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+  const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  return `${weekday}, ${iso}`;
+}
+
 /** Builds "10:00 AM - 12:00 PM" (or just the start) from raw start/end times. */
 export function formatEventTimeRange(
   start: string | null | undefined,
