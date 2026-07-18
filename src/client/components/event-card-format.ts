@@ -31,14 +31,29 @@ export function isRegistrationClosed(
   return Date.now() > date.getTime();
 }
 
-/** "2026-03-14" | ISO datetime → "Saturday, 2026-03-14"; "" for empty, echoes unparseable values. */
+/**
+ * Site-wide date format: "2026-02-10" | ISO datetime → "10 Feb, 2026".
+ * "" for empty, echoes unparseable values.
+ */
+export function formatShortDate(value: string | null | undefined): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  return `${date.getDate()} ${month}, ${date.getFullYear()}`;
+}
+
+/**
+ * Weekday variant, used on the event detail page (banner + registration
+ * deadline): "2026-10-26" → "Monday, 26 Oct, 2026". "" for empty, echoes
+ * unparseable values.
+ */
 export function formatEventDate(value: string | null | undefined): string {
   if (!value) return "";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
-  const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-  return `${weekday}, ${iso}`;
+  return `${weekday}, ${formatShortDate(value)}`;
 }
 
 /** Builds "10:00 AM - 12:00 PM" (or just the start) from raw start/end times. */
@@ -103,7 +118,7 @@ export function toEventCardItem(event: EventCardSource): ContentType {
     avatar: (event.speakers ?? [])
       .map((speaker) => speaker.imageUrl)
       .filter((url): url is string => Boolean(url)),
-    date: event.date ?? "",
+    date: formatShortDate(event.date),
     price: Number(event.fee) || 0,
     time: formatEventTimeRange(event.startTime, event.endTime),
     place: event.location,

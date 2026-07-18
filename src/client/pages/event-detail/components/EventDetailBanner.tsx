@@ -20,7 +20,7 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
     !isRegistrationClosed(event.registrationDeadline);
   const isFull = event.totalSeats - event.bookedSeats <= 0;
   const canRegister = isOpen && !isFull;
-  // "Day, YYYY-MM-DD" e.g. "Friday, 2026-03-14"
+  // "Weekday, D MMM, YYYY" e.g. "Friday, 14 Mar, 2026"
   const dateLabel = formatEventDate(event.date) || null;
 
   return (
