@@ -93,7 +93,7 @@ export default function Teams() {
   // md:pt-16 matches the events page's highlight swiper offset so both
   // pages start the same distance below the navbar.
   return (
-    <SectionContainer as="section" className="py-10 md:pt-16">
+    <SectionContainer as="section" className="pt-10 md:pt-16 pb-8 md:pb-8">
       <div className="gap-10 md:flex items-start">
         {/* Sticky top matches the column's natural resting offset (63px fixed
             navbar + 64px section md:pt-16) so it pins immediately with zero

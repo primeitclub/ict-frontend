@@ -19,7 +19,7 @@ const FAQSection = () => {
   if (!faqs?.length) return null;
 
   return (
-    <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12">
+    <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12 pb-8 md:pb-8">
       {/* Same full title on every breakpoint (mobile used to abbreviate to
           "FAQs"); at the 30px mobile size it simply wraps, centered. */}
       <SectionHeader

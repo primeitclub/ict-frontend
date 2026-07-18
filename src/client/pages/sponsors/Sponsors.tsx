@@ -1,13 +1,10 @@
 import SectionContainer from "../../components/sectionContainer.tsx";
 import SponsorData from "./SponsorData.tsx";
-import GlowCircle from "./GlowCircle.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
 import { useSiteSettings } from "../../hooks/use-site-settings.ts";
-import { Mail, Phone, ArrowRight } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Heading } from "../../../shared/design-components";
-import { Link } from "react-router-dom";
-import { useVersion } from "../../routes/VersionContext.tsx";
 
 interface Category {
   id: string;
@@ -49,7 +46,6 @@ interface ContactSettings {
 
 const Sponsors = () => {
   const { versionId, isLoading: versionLoading } = useVersionData();
-  const { getPath } = useVersion();
 
   const { data: categoriesRes, isLoading: categoriesLoading } = useApiQuery(
     "sponsorCategories",
@@ -89,113 +85,72 @@ const Sponsors = () => {
 
   const renderBecomeSponsorCard = () => {
     const contactData = contactsRes?.data;
-    const organizerDepts = contactData?.contactDepartments?.filter(
-      (dept) =>
-        dept.department.toLowerCase().includes("organi") ||
-        dept.department.toLowerCase().includes("sponsor")
-    );
-
-    // Fallback: If no specific organizer department, check if any department exists
-    const deptsToDisplay =
-      organizerDepts && organizerDepts.length > 0
-        ? organizerDepts
-        : contactData?.contactDepartments?.slice(0, 1) ?? [];
-
     const email = contactData?.email ?? siteSettings?.clubEmail ?? null;
     const phone = contactData?.phoneNumber ?? siteSettings?.clubPhoneNumber ?? null;
 
-    // The whole card is a single link to the (version-aware) contact page.
-    // Contact details are shown as read-only chips so we don't nest anchors.
+    // Simple three-column card: heading | description | contact details.
     return (
-      <Link
-        to={getPath("/contacts")}
-        aria-label="Become a sponsor — go to the contact page"
-        className="group w-full max-w-4xl bg-gradient-to-br from-[#0b1528]/80 to-[#020919]/90 border border-blue-500/20 hover:border-blue-400/60 rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgb(var(--color-accent-rgb)/0.45)] relative overflow-hidden mt-10 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
-      >
-        {/* Subtle background glow */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 group-hover:bg-blue-500/20 rounded-full blur-3xl pointer-events-none transition-colors duration-300" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="w-full mt-10 rounded-3xl bg-[var(--color-accent-dark)] p-8 sm:p-10 lg:p-14 font-sans text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12 items-start">
+          <Heading
+            level="h2"
+            className="text-4xl sm:text-5xl font-bold text-white leading-[1.1] tracking-tight !mb-0"
+          >
+            Join Our
+            <br />
+            Sponsors
+          </Heading>
 
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-between relative z-10 w-full">
-          <div className="flex flex-col gap-4 text-center md:text-left max-w-lg">
-            <Heading
-              level="h2"
-              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text  text-transparent leading-relaxed py-1 "
-            >
-              Become a 
-            </Heading>
-            <Heading
-              level="h2"
-              className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[#DBF5FF] to-[#51A7FF] bg-clip-text text-transparent leading-relaxed py-1 !mb-2"
-            >
-              Sponsor
-            </Heading>
-            
-            <p className="text-white/70 text-sm sm:text-base leading-relaxed font-sans">
-              Partner with ICT MeetUp and showcase your brand to a vibrant
-              community of tech enthusiasts and developers. Get a chance to be
-              featured and gain maximum visibility.
-            </p>
-          </div>
+          <p className="text-white/80 text-base sm:text-lg leading-relaxed">
+            Showcase your brand to a highly engaged tech audience while supporting innovation, learning, and community growth.
+          </p>
 
-          <div className="flex flex-col gap-4 w-full md:w-auto shrink-0 font-sans">
-            <div className="flex flex-col gap-3 items-center md:items-start text-sm sm:text-base text-white/95">
+          {(email || phone) && (
+            <div className="flex flex-col gap-6">
               {email && (
-                <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all duration-300 w-full justify-center md:justify-start">
-                  <Mail size={18} className="text-blue-400 shrink-0" />
-                  <span className="truncate">{email}</span>
+                <div className="flex items-center gap-5">
+                  <Mail size={26} className="shrink-0 text-white" />
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
+                      Email
+                    </span>
+                    <a
+                      href={`mailto:${email}`}
+                      className="text-base sm:text-lg text-white truncate hover:text-[#020919] hover:underline transition-colors"
+                    >
+                      {email}
+                    </a>
+                  </div>
                 </div>
               )}
               {phone && (
-                <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all duration-300 w-full justify-center md:justify-start">
-                  <Phone size={18} className="text-blue-400 shrink-0" />
-                  <span>{phone}</span>
+                <div className="flex items-center gap-5">
+                  <Phone size={26} className="shrink-0 text-white" />
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
+                      Phone
+                    </span>
+                    <a
+                      href={`tel:${phone}`}
+                      className="text-base sm:text-lg text-white hover:text-[#020919] hover:underline transition-colors"
+                    >
+                      {phone}
+                    </a>
+                  </div>
                 </div>
               )}
-              <span className="flex items-center gap-2 px-5 py-3 rounded-xl bg-accent group-hover:bg-[#2a5fd6] text-white font-semibold w-full justify-center md:justify-start transition-colors duration-300">
-                Get in Touch
-                <ArrowRight
-                  size={18}
-                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </span>
             </div>
-          </div>
+          )}
         </div>
-
-        {/* Department Contacts */}
-        {deptsToDisplay.length > 0 && (
-          <div className="w-full mt-4 pt-6 border-t border-white/10 flex flex-col gap-3 relative z-10 font-sans">
-            <h4 className="text-white/80 font-semibold text-sm tracking-wide text-center md:text-left">
-              Contact Organizing Committee:
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {deptsToDisplay.flatMap((dept) =>
-                dept.contacts.map((contact, idx) => (
-                  <div
-                    key={`${dept.department}-${idx}`}
-                    className="flex justify-between items-center px-4 py-2.5 rounded-lg bg-white/5 border border-white/5 text-sm"
-                  >
-                    <span className="text-white/90 font-medium">{contact.name}</span>
-                    <span className="text-blue-400 font-medium">{contact.phone}</span>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        )}
-      </Link>
+      </section>
     );
   };
 
   if (!sponsors.length) {
     return (
-      <SectionContainer>
-        <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
+      <SectionContainer className="pt-10 md:pt-16 pb-8 md:pb-8">
+        <div className="w-full flex flex-col gap-20 relative items-center">
           {renderBecomeSponsorCard()}
-          <GlowCircle x="top-0" y="-left-[20%]" />
-          <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />
-          <GlowCircle x="bottom-0" y="-left-[20%]" />
         </div>
       </SectionContainer>
     );
@@ -242,8 +197,8 @@ const Sponsors = () => {
     }));
 
   return (
-    <SectionContainer>
-      <div className="w-full flex flex-col gap-20 mt-10 relative items-center">
+    <SectionContainer className="pt-10 md:pt-16 pb-8 md:pb-8">
+      <div className="w-full flex flex-col gap-20 relative items-center">
         {grouped.map(({ category, items, big, sponsortier }) => (
           <SponsorData
             key={category.id}
@@ -251,15 +206,14 @@ const Sponsors = () => {
             altdata={`${category.displayName} sponsor logo`}
             big={big}
             sponsortier={sponsortier}
-            imgUrl={items.map((s) => s.imageUrl ?? "")}
+            sponsors={items.map((s) => ({
+              imageUrl: s.imageUrl ?? "",
+              link: s.link,
+            }))}
           />
         ))}
 
         {renderBecomeSponsorCard()}
-
-        <GlowCircle x="top-0" y="-left-[20%]" />
-        <GlowCircle x="top-[50%]" y="-right-[5%] sm:right-[20%] xl:-right-[10%]" />
-        <GlowCircle x="bottom-0" y="-left-[20%]" />
       </div>
     </SectionContainer>
   );

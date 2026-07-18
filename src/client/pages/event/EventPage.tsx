@@ -30,10 +30,10 @@ export default function EventsPage() {
   const hasMore = events.length > visibleCount;
 
   return (
-    <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA] pb-12 md:pb-16">
+    <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventSwiper events={highlightedEvents} />
       <div className="bg-[#F2F5FA] text-black">
-        <div className="mx-auto max-w-7xl px-4 pt-2 pb-10 sm:pt-12 sm:pb-24 md:space-y-10 space-y-12">
+        <div className="mx-auto max-w-7xl px-4 pt-2 pb-12 sm:pt-12 md:pb-24 md:space-y-10 space-y-12">
           <CategoryTabs
             categories={categories}
             activeCategoryId={activeCategoryId}

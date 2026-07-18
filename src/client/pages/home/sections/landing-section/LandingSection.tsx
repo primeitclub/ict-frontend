@@ -3,7 +3,6 @@ import "../../../../../App.css";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { Text } from "../../../../../shared/design-components";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 import image from "../../../../../../public/ICT Meet/Arc-1.png"
 import { useHome } from "../../useHome";
@@ -30,11 +29,6 @@ export function LandingSection() {
   const { getPath } = useVersion();
   const { data: edition } = useHome((d) => d.edition);
   const { data: hero } = useHome((d) => d.sections.hero);
-  // The arc runs two animations in sequence: the one-shot intro fade-in, then
-  // an endless slow glow "breath" (dim → back to full). Framer can't chain a
-  // finite animation into an infinite one declaratively, so this flag flips
-  // when the intro finishes and swaps the animate/transition props.
-  const [arcIntroDone, setArcIntroDone] = useState(false);
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
 
   return (
@@ -177,45 +171,13 @@ export function LandingSection() {
               WebkitMaskImage:
                 "linear-gradient(to bottom, #000 0%, #000 48%, transparent 82%)",
             }}
-            initial={{ opacity: 0, filter: "brightness(0.15)" }}
-            animate={
-              arcIntroDone
-                ? {
-                    // Glow breath: ease down deep, rest at the bottom for a
-                    // beat, then re-emerge with the same easeOut feel as the
-                    // page-load intro (bright fast out of the dark, then a
-                    // long settle into full glow). The bottom dwell is what
-                    // kills the "bounce" — brightness never reverses
-                    // direction instantly. Opacity drops to 0 together with
-                    // brightness so the arc goes fully dark into the page
-                    // background before glowing back.
-                    opacity: [1, 0, 0, 1],
-                    filter: [
-                      "brightness(1)",
-                      "brightness(0)",
-                      "brightness(0)",
-                      "brightness(1)",
-                    ],
-                  }
-                : { opacity: 1, filter: "brightness(1)" }
-            }
-            transition={
-              arcIntroDone
-                ? {
-                    duration: 12,
-                    // 0-40%: dim down (easeIn — stays bright most of the way,
-                    // plunges into black only at the end, so the dark period
-                    // is just the hold) · 40-52.5%: hold fully dark for 1.5s ·
-                    // 52.5-100%: easeOut rise back to full glow.
-                    times: [0, 0.4, 0.525, 1],
-                    ease: ["easeIn", "linear", "easeOut"],
-                    repeat: Infinity,
-                  }
-                : { duration: 2.2, ease: "easeOut" }
-            }
-            onAnimationComplete={() => {
-              if (!arcIntroDone) setArcIntroDone(true);
-            }}
+            // One-shot page-load reveal: the arc stays completely invisible
+            // (opacity 0 + zero brightness) for the delay, then slowly shows
+            // itself — opacity and glow rise together — and holds at full
+            // glow. No loop.
+            initial={{ opacity: 0, filter: "brightness(0)" }}
+            animate={{ opacity: 1, filter: "brightness(1)" }}
+            transition={{ duration: 3, ease: "easeOut", delay: 2 }}
           />
         </figure>
       </div>
