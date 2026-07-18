@@ -106,15 +106,19 @@ export interface EventCardSource {
  * events page both call it so their cards are identical.
  */
 export function toEventCardItem(event: EventCardSource): ContentType {
+  const speakerNames = (event.speakers ?? [])
+    .map((speaker) => speaker.name)
+    .filter(Boolean);
   return {
     id: event.id,
     image: event.imageUrl ?? "",
     title: event.title,
-    // "with <names>" is assembled in the Card; here we just join speaker names.
-    speaker: (event.speakers ?? [])
-      .map((speaker) => speaker.name)
-      .filter(Boolean)
-      .join(", "),
+    // "with <names>" is assembled in the Card; the last name is joined with
+    // "&" — "A & B", "A, B & C".
+    speaker:
+      speakerNames.length > 1
+        ? `${speakerNames.slice(0, -1).join(", ")} & ${speakerNames[speakerNames.length - 1]}`
+        : (speakerNames[0] ?? ""),
     avatar: (event.speakers ?? [])
       .map((speaker) => speaker.imageUrl)
       .filter((url): url is string => Boolean(url)),

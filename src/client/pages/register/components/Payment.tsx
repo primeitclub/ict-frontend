@@ -55,8 +55,8 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
   }
 
   const getAmountText = () => {
-    if (!selectedEvent) return "Rs. 500";
-    return `Rs. ${selectedEvent.fee}`;
+    if (!selectedEvent) return "NPR 500";
+    return `NPR ${selectedEvent.fee}`;
   };
 
   return (

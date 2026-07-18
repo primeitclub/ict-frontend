@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 import Logo2 from "./Logo/Logo2";
 import { Menu, X } from "lucide-react";
@@ -12,6 +12,14 @@ import { useEventsList } from "../../pages/event/useEvents";
 const Navbar = () => {
   const { getPath, navigateToVersion, version } = useVersion();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  // Whether a nav target IS the page currently shown.
+  const isCurrentPage = (targetPath: string) => {
+    const normalize = (p: string) =>
+      p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p;
+    return normalize(pathname) === normalize(targetPath);
+  };
   const [toggle, setToggle] = useState(false);
   const { data: logo, isLoading: logoLoading } = useHome(
     (d) => d.edition.logoPath ?? d.edition.logo,
@@ -23,11 +31,12 @@ const Navbar = () => {
   // Keep it while loading to avoid a flash, hide it once confirmed empty.
   const hasEvents = eventsLoading || events.length > 0;
 
-  // Lock page scroll while the mobile menu is open. Freezing the body with
-  // position:fixed (instead of overflow:hidden) works on iOS Safari AND keeps
-  // overflow rules off <body> — an overflow there clips the backdrop-blurred
-  // fixed header in Chromium (the vanishing-navbar bug). The saved scrollY is
-  // restored on close so the page doesn't jump to the top.
+  // Set by a same-page nav-item click in the mobile menu: the scroll-lock
+  // cleanup below normally restores the pre-open scroll position on close,
+  // but with this flag it smooth-scrolls to the top instead.
+  const scrollTopOnCloseRef = useRef(false);
+
+  // Lock page scroll while the mobile menu is open.
   useEffect(() => {
     if (!toggle) return;
 
@@ -54,7 +63,16 @@ const Navbar = () => {
       style.left = "";
       style.right = "";
       style.width = "";
+      // Always restore first — unfreezing the body resets the window to 0.
+      // On a same-page nav click, glide from there to the top on the next
+      // frame so the restore has painted before the animation starts.
       window.scrollTo(0, scrollY);
+      if (scrollTopOnCloseRef.current) {
+        scrollTopOnCloseRef.current = false;
+        requestAnimationFrame(() =>
+          window.scrollTo({ top: 0, behavior: "smooth" }),
+        );
+      }
     };
   }, [toggle]);
 
@@ -68,17 +86,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/*
-        `fixed` (not `sticky`): sticky kept failing on scroll-down because an
-        ancestor became a scroll/clip container. Fixed positioning pins the bar
-        to the viewport unconditionally, in both scroll directions. The spacer
-        div below reserves the 63px the bar no longer occupies in flow.
-      */}
-      {/*
-        While the mobile menu is open the bar darkens to near-solid so it reads
-        as one dark surface with the menu overlay below it — at 70% over a
-        bright section the bar looked washed-out against the black menu.
-      */}
       <header
         className={`fixed top-0 inset-x-0 z-50 w-full h-[63px] backdrop-blur-md transition-all duration-300 ${
           toggle ? "bg-[#010005]/95" : "bg-[#010005]/70"
@@ -88,7 +95,16 @@ const Navbar = () => {
           width="navbar"
           className="flex items-center justify-between h-full w-full !py-0"
         >
-          <div className="hover:cursor-pointer" onClick={() => navigate(getPath("/"))}>
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => {
+              if (isCurrentPage(getPath("/"))) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              } else {
+                navigate(getPath("/"));
+              }
+            }}
+          >
             <Logo2 src={logo} loading={logoLoading} />
           </div>
 
@@ -110,6 +126,14 @@ const Navbar = () => {
                 key={`${label}-${path}`}
                 to={getPath(path)}
                 end={path === "/"}
+                // Same-page click: the route doesn't change, so the
+                // ScrollToTop wrapper won't fire — glide up instead. A real
+                // navigation lands the new page at the top via the wrapper.
+                onClick={() => {
+                  if (isCurrentPage(getPath(path))) {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
                 className={({ isActive }) =>
                   `transition-colors duration-300 ${
                     isActive
@@ -128,26 +152,7 @@ const Navbar = () => {
       {/* Flow spacer: the fixed header is out of normal flow, so this keeps
           page content starting 63px down exactly like the old sticky bar. */}
       <div aria-hidden="true" className="h-[63px]" />
-
-      {/*
-        Full-screen mobile menu. Rendered OUTSIDE <header> on purpose: the header
-        uses backdrop-blur (a backdrop-filter), which makes it the containing
-        block for any fixed descendant — a fixed child there gets clipped to the
-        63px bar instead of covering the viewport (that was the crop/glitch). As
-        a sibling it fills the screen and scrolls, so every item is reachable. It
-        sits below the sticky header (z-40 < z-50) so the logo + close button
-        stay on top and tappable.
-      */}
       {toggle && (
-        /*
-          Outer div = the scroll container only. It starts BELOW the fixed
-          63px header (top-[63px]) so the bar + close button stay visible.
-          Centering happens on the INNER wrapper via min-h-full +
-          justify-center: when the content is shorter than the viewport it is
-          perfectly centered, and when it's taller the wrapper simply grows and
-          scrolls. (Putting justify-center + overflow-y-auto on the SAME
-          element clipped the top items — that was the off-center glitch.)
-        */
         /* Semi-transparent frosted overlay (not flat black): the page shows
            faintly through the blur, and its tone matches the darkened bar so
            bar + menu read as one continuous dark glass surface. */
@@ -166,7 +171,10 @@ const Navbar = () => {
                 }
                 to={getPath(path)}
                 end={path === "/"}
-                onClick={() => setToggle(false)}
+                onClick={() => {
+                  scrollTopOnCloseRef.current = isCurrentPage(getPath(path));
+                  setToggle(false);
+                }}
               >
                 {label}
               </NavLink>

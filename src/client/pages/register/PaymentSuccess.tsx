@@ -112,7 +112,7 @@ const PaymentSuccess = () => {
 
   const getPrice = () => {
     if (!eventDetail) return "Free";
-    return eventDetail.feeType === "free" ? "Free" : eventDetail.fee;
+    return eventDetail.feeType === "free" ? "Free" : `NPR ${eventDetail.fee}`;
   };
 
   if (isLoading) {

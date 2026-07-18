@@ -43,18 +43,13 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
       </div>
 
       <div className="mt-3 flex flex-col flex-1">
-        <h3
-          className="text-[20px] font-semibold mb-1 truncate"
-          title={item.title}
-        >
+        <h3 className="text-[20px] font-semibold mb-1 break-words leading-snug">
           {item.title}
         </h3>
-        {/* Speaker line: hard-coded "with" + comma-separated names. Rendered
-            only when there is at least one speaker. */}
+        {/* Speaker line: hard-coded "with" + the names joined in the mapper
+            ("A, B & C"). Rendered only when there is at least one speaker. */}
         {item.speaker ? (
-          <p className="text-[12px] mb-2 truncate" title={`with ${item.speaker}`}>
-            with {item.speaker}
-          </p>
+          <p className="text-[12px] mb-2 break-words">with {item.speaker}</p>
         ) : null}
 
         {item.avatar.length > 0 && (
@@ -86,7 +81,7 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
           <div className="flex items-center gap-2 min-w-0">
             <Banknote className="w-4 h-4 text-[#10B981] shrink-0" />
             <span className="text-[#10B981] text-[12px] font-medium truncate">
-              {item.price > 0 ? `Rs. ${item.price}` : "Free"}
+              {item.price > 0 ? `NPR ${item.price}` : "Free"}
             </span>
           </div>
           <div className="flex items-center gap-2 min-w-0">

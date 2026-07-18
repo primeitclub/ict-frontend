@@ -41,14 +41,11 @@ const EventListItem = ({ event }: EventListItemProps) => {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-[17px] font-semibold" title={item.title}>
+          <h3 className="break-words text-[17px] font-semibold leading-snug">
             {item.title}
           </h3>
           {item.speaker ? (
-            <p
-              className="truncate text-[12px] text-gray-500"
-              title={`with ${item.speaker}`}
-            >
+            <p className="break-words text-[12px] text-gray-500">
               with {item.speaker}
             </p>
           ) : null}
@@ -63,7 +60,7 @@ const EventListItem = ({ event }: EventListItemProps) => {
             <div className="flex shrink-0 items-center gap-1.5">
               <Banknote className="h-3.5 w-3.5 text-[#10B981]" />
               <span className="text-[12px] font-semibold text-[#10B981]">
-                {item.price > 0 ? `Rs ${item.price}` : "Free"}
+                {item.price > 0 ? `NPR ${item.price}` : "Free"}
               </span>
             </div>
           </div>
