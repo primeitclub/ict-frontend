@@ -40,8 +40,9 @@ const ContactUs = () => {
   }
 
   return (
-    // Special case: no top padding — this page sits flush against the navbar.
-    <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-12 pt-0 pb-8 text-center sm:text-left">
+    // Mobile sits flush against the navbar (special case); desktop uses the
+    // same md:pt-16 navbar gap as the teams and sponsors pages.
+    <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-12 pt-0 md:pt-16 pb-8 text-center sm:text-left">
       <div className="relative overflow-hidden bg-accent sm:rounded-2xl px-6 sm:px-10 lg:px-14 py-8 sm:py-10 lg:py-16 flex flex-col lg:flex-row gap-8 lg:gap-10">
         {/* Grain texture */}
         <div

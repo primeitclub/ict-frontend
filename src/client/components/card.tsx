@@ -6,6 +6,7 @@ import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
 import { getImageUrl } from "../../lib/imageUtils";
 import { goToRegistration } from "../../lib/registration";
+import { isRegistrationClosed } from "./event-card-format";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
@@ -17,7 +18,11 @@ interface CardProps extends React.HTMLAttributes<HTMLElement> {
 const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
+  // CTA states, highest precedence first: seats gone → "Booked"; deadline
+  // passed → "Registration Closed"; otherwise "Register Now".
+  const isClosed = isRegistrationClosed(item.registrationDeadline);
   const isFull = item.seats <= 0;
+  const canRegister = !isClosed && !isFull;
   return (
     <div
       className={cn(
@@ -57,9 +62,13 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
             {item.avatar.map((av, i) => (
               <div
                 key={i}
-                className={`${i == 0 ? "bg-[#2dDBDB] rounded-full" : "bg-[#1CCECE] rounded-full"}`}
+                className="w-8 h-8 bg-accent-secondary rounded-full overflow-hidden flex items-center justify-center"
               >
-                <img src={getImageUrl(av)} alt="Speaker" className="w-8 h-8 rounded-full " />
+                <img
+                  src={getImageUrl(av)}
+                  alt="Speaker"
+                  className="w-full h-full object-contain object-center"
+                />
               </div>
             ))}
           </div>
@@ -102,8 +111,8 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
               navigate,
             );
           }}
-          disabled={isFull}
-          label={isFull ? "Booked" : "Register Now"}
+          disabled={!canRegister}
+          label={isFull ? "Booked" : isClosed ? "Registration Closed" : "Register Now"}
           fullWidth
           rightIcon={
             <ChevronRight

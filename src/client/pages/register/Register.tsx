@@ -10,7 +10,7 @@ import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
-import { remainingSeats } from "../../components/event-card-format";
+import { isRegistrationClosed, remainingSeats } from "../../components/event-card-format";
 import { useVersionData } from "../../hooks/use-version-data";
 import { ictClient, ApiError } from "../../../lib";
 
@@ -205,10 +205,15 @@ const Register = () => {
     }
   };
 
-  // Events with an external registerLink are registered off-site, so they
-  // don't belong in the in-app registration dropdown.
+  // The dropdown only lists events that can actually be registered in-app:
+  // published, seats left, registration deadline not passed, and no external
+  // registerLink (those register off-site).
   const publishedEvents = events.filter(
-    (e) => e.status === "published" && remainingSeats(e) > 0 && !e.registerLink,
+    (e) =>
+      e.status === "published" &&
+      remainingSeats(e) > 0 &&
+      !isRegistrationClosed(e.registrationDeadline) &&
+      !e.registerLink,
   );
 
   return (

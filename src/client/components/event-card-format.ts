@@ -17,6 +17,20 @@ export function formatEventTime(value: string | null | undefined): string {
   return `${hour12}:${String(minutes).padStart(2, "0")} ${period}`;
 }
 
+/**
+ * Whether the registration deadline has passed. No/invalid deadline = still
+ * open. Date-only deadlines (no time part) stay open through that whole day.
+ */
+export function isRegistrationClosed(
+  deadline: string | null | undefined,
+): boolean {
+  if (!deadline) return false;
+  const date = new Date(deadline);
+  if (Number.isNaN(date.getTime())) return false;
+  if (!deadline.includes("T")) date.setHours(23, 59, 59, 999);
+  return Date.now() > date.getTime();
+}
+
 /** "2026-03-14" | ISO datetime → "Saturday, 2026-03-14"; "" for empty, echoes unparseable values. */
 export function formatEventDate(value: string | null | undefined): string {
   if (!value) return "";
@@ -67,6 +81,7 @@ export interface EventCardSource {
   fee: string;
   totalSeats: number;
   bookedSeats: number;
+  registrationDeadline?: string | null;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
 }
 
@@ -94,5 +109,6 @@ export function toEventCardItem(event: EventCardSource): ContentType {
     place: event.location,
     seats: remainingSeats(event),
     totalSeats: event.totalSeats,
+    registrationDeadline: event.registrationDeadline ?? null,
   };
 }

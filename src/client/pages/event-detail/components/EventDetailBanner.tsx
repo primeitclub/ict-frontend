@@ -1,5 +1,5 @@
 import SectionContainer from "../../../components/sectionContainer";
-import { formatEventDate } from "../../../components/event-card-format";
+import { formatEventDate, isRegistrationClosed } from "../../../components/event-card-format";
 import { Calendar, Banknote } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useVersion } from "../../../routes/VersionContext";
@@ -13,7 +13,11 @@ interface EventDetailBannerProps {
 export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
-  const isOpen = event.status === "published";
+  // Registration is closed when the event isn't published OR the deadline
+  // has passed; "Booked"/"Seats Full" only applies while still open.
+  const isOpen =
+    event.status === "published" &&
+    !isRegistrationClosed(event.registrationDeadline);
   const isFull = event.totalSeats - event.bookedSeats <= 0;
   const canRegister = isOpen && !isFull;
   // "Day, YYYY-MM-DD" e.g. "Friday, 2026-03-14"
@@ -68,7 +72,7 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
                 style={{ backgroundColor: canRegister ? "#22c55e" : "#ef4444" }}
               />
               <span style={{ color: canRegister ? "#4ade80" : "#f87171" }}>
-                {!isOpen ? "Registration Closed" : isFull ? "Seats Full" : "Registration Open"}
+                {isFull ? "Seats Full" : !isOpen ? "Registration Closed" : "Registration Open"}
               </span>
             </div>
           </div>
@@ -88,7 +92,7 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
             disabled={!canRegister}
             className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
           >
-            {isFull ? "Booked" : "Register Now"}
+            {isFull ? "Booked" : !isOpen ? "Registration Closed" : "Register Now"}
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
