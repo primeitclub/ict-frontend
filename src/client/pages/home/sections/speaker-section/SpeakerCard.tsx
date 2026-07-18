@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { CircleArrowRight } from "lucide-react";
-import Speakers from "./../../../../../assets/speaker-1.png";
 import type { Speaker } from "../../types";
 import { getImageUrl } from "../../../../../lib/imageUtils";
 import { slugify } from "../../../../../lib";
@@ -189,11 +188,13 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
         {/* -mr-2 cancels the wrapper's pr-2 so the photo touches the card's
             right border */}
         <div className="relative z-0 pointer-events-none flex justify-end items-end flex-1 overflow-hidden mt-[-150px] sm:mt-[-120px] -mr-2">
-          <img
-            src={speaker.imageUrl ? getImageUrl(speaker.imageUrl) : Speakers}
-            alt={speaker.name}
-            className="object-contain object-top max-h-[220px] w-auto"
-          />
+          {speaker.imageUrl && (
+            <img
+              src={getImageUrl(speaker.imageUrl)}
+              alt={speaker.name}
+              className="object-contain object-top max-h-[220px] w-auto"
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
-import logo2 from "../../../../assets/logo@2x.png";
 import { cn } from "../../../../shared/utils/cn";
 import { getImageUrl } from "../../../../lib/imageUtils";
+
+// Bundled asset fallbacks were removed; the club logo in /public is the
+// last-resort image when no edition logo is configured.
+const FALLBACK_LOGO = "/logo.png";
 
 interface Logo2Props {
   className?: string;
@@ -31,7 +34,7 @@ export default function Logo2({ className, size = "md", src, loading }: Logo2Pro
   }
   return (
     <img
-      src={src ? getImageUrl(src) : logo2}
+      src={src ? getImageUrl(src) : FALLBACK_LOGO}
       alt="logo"
       className={cn("object-contain w-auto", SIZE_CLASS[size], className)}
     />
