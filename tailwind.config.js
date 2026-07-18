@@ -1,5 +1,3 @@
-import { transform } from 'typescript';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,19 +6,28 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        // Global accent (#3571F0) — sourced from --color-accent-dark-rgb in
+        // src/index.css. Generates every color utility (text-accent,
+        // bg-accent, border-accent, ring-accent, …) with opacity support
+        // (e.g. border-accent/30).
+        'accent': 'rgb(var(--color-accent-dark-rgb) / <alpha-value>)',
+        // Lighter blue for dark surfaces (nav active, footer headings).
+        'accent-secondary': 'rgb(var(--color-accent-light-rgb) / <alpha-value>)',
+      },
       backgroundColor: {
-        // background colors 
+        // background colors
         'primary': '#010005',
-        'primary-cyan':'#3571F0',
-        'primary-cyan-dark':'#0099cc',       
-        'secondary': '#212121',     
+        'primary-cyan': 'rgb(var(--color-accent-dark-rgb) / <alpha-value>)', // alias of accent
+        'primary-cyan-dark':'#0099cc',
+        'secondary': '#212121',
         'admin-primary': '#01060A',
         'admin-secondary': '#39BFF2',
-        'accent-light': '#3B82F6',  
-        'accent-dark': '#1D4ED8',  
-        
-        // button colors 
-        'btn-primary': '#3571F0', 
+        'accent-light': '#3B82F6',
+        'accent-dark': '#1D4ED8',
+
+        // button colors
+        'btn-primary': 'rgb(var(--color-accent-dark-rgb) / <alpha-value>)', // alias of accent
         'btn-primary-hover':'#184EBF',
         'btn-secondary': '#02369E',
         'btn-secondary-hover':'#12306C',
@@ -44,7 +51,7 @@ export default {
         'tertiary': '#A3A3A3',     
         'nav-default': '#F5F5F5',
         'nav-hover': '#60A5FA',    // secondary accent — hover state
-        'nav-active': '#3B82F6',   // primary accent — active state
+        'nav-active': 'rgb(var(--color-accent-light-rgb) / <alpha-value>)', // light accent — active state (dark surfaces)
       },
       spacing: {
         'page-margin': '2rem',

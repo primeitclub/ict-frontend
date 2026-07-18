@@ -91,8 +91,7 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
               )
             }
             disabled={!canRegister}
-            className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
-            style={{ backgroundColor: "#3571F0" }}
+            className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
           >
             {isFull ? "Booked" : "Register Now"}
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

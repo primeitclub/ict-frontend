@@ -37,7 +37,7 @@ export const SeatsAndQueryCard = ({ totalSeats, bookedSeats }: SeatsAndQueryCard
       {/* Got Any Queries */}
       <Link
         to={getPath("/contacts")}
-        className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-[#3571F0] hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none"
+        className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-accent hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
