@@ -56,6 +56,18 @@ export function formatEventDate(value: string | null | undefined): string {
   return `${weekday}, ${formatShortDate(value)}`;
 }
 
+/**
+ * Price label for an event card. Group events charge per team, so the amount
+ * gets a " /per Team" suffix; free/zero-fee events show "Free" (no suffix).
+ */
+export function formatEventPrice(
+  price: number,
+  eventType?: string | null,
+): string {
+  if (price <= 0) return "Free";
+  return eventType === "GROUP" ? `NPR ${price} /team` : `NPR ${price}`;
+}
+
 /** Builds "10:00 AM - 12:00 PM" (or just the start) from raw start/end times. */
 export function formatEventTimeRange(
   start: string | null | undefined,
@@ -98,6 +110,7 @@ export interface EventCardSource {
   bookedSeats: number;
   registrationDeadline?: string | null;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
+  eventType?: string | null;
 }
 
 /**
@@ -129,5 +142,6 @@ export function toEventCardItem(event: EventCardSource): ContentType {
     seats: remainingSeats(event),
     totalSeats: event.totalSeats,
     registrationDeadline: event.registrationDeadline ?? null,
+    eventType: event.eventType ?? null,
   };
 }
