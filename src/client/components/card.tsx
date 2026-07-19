@@ -6,7 +6,7 @@ import { cn } from "../../shared/utils/cn";
 import { useVersion } from "../routes/VersionContext";
 import { getImageUrl } from "../../lib/imageUtils";
 import { goToRegistration } from "../../lib/registration";
-import { isRegistrationClosed } from "./event-card-format";
+import { isRegistrationClosed, formatEventPrice } from "./event-card-format";
 
 interface CardProps extends React.HTMLAttributes<HTMLElement> {
   item: ContentType;
@@ -81,7 +81,7 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
           <div className="flex items-center gap-2 min-w-0">
             <Banknote className="w-4 h-4 text-[#10B981] shrink-0" />
             <span className="text-[#10B981] text-[12px] font-medium truncate">
-              {item.price > 0 ? `NPR ${item.price}` : "Free"}
+              {formatEventPrice(item.price, item.eventType)}
             </span>
           </div>
           <div className="flex items-center gap-2 min-w-0">

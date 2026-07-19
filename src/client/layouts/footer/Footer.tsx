@@ -41,8 +41,11 @@ export const Footer = () => {
     { path: "/teams", label: "Teams" },
     { path: "/sponsors", label: "Sponsors" },
     { path: "/contacts", label: "Contacts" },
-    { path: "/contributors", label: "Contributors" },
   ];
+
+  // Same external link in every version, so it isn't version-prefixed.
+  const contributorsLink =
+    "https://github.com/primeitclub/ict-meetup-contributers";
 
   return (
     <SectionContainer
@@ -246,6 +249,14 @@ export const Footer = () => {
               {label}
             </NavLink>
           ))}
+          <a
+            href={contributorsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 text-nav-default hover:text-nav-hover font-normal"
+          >
+            Contributors
+          </a>
         </nav>
 
         <button
