@@ -7,7 +7,8 @@ import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
 import { useVersions } from "../../hooks/use-versions";
 import { useHome } from "../../pages/home/useHome";
-import { useEventsList } from "../../pages/event/useEvents";
+import { useCurrentEditionHasNoEvents } from "../../hooks/use-current-edition-empty";
+import { useActiveVersionHasNoTeams } from "../../hooks/use-active-version-empty";
 
 const Navbar = () => {
   const { getPath, navigateToVersion, version } = useVersion();
@@ -24,12 +25,15 @@ const Navbar = () => {
   const { data: logo, isLoading: logoLoading } = useHome(
     (d) => d.edition.logoPath ?? d.edition.logo,
   );
-  const { events, isLoading: eventsLoading } = useEventsList();
   const versions = useVersions();
 
-  // Only surface the Events link when this edition actually has events.
-  // Keep it while loading to avoid a flash, hide it once confirmed empty.
-  const hasEvents = eventsLoading || events.length > 0;
+  // Hide the Events link only when the current edition has no published events
+  // yet (past editions always keep it). Stays visible while loading so it
+  // doesn't flash out and back in.
+  const hasEvents = !useCurrentEditionHasNoEvents();
+  // Hide the Teams link when the active version has no team members. Same
+  // flash-avoidance: shown while loading, hidden once confirmed empty.
+  const hasTeams = !useActiveVersionHasNoTeams();
 
   // Set by a same-page nav-item click in the mobile menu: the scroll-lock
   // cleanup below normally restores the pre-open scroll position on close,
@@ -79,7 +83,7 @@ const Navbar = () => {
   const pages = [
     { path: "/", label: "Home" },
     ...(hasEvents ? [{ path: "/events", label: "Events" }] : []),
-    { path: "/teams", label: "Teams" },
+    ...(hasTeams ? [{ path: "/teams", label: "Teams" }] : []),
     { path: "/sponsors", label: "Sponsors" },
     { path: "/contacts", label: "Contacts" },
   ];

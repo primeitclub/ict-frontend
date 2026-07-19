@@ -61,11 +61,14 @@ const Sponsors = () => {
     enabled: !!versionId,
   });
 
-  const { data: contactsRes, isLoading: contactsLoading } = useApiQuery(
+  const { data: contactsRes } = useApiQuery(
     "settingsContacts",
   )<Envelope<ContactSettings>>({
     queryParams: { versionId: versionId ?? undefined },
     enabled: !!versionId,
+    // Only feeds the optional "Join Our Sponsors" card (which falls back to
+    // siteSettings), so don't let a slow/failing endpoint retry for ~7s.
+    config: { retry: 1 },
   });
   const { data: siteSettings } = useSiteSettings();
 
@@ -73,7 +76,9 @@ const Sponsors = () => {
     (a, b) => a.displayOrder - b.displayOrder,
   );
   const sponsors = sponsorsRes?.data?.items ?? [];
-  const isLoading = versionLoading || categoriesLoading || sponsorsLoading || contactsLoading;
+  // Contacts intentionally excluded: it only populates the optional contact
+  // card, so it must not block the whole page from rendering.
+  const isLoading = versionLoading || categoriesLoading || sponsorsLoading;
 
   if (isLoading) {
     return (
