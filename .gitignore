@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Yarn is the package manager for this repo; keep npm's lockfile out.
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
