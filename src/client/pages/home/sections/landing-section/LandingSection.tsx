@@ -58,7 +58,9 @@ export function LandingSection() {
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
       >
         <div className="items-center flex justify-center text-center">
-          <Link to={getPath("/events")}>
+          {/* text-white on hover too: the global `a` rule recolors link text on
+              hover — the pill should only change its background, not the text. */}
+          <Link to={getPath("/events")} className="text-white hover:text-white active:text-white">
             <div className="flex items-center gap-2 border-1 p-2 rounded-full  bg-white/5 transition-colors hover:bg-white/10 cursor-pointer">
               <div className="flex rounded-full bg-accent text-[14px] md:text-[16px] py-[2px] px-[14px]">
                 Event on
@@ -177,7 +179,7 @@ export function LandingSection() {
             // glow. No loop.
             initial={{ opacity: 0, filter: "brightness(0)" }}
             animate={{ opacity: 1, filter: "brightness(1)" }}
-            transition={{ duration: 3, ease: "easeOut", delay: 2 }}
+            transition={{ duration: 3, ease: "easeOut", delay: 0.5 }}
           />
         </figure>
       </div>

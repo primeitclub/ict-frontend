@@ -114,9 +114,7 @@ src/
 │       ├── event/
 │       │   ├── EventPage.tsx
 │       │   ├── useEvents.ts
-│       │   ├── components/  (CategoryTabs, EventGrid, EventSwiper)
-│       │   ├── data/
-│       │   ├── types/
+│       │   ├── components/  (CategoryTabs, EventGrid, EventListItem, EventSwiper)
 │       │   └── index.ts
 │       │
 │       ├── event-detail/

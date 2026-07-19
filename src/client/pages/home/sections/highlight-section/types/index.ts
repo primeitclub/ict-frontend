@@ -10,6 +10,7 @@ export type ContentType = {
   place: string;
   seats: number;
   totalSeats: number;
+  registrationDeadline?: string | null;
 };
 
 export type TabType = {

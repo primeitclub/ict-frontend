@@ -10,7 +10,7 @@ import { ChevronRight } from "lucide-react";
 import TopBgContent from "../../components/bg-content";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEventsList } from "../event/useEvents";
-import { remainingSeats } from "../../components/event-card-format";
+import { isRegistrationClosed, remainingSeats } from "../../components/event-card-format";
 import { useVersionData } from "../../hooks/use-version-data";
 import { ictClient, ApiError } from "../../../lib";
 
@@ -205,13 +205,28 @@ const Register = () => {
     }
   };
 
+  // The dropdown only lists events that can actually be registered in-app:
+  // published, seats left, registration deadline not passed, and no external
+  // registerLink (those register off-site).
   const publishedEvents = events.filter(
-    (e) => e.status === "published" && remainingSeats(e) > 0,
+    (e) =>
+      e.status === "published" &&
+      remainingSeats(e) > 0 &&
+      !isRegistrationClosed(e.registrationDeadline) &&
+      !e.registerLink,
   );
 
   return (
     <div className="py-0">
-      <TopBgContent className="z-0">
+      {/* Mobile: banner hugs its content with the same pt-10 gap below the
+          navbar as the sponsors page (the fixed 250px centered banner left a
+          huge gap). Desktop keeps the standard 300px banner. */}
+      <TopBgContent
+        className="z-0"
+        variant="black-glow"
+        bannerClassName="h-auto pt-10 pb-24 md:pt-0 md:pb-0 md:h-[300px]"
+        contentClassName="py-0"
+      >
         <Heading
           align="center"
           className="text-[#F5F7FA] text-[28px] md:text-[40px] font-semibold"
@@ -226,7 +241,7 @@ const Register = () => {
       <div className="bg-[#F2F5FA] font-sans p-10">
         <form
           onSubmit={handleSubmit}
-          className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-20 text-black p-6 md:p-12 space-y-6 rounded-lg shadow-[0_4px_8px_0_#00000014]"
+          className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-24 md:-mt-32 text-black p-6 md:p-12 space-y-6 rounded-lg shadow-[0_4px_8px_0_#00000014]"
         >
           {/* Personal Information */}
           <div className="space-y-6">

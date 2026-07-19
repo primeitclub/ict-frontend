@@ -1,35 +1,23 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useVersion } from "../../../routes/VersionContext";
+import { useParams } from "react-router-dom";
 import { EventDetailBanner } from "../components/EventDetailBanner";
-import { slugify } from "../../../../lib";
 import { SeatsAndQueryCard } from "../components/SeatsAndQueryCard";
 import { EventDetailTabs } from "../components/EventDetailTabs";
 import SectionContainer from "../../../components/sectionContainer";
 import { useEventDetail } from "../useEventDetail";
 import { useEventsList } from "../../event/useEvents";
-import { remainingSeats } from "../../../components/event-card-format";
-import Card from "../../../components/card";
+import EventGrid from "../../event/components/EventGrid";
 import SectionHeader from "../../../components/section-header";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import NavButton from "../../home/sections/highlight-section/components/NavButton";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import type { ContentType } from "../../event/types";
 
 export default function EventsDetail() {
   const { eventId } = useParams<{ eventId: string }>();
-  const navigate = useNavigate();
-  const { getPath } = useVersion();
   const { event, isLoading, isError } = useEventDetail(eventId);
 
-  // Other events: all published events excluding the current one
+  // Other events: the first 4 highlighted events (list order = their order),
+  // excluding the one being viewed.
   const { events: otherEvents } = useEventsList();
   const relatedEvents = otherEvents
-    .filter((e) => e.id !== event?.id)
-    .slice(0, 8);
+    .filter((e) => e.isHighlighted && e.id !== event?.id)
+    .slice(0, 4);
 
   if (isLoading) {
     return (
@@ -50,9 +38,14 @@ export default function EventsDetail() {
   return (
     <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
       <EventDetailBanner event={event} />
-      <SectionContainer className="px-4 md:px-10 py-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+      {/* md:pt-8/md:pb-16 override SectionContainer's default md:pt-24/md:pb-40
+          — the unscoped py-8 alone doesn't beat the md-scoped defaults, which
+          left a huge gap under the banner. */}
+      <SectionContainer className="px-4 md:px-10 pt-8 pb-12 md:pt-8 md:pb-16 flex flex-col lg:flex-row gap-8 lg:items-start">
         <EventDetailTabs event={event} />
-        <div className="w-full lg:w-72 md:flex-shrink md:pt-14">
+        {/* lg:-mt-8 cancels the container's top padding so the seats card sits
+            flush against the banner's bottom edge. */}
+        <div className="w-full lg:w-72 md:flex-shrink lg:-mt-8">
           <SeatsAndQueryCard totalSeats={event.totalSeats} bookedSeats={event.bookedSeats} />
         </div>
       </SectionContainer>
@@ -64,58 +57,12 @@ export default function EventsDetail() {
               titleNormal=""
               titleHighlight="Other Events For You"
               varient="secondary"
-              className="justify-start"
+              className="justify-center sm:justify-start"
             />
 
-            <div className="relative space-y-8 md:space-y-8">
-              <div className="lg:block hidden">
-                <NavButton
-                  icon={ArrowLeft}
-                  className="swiper-button-prev-custom left-2 sm:left-4 md:-left-6 lg:-left-10 xl:-left-16"
-                />
-                <NavButton
-                  icon={ArrowRight}
-                  className="swiper-button-next-custom right-2 sm:right-4 md:-right-6 lg:-right-10 xl:-right-16"
-                />
-              </div>
-
-              <Swiper
-                modules={[Navigation, Autoplay, Pagination]}
-                spaceBetween={20}
-                slidesPerView={1}
-                navigation={{ prevEl: ".swiper-button-prev-custom", nextEl: ".swiper-button-next-custom" }}
-                pagination={{ clickable: true, el: ".custom-pagination" }}
-                breakpoints={{ 640: { slidesPerView: 2 }, 860: { slidesPerView: 3 }, 1300: { slidesPerView: 4 } }}
-                className="pb-16"
-              >
-                {relatedEvents.map((e) => {
-                  const cardItem: ContentType = {
-                    image: e.imageUrl ?? "",
-                    title: e.title,
-                    speaker: e.subtitle ?? "",
-                    avatar: [],
-                    date: e.date ?? "",
-                    price: Number(e.fee) || 0,
-                    time: "",
-                    place: e.location,
-                    seats: remainingSeats(e),
-                    totalSeats: e.totalSeats,
-                  };
-                  return (
-                    <SwiperSlide key={e.id}>
-                      <div
-                        onClick={() => navigate(getPath(`/event-detail/${slugify(e.title)}`))}
-                        className="cursor-pointer"
-                      >
-                        <Card item={cardItem} registerLink={e.registerLink} />
-                      </div>
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-
-              <div className="custom-pagination flex justify-center lg:hidden mt-8 gap-2" />
-            </div>
+            {/* Same grid component as the events page, so cards keep equal
+                heights per row instead of stretching each other in a swiper. */}
+            <EventGrid events={relatedEvents} />
           </div>
         </div>
       )}
