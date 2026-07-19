@@ -8,6 +8,8 @@ import SectionContainer from "../../components/sectionContainer";
 import { useVersion } from "../../routes/VersionContext";
 import { useSiteSettings } from "../../hooks/use-site-settings";
 import { useHome } from "../../pages/home/useHome";
+import { useCurrentEditionHasNoEvents } from "../../hooks/use-current-edition-empty";
+import { useActiveVersionHasNoTeams } from "../../hooks/use-active-version-empty";
 
 export const Footer = () => {
   const navigate = useNavigate();
@@ -35,14 +37,23 @@ export const Footer = () => {
     (l) => l.platform.toLowerCase() === "linkedin",
   )?.link || "#";
 
+  // Drop the Events link when the current edition has no published events yet
+  // (mirrors the navbar). Past editions always keep it.
+  const hideEvents = useCurrentEditionHasNoEvents();
+  // Drop the Teams link when the active version has no team members.
+  const hideTeams = useActiveVersionHasNoTeams();
+
   const pages = [
     { path: "/", label: "Home" },
-    { path: "/events", label: "Events" },
-    { path: "/teams", label: "Teams" },
+    ...(hideEvents ? [] : [{ path: "/events", label: "Events" }]),
+    ...(hideTeams ? [] : [{ path: "/teams", label: "Teams" }]),
     { path: "/sponsors", label: "Sponsors" },
     { path: "/contacts", label: "Contacts" },
-    { path: "/contributors", label: "Contributors" },
   ];
+
+  // Same external link in every version, so it isn't version-prefixed.
+  const contributorsLink =
+    "https://github.com/primeitclub/ict-meetup-contributers";
 
   return (
     <SectionContainer
@@ -246,6 +257,14 @@ export const Footer = () => {
               {label}
             </NavLink>
           ))}
+          <a
+            href={contributorsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 text-nav-default hover:text-nav-hover font-normal"
+          >
+            Contributors
+          </a>
         </nav>
 
         <button

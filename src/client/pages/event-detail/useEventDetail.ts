@@ -17,6 +17,8 @@ export interface EventDetailData {
   status: string;
   registrationDeadline: string | null;
   category: { id: string; name: string; displayName: string };
+  /** "GROUP" events charge per team, so their fee shows "/team". */
+  eventType?: "SINGLE" | "GROUP" | null;
   speakers?: EventDetailSpeaker[] | null;
   /** External registration URL; takes precedence over the in-app form. */
   registerLink: string | null;

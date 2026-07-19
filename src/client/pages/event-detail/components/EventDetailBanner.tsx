@@ -61,7 +61,9 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
             <div className="flex items-center gap-2 text-white text-base md:text-xl">
               <Banknote className="w-5 h-5 text-[#10B981] shrink-0" />
               <span>
-                {event.feeType === "free" ? "Free" : `NPR ${event.fee}`}
+                {event.feeType === "free"
+                  ? "Free"
+                  : `NPR ${event.fee}${event.eventType === "GROUP" ? " /team" : ""}`}
               </span>
             </div>
 

@@ -11,6 +11,7 @@ export type ContentType = {
   seats: number;
   totalSeats: number;
   registrationDeadline?: string | null;
+  eventType?: string | null;
 };
 
 export type TabType = {

@@ -6,6 +6,7 @@ import { goToRegistration } from "../../../../lib/registration";
 import {
   isRegistrationClosed,
   toEventCardItem,
+  formatEventPrice,
 } from "../../../components/event-card-format";
 import type { ApiEvent } from "../useEvents";
 
@@ -60,7 +61,7 @@ const EventListItem = ({ event }: EventListItemProps) => {
             <div className="flex shrink-0 items-center gap-1.5">
               <Banknote className="h-3.5 w-3.5 text-[#10B981]" />
               <span className="text-[12px] font-semibold text-[#10B981]">
-                {item.price > 0 ? `NPR ${item.price}` : "Free"}
+                {formatEventPrice(item.price, item.eventType)}
               </span>
             </div>
           </div>

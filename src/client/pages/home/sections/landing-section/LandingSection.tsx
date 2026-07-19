@@ -8,6 +8,7 @@ import image from "../../../../../../public/ICT Meet/Arc-1.png"
 import { useHome } from "../../useHome";
 import { Link } from "react-router-dom";
 import { useVersion } from "../../../../routes/VersionContext";
+import { useCurrentEditionHasNoEvents } from "../../../../hooks/use-current-edition-empty";
 
 function formatEventDateRange(startDate?: string | null, endDate?: string | null): string {
   if (!startDate || !endDate) return "";
@@ -30,6 +31,8 @@ export function LandingSection() {
   const { data: edition } = useHome((d) => d.edition);
   const { data: hero } = useHome((d) => d.sections.hero);
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
+  // No events in the current edition → nothing to register for, so drop the CTA.
+  const hideRegister = useCurrentEditionHasNoEvents();
 
   return (
     <div className="landing_section relative w-full sm:min-h-screen pt-32 sm:pt-40 pb-[calc(32vw+56px)] sm:pb-0">
@@ -96,31 +99,33 @@ export function LandingSection() {
           </div> */}
         </div>
         <div className="flex sm:flex-row flex-col gap-4 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
-          <Link to={getPath("/register")}>
-            {/* Old glass button, but the whitish hover fill is kept ON always
-                (!bg-glow-secondary + black text) so Register Now stays the light
-                primary CTA. Wrapper scales up on hover only (no idle pulse). */}
-            <motion.div
-              className="inline-block"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-            >
-              <Button
-                variant="glass"
-                className="!w-fit text-xs sm:text-base !bg-glow-secondary !text-black"
-                rightIcon={
-                  <motion.span
-                    className="flex"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
-                  >
-                    <ChevronRight />
-                  </motion.span>
-                }
-                label="Register Now "
-              />
-            </motion.div>
-          </Link>
+          {!hideRegister && (
+            <Link to={getPath("/register")}>
+              {/* Old glass button, but the whitish hover fill is kept ON always
+                  (!bg-glow-secondary + black text) so Register Now stays the light
+                  primary CTA. Wrapper scales up on hover only (no idle pulse). */}
+              <motion.div
+                className="inline-block"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                <Button
+                  variant="glass"
+                  className="!w-fit text-xs sm:text-base !bg-glow-secondary !text-black"
+                  rightIcon={
+                    <motion.span
+                      className="flex"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.2, ease: "easeInOut", repeat: Infinity }}
+                    >
+                      <ChevronRight />
+                    </motion.span>
+                  }
+                  label="Register Now "
+                />
+              </motion.div>
+            </Link>
+          )}
           <Link to={getPath("/sponsors")}>
             <motion.div
               className="inline-block"
