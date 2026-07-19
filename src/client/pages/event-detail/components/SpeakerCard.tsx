@@ -1,13 +1,15 @@
 import type { ISpeaker } from "../types";
 import { getImageUrl } from "../../../../lib/imageUtils";
-import instagramIcon from "../../../../assets/icons/Speaker-Instagram.png";
-import portfolioIcon from "../../../../assets/icons/Speaker-Portfolio.png";
-import linkedinIcon from "../../../../assets/icons/Speaker-Linkedin.png";
+import SocialIcon from "../../../components/social-icon/SocialIcon";
 
-const SOCIALS: { key: keyof NonNullable<ISpeaker["socials"]>; icon: string; label: string }[] = [
-  { key: "linkedin", icon: linkedinIcon, label: "LinkedIn" },
-  { key: "instagram", icon: instagramIcon, label: "Instagram" },
-  { key: "portfolio", icon: portfolioIcon, label: "Portfolio" },
+const SOCIALS: {
+  key: keyof NonNullable<ISpeaker["socials"]>;
+  platform: string;
+  label: string;
+}[] = [
+  { key: "linkedin", platform: "linkedin", label: "LinkedIn" },
+  { key: "instagram", platform: "instagram", label: "Instagram" },
+  { key: "portfolio", platform: "website", label: "Portfolio" },
 ];
 
 export const SpeakerCard = ({
@@ -43,15 +45,16 @@ export const SpeakerCard = ({
         {/* Socials — only the links the speaker actually has */}
         {socialLinks.length > 0 && (
           <div className="flex items-center justify-center sm:justify-start gap-3 mt-3">
-            {socialLinks.map(({ key, icon, label }) => (
+            {socialLinks.map(({ key, platform, label }) => (
               <a
                 key={key}
                 href={socials?.[key]}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={label}
                 className="hover:opacity-80 transition-opacity"
               >
-                <img src={icon} alt={label} className="w-6 h-6" />
+                <SocialIcon platform={platform} className="w-6 h-6" />
               </a>
             ))}
           </div>
