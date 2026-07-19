@@ -112,7 +112,10 @@ const PaymentSuccess = () => {
 
   const getPrice = () => {
     if (!eventDetail) return "Free";
-    return eventDetail.feeType === "free" ? "Free" : `NPR ${eventDetail.fee}`;
+    if (eventDetail.feeType === "free") return "Free";
+    // Group events are priced per team, so surface that on the amount.
+    const suffix = eventDetail.eventType === "GROUP" ? " /team" : "";
+    return `NPR ${eventDetail.fee}${suffix}`;
   };
 
   if (isLoading) {

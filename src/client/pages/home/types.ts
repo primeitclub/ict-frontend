@@ -93,6 +93,8 @@ export interface HighlightItem {
   categoryId: string;
   /** Speakers for this event; used for the "with <names>" line + avatars. */
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
+  /** "GROUP" events charge per team, so their card price shows "/per Team". */
+  eventType?: "SINGLE" | "GROUP" | null;
   /** External registration URL; takes precedence over the in-app form. */
   registerLink: string | null;
 }

@@ -25,6 +25,14 @@ export default function EventsPage() {
     setVisibleCount(PAGE_SIZE);
   };
 
+  // Only show category tabs that actually have at least one event in the
+  // current version. allEvents is the unfiltered, version-scoped list, so the
+  // set of category ids present there is exactly the categories to display.
+  const categoryIdsWithEvents = new Set(allEvents.map((e) => e.categoryId));
+  const visibleCategories = categories.filter((c) =>
+    categoryIdsWithEvents.has(c.id),
+  );
+
   const highlightedEvents = allEvents.filter((e) => e.isHighlighted);
   const visibleEvents = events.slice(0, visibleCount);
   const hasMore = events.length > visibleCount;
@@ -35,7 +43,7 @@ export default function EventsPage() {
       <div className="bg-[#F2F5FA] text-black">
         <div className="mx-auto max-w-7xl px-4 pt-2 pb-12 sm:pt-12 md:pb-24 md:space-y-10 space-y-12">
           <CategoryTabs
-            categories={categories}
+            categories={visibleCategories}
             activeCategoryId={activeCategoryId}
             onSelect={handleCategorySelect}
             isLoading={categoriesLoading}
