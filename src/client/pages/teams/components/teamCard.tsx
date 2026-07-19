@@ -1,6 +1,5 @@
 import ref1 from "../team-images/ref1.jpg";
-import LinkedIn from "../icons/linkedIn";
-import { Globe, Instagram } from "lucide-react";
+import SocialIcon from "../../../components/social-icon/SocialIcon";
 import { getImageUrl } from "../../../../lib/imageUtils";
 import { cn } from "../../../../shared/utils/cn";
 
@@ -27,17 +26,17 @@ export default function TeamCard({ name, role, imageUrl, socialLinks, className 
         <div className="grid gap-2 absolute top-[12.96px] right-2">
           {socialLinks.instagram && (
             <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
-              <Instagram className="w-[18px] h-[18px] text-white cursor-pointer" />
+              <SocialIcon platform="instagram" className="w-[18px] h-[18px] cursor-pointer" />
             </a>
           )}
           {socialLinks.linkedin && (
             <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
-              <LinkedIn className="w-[18px] h-[18px] text-white cursor-pointer" />
+              <SocialIcon platform="linkedin" className="w-[18px] h-[18px] cursor-pointer" />
             </a>
           )}
           {socialLinks.portfolio && (
             <a href={socialLinks.portfolio} target="_blank" rel="noopener noreferrer">
-              <Globe className="w-[18px] h-[18px] text-white cursor-pointer" />
+              <SocialIcon platform="website" className="w-[18px] h-[18px] cursor-pointer" />
             </a>
           )}
         </div>

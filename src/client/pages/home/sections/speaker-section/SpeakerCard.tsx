@@ -5,9 +5,7 @@ import { getImageUrl } from "../../../../../lib/imageUtils";
 import { slugify } from "../../../../../lib";
 import { useHome } from "../../useHome";
 import { useVersion } from "../../../../routes/VersionContext";
-import linkedinIcon from "../../../../../assets/icons/LinkedIn-Light.png";
-import instagramIcon from "../../../../../assets/icons/Instagram-Light.png";
-import portfolioIcon from "../../../../../assets/icons/Portfolio-Light.png";
+import SocialIcon from "../../../../components/social-icon/SocialIcon";
 
 interface SpeakerCardProps {
   speaker: Speaker;
@@ -103,7 +101,7 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
               aria-label={`${speaker.name} on LinkedIn`}
               className="rounded-full transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51A7FF]"
             >
-              <img src={linkedinIcon} alt="" className="w-[25px] h-[25px]" />
+              <SocialIcon platform="linkedin" className="w-[25px] h-[25px]" />
             </a>
           )}
           {instagram && (
@@ -114,7 +112,7 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
               aria-label={`${speaker.name} on Instagram`}
               className="rounded-full transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51A7FF]"
             >
-              <img src={instagramIcon} alt="" className="w-[25px] h-[25px]" />
+              <SocialIcon platform="instagram" className="w-[25px] h-[25px]" />
             </a>
           )}
           {portfolio && (
@@ -125,7 +123,7 @@ const SpeakerCard = ({ speaker }: SpeakerCardProps) => {
               aria-label={`${speaker.name}'s portfolio`}
               className="rounded-full transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51A7FF]"
             >
-              <img src={portfolioIcon} alt="" className="w-[25px] h-[25px]" />
+              <SocialIcon platform="website" className="w-[25px] h-[25px]" />
             </a>
           )}
         </div>

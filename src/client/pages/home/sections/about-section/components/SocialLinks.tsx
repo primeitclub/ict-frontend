@@ -1,4 +1,5 @@
 import { SOCIAL_LINKS } from "../data";
+import SocialIcon from "../../../../../components/social-icon/SocialIcon";
 
 const SocialLinks = () => {
   return (
@@ -9,10 +10,13 @@ const SocialLinks = () => {
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-6 h-6 md:w-7 md:h-7 xl:w-9 xl:h-9 cursor-pointer"
+          className="cursor-pointer"
           aria-label={link.label}
         >
-          {link.icon}
+          <SocialIcon
+            platform={link.platform}
+            className="w-6 h-6 md:w-7 md:h-7 xl:w-9 xl:h-9"
+          />
         </a>
       ))}
     </div>
