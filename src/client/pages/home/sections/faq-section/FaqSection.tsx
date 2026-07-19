@@ -22,12 +22,14 @@ const FAQSection = () => {
     <SectionContainer className="mx-auto px-4 sm:px-6 space-y-12 pb-8 md:pb-8">
       {/* Same full title on every breakpoint (mobile used to abbreviate to
           "FAQs"); at the 30px mobile size it simply wraps, centered. */}
+      {/* text-center keeps wrapped lines centered too — align="center" only
+          centers the heading block, not the text inside it. */}
       <SectionHeader
         titleNormal="Frequently"
         titleHighlight="Asked Questions"
         varient="primary"
         align="center"
-        className="mb-4"
+        className="mb-4 text-center"
       />
 
       {/* FAQ List */}

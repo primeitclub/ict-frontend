@@ -17,6 +17,45 @@ export function formatEventTime(value: string | null | undefined): string {
   return `${hour12}:${String(minutes).padStart(2, "0")} ${period}`;
 }
 
+/**
+ * Whether the registration deadline has passed. No/invalid deadline = still
+ * open. Date-only deadlines (no time part) stay open through that whole day.
+ */
+export function isRegistrationClosed(
+  deadline: string | null | undefined,
+): boolean {
+  if (!deadline) return false;
+  const date = new Date(deadline);
+  if (Number.isNaN(date.getTime())) return false;
+  if (!deadline.includes("T")) date.setHours(23, 59, 59, 999);
+  return Date.now() > date.getTime();
+}
+
+/**
+ * Site-wide date format: "2026-02-10" | ISO datetime → "10 Feb, 2026".
+ * "" for empty, echoes unparseable values.
+ */
+export function formatShortDate(value: string | null | undefined): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  return `${date.getDate()} ${month}, ${date.getFullYear()}`;
+}
+
+/**
+ * Weekday variant, used on the event detail page (banner + registration
+ * deadline): "2026-10-26" → "Monday, 26 Oct, 2026". "" for empty, echoes
+ * unparseable values.
+ */
+export function formatEventDate(value: string | null | undefined): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+  return `${weekday}, ${formatShortDate(value)}`;
+}
+
 /** Builds "10:00 AM - 12:00 PM" (or just the start) from raw start/end times. */
 export function formatEventTimeRange(
   start: string | null | undefined,
@@ -57,6 +96,7 @@ export interface EventCardSource {
   fee: string;
   totalSeats: number;
   bookedSeats: number;
+  registrationDeadline?: string | null;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
 }
 
@@ -66,23 +106,28 @@ export interface EventCardSource {
  * events page both call it so their cards are identical.
  */
 export function toEventCardItem(event: EventCardSource): ContentType {
+  const speakerNames = (event.speakers ?? [])
+    .map((speaker) => speaker.name)
+    .filter(Boolean);
   return {
     id: event.id,
     image: event.imageUrl ?? "",
     title: event.title,
-    // "with <names>" is assembled in the Card; here we just join speaker names.
-    speaker: (event.speakers ?? [])
-      .map((speaker) => speaker.name)
-      .filter(Boolean)
-      .join(", "),
+    // "with <names>" is assembled in the Card; the last name is joined with
+    // "&" — "A & B", "A, B & C".
+    speaker:
+      speakerNames.length > 1
+        ? `${speakerNames.slice(0, -1).join(", ")} & ${speakerNames[speakerNames.length - 1]}`
+        : (speakerNames[0] ?? ""),
     avatar: (event.speakers ?? [])
       .map((speaker) => speaker.imageUrl)
       .filter((url): url is string => Boolean(url)),
-    date: event.date ?? "",
+    date: formatShortDate(event.date),
     price: Number(event.fee) || 0,
     time: formatEventTimeRange(event.startTime, event.endTime),
     place: event.location,
     seats: remainingSeats(event),
     totalSeats: event.totalSeats,
+    registrationDeadline: event.registrationDeadline ?? null,
   };
 }

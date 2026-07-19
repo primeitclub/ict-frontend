@@ -6,6 +6,7 @@ import TopBgContent from "../../components/bg-content";
 import { Heading } from "../../../shared/design-components";
 import Success from "../register/icons/Success.svg";
 import { useApiQuery } from "../../../lib";
+import { formatShortDate } from "../../components/event-card-format";
 import { useSiteSettings } from "../../hooks/use-site-settings";
 
 interface Envelope<T> {
@@ -104,25 +105,20 @@ const PaymentSuccess = () => {
 
   const formatDate = (dateStr?: string | null) => {
     if (!dateStr) return "—";
-    try {
-      const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
-      const d = new Date(dateStr);
-      if (isNaN(d.getTime())) return "—";
-      return d.toLocaleDateString("en-US", options);
-    } catch {
-      return dateStr;
-    }
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "—";
+    return formatShortDate(dateStr);
   };
 
   const getPrice = () => {
     if (!eventDetail) return "Free";
-    return eventDetail.feeType === "free" ? "Free" : eventDetail.fee;
+    return eventDetail.feeType === "free" ? "Free" : `NPR ${eventDetail.fee}`;
   };
 
   if (isLoading) {
     return (
       <div className="py-0">
-        <TopBgContent className="z-0"></TopBgContent>
+        <TopBgContent className="z-0" variant="black-glow"></TopBgContent>
         <div className="bg-[#F2F5FA] font-sans p-10 min-h-[500px] flex items-center justify-center">
           <p className="text-center text-[#64748B] text-lg">Loading registration details...</p>
         </div>
@@ -143,7 +139,7 @@ const PaymentSuccess = () => {
 
   return (
     <div className="py-0">
-      <TopBgContent className="z-0"></TopBgContent>
+      <TopBgContent className="z-0" variant="black-glow"></TopBgContent>
       <div className="bg-[#F2F5FA] font-sans p-10">
         <div className="relative z-10 bg-[#FFFFFF] lg:w-[800px] mx-auto -mt-60 flex flex-col gap-2 sm:gap-7 px-2 py-6 md:px-8 md:py-7 space-y-6 rounded-lg shadow-[0px_8.66px_34.64px_-8.66px_#00000029] ">
           <div className="space-y-5">
@@ -156,12 +152,13 @@ const PaymentSuccess = () => {
                 align="center"
                 className="text-[#16A34A] text-[14px] md:text-[14px] lg:text-[20px] mb-0 font-semibold"
               >
-                Registration Successful!
+                Registration Submitted
               </Heading>
 
               <p className="font-normal text-center text-[#64748B] text-[12px] lg:text-[16px] px-[13px]">
-                Your registration has been completed successfully. You will
-                receive a confirmation with further details shortly.
+                Your registration has been received and is pending approval.
+                We'll send you a confirmation email once it's approved. Please
+                allow a few hours for the review process.
               </p>
             </div>
           </div>

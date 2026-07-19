@@ -1,14 +1,3 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Pagination,
-  EffectCoverflow,
-  Autoplay,
-  Navigation,
-} from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import { SpeakerCard } from "./SpeakerCard";
 import type { EventDetailData, EventDetailSpeaker } from "../useEventDetail";
 
@@ -25,6 +14,7 @@ const toCardProps = (speaker: EventDetailSpeaker) => ({
   socials: speaker.socialLinks
     ? {
         instagram: speaker.socialLinks.instagram,
+        portfolio: speaker.socialLinks.portfolio,
         linkedin: speaker.socialLinks.linkedin,
       }
     : undefined,
@@ -39,39 +29,12 @@ export const SpeakerOverview = ({ event }: SpeakerOverviewProps) => {
     );
   }
 
+  // Single column on every breakpoint — mobile stacks the cards too (no swiper).
   return (
-    <>
-      {/* Mobile: coverflow swiper */}
-      <div className="block sm:hidden">
-        <Swiper
-          modules={[Pagination, EffectCoverflow, Autoplay, Navigation]}
-          effect="coverflow"
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={1}
-          coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 1, slideShadows: true }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          loop={false}
-          pagination={{ clickable: true, dynamicBullets: false }}
-          className="!pb-10"
-        >
-          {speakers.map((speaker) => (
-            <SwiperSlide
-              key={speaker.id}
-              className="rounded-2xl overflow-hidden shadow-xl bg-white"
-            >
-              <SpeakerCard {...toCardProps(speaker)} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-
-      {/* Desktop: list */}
-      <div className="hidden sm:flex sm:flex-col sm:gap-6">
-        {speakers.map((speaker) => (
-          <SpeakerCard key={speaker.id} {...toCardProps(speaker)} />
-        ))}
-      </div>
-    </>
+    <div className="flex flex-col gap-6">
+      {speakers.map((speaker) => (
+        <SpeakerCard key={speaker.id} {...toCardProps(speaker)} />
+      ))}
+    </div>
   );
 };
