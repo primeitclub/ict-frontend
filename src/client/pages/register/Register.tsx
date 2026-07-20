@@ -26,6 +26,7 @@ interface FormState {
   email: string;
   isStudent: "Yes" | "No" | "";
   educationLevel: string;
+  collegeName: string;
   faculty: string;
   year: string;
   eventId: string;
@@ -60,6 +61,7 @@ const Register = () => {
     email: "",
     isStudent: "",
     educationLevel: "",
+    collegeName: "",
     faculty: "",
     year: "",
     eventId: queryEventId || "",
@@ -157,6 +159,7 @@ const Register = () => {
     data.append("isStudent", String(form.isStudent === "Yes"));
     if (form.isStudent === "Yes") {
       data.append("educationLevel", form.educationLevel);
+      data.append("collegeName", form.collegeName.trim());
       data.append("faculty", form.faculty);
       data.append("year", form.year);
     }
@@ -298,6 +301,7 @@ const Register = () => {
                     setForm((prev) => ({
                       ...prev,
                       educationLevel: "",
+                      collegeName: "",
                       faculty: "",
                       year: "",
                     }));
@@ -317,6 +321,13 @@ const Register = () => {
             </div>
             {form.isStudent === "Yes" && (
               <div className="space-y-6 md:space-y-0 md:flex gap-6">
+                <InputBox
+                  inputName="College Name"
+                  placeHolder="e.g. Prime College"
+                  variant="box"
+                  value={form.collegeName}
+                  onChange={(v) => set("collegeName", v)}
+                />
                 <InputBox
                   inputName="Your Faculty"
                   placeHolder="e.g. CSIT, BCA"
