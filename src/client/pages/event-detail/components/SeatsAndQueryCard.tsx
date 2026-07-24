@@ -1,47 +1,73 @@
 import { Link } from "react-router-dom";
+import { CalendarClock } from "lucide-react";
 import { useVersion } from "../../../routes/VersionContext";
+import { formatEventDate } from "../../../components/event-card-format";
 
 interface SeatsAndQueryCardProps {
-  totalSeats: number;
+  /** null = unlimited capacity; the "Seats Available" row is hidden. */
+  totalSeats: number | null;
   bookedSeats: number;
+  registrationDeadline: string | null;
 }
 
-export const SeatsAndQueryCard = ({ totalSeats, bookedSeats }: SeatsAndQueryCardProps) => {
+export const SeatsAndQueryCard = ({
+  totalSeats,
+  bookedSeats,
+  registrationDeadline,
+}: SeatsAndQueryCardProps) => {
   const { getPath } = useVersion();
-  const remainingSeats = Math.max(totalSeats - bookedSeats, 0);
+  const remainingSeats =
+    totalSeats == null ? null : Math.max(totalSeats - bookedSeats, 0);
 
   return (
     <div className="w-full overflow-hidden">
-      {/* Seats Available */}
-      <div className="flex items-center gap-4 px-5 py-4 mb-4 sm:mb-0 border border-[#E2E8F0] bg-[#F1F5F9] sm:bg-[#EFEFEF] rounded-xl sm:rounded-none sm:border-0">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-10 h-10 text-gray-800 flex-shrink-0 bg-white p-2 rounded-lg sm:rounded-none sm:bg-transparent"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <rect x="2" y="14" width="4" height="7" rx="1" />
-          <rect x="9" y="9" width="4" height="12" rx="1" />
-          <rect x="16" y="4" width="4" height="17" rx="1" />
-        </svg>
-        <div className="flex flex-col">
-          <span className="text-base font-bold text-gray-900">
-            Seats Available
-          </span>
-          <span className="text-sm text-gray-600">
-            {remainingSeats > 0 ? `${remainingSeats} of ${totalSeats} seats left` : "Booked"}
-          </span>
+      {/* Registration Closes */}
+      {registrationDeadline && (
+        <div className="flex items-center gap-4 px-5 py-4 bg-[#EFEFEF]">
+          <CalendarClock className="w-10 h-10 text-gray-800 flex-shrink-0 p-2" />
+          <div className="flex flex-col">
+            <span className="text-base font-bold text-gray-900">
+              Registration Closes
+            </span>
+            <span className="text-sm text-gray-600">
+              {formatEventDate(registrationDeadline)}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Seats Available — hidden entirely for unlimited-capacity events. */}
+      {remainingSeats != null && (
+        <div className="flex items-center gap-4 px-5 py-4 bg-[#EFEFEF]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-10 h-10 text-gray-800 flex-shrink-0 p-2"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <rect x="2" y="14" width="4" height="7" rx="1" />
+            <rect x="9" y="9" width="4" height="12" rx="1" />
+            <rect x="16" y="4" width="4" height="17" rx="1" />
+          </svg>
+          <div className="flex flex-col">
+            <span className="text-base font-bold text-gray-900">
+              Seats Available
+            </span>
+            <span className="text-sm text-gray-600">
+              {remainingSeats > 0 ? `${remainingSeats} of ${totalSeats} seats left` : "Booked"}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Got Any Queries */}
       <Link
         to={getPath("/contacts")}
-        className="w-full flex justify-center sm:justify-start items-center gap-4 px-5 py-4 bg-accent hover:bg-[#2a5fd6] transition-colors rounded-lg sm:rounded-none"
+        className="w-full flex justify-start items-center gap-4 px-5 py-4 bg-accent hover:bg-[#2a5fd6] transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 text-white flex-shrink-0"
+          className="w-10 h-10 text-white flex-shrink-0 p-2"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

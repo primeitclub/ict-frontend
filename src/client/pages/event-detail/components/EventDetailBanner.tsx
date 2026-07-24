@@ -14,11 +14,13 @@ export const EventDetailBanner = ({ event }: EventDetailBannerProps) => {
   const navigate = useNavigate();
   const { getPath } = useVersion();
   // Registration is closed when the event isn't published OR the deadline
-  // has passed; "Booked"/"Seats Full" only applies while still open.
+  // has passed; "Booked"/"Seats Full" only applies while still open. A null
+  // totalSeats means unlimited capacity, so it can never be full.
   const isOpen =
     event.status === "published" &&
     !isRegistrationClosed(event.registrationDeadline);
-  const isFull = event.totalSeats - event.bookedSeats <= 0;
+  const isFull =
+    event.totalSeats != null && event.totalSeats - event.bookedSeats <= 0;
   const canRegister = isOpen && !isFull;
   // "Weekday, D MMM, YYYY" e.g. "Friday, 14 Mar, 2026"
   const dateLabel = formatEventDate(event.date) || null;

@@ -46,7 +46,11 @@ export default function EventsDetail() {
         {/* lg:-mt-8 cancels the container's top padding so the seats card sits
             flush against the banner's bottom edge. */}
         <div className="w-full lg:w-72 md:flex-shrink lg:-mt-8">
-          <SeatsAndQueryCard totalSeats={event.totalSeats} bookedSeats={event.bookedSeats} />
+          <SeatsAndQueryCard
+            totalSeats={event.totalSeats}
+            bookedSeats={event.bookedSeats}
+            registrationDeadline={event.registrationDeadline}
+          />
         </div>
       </SectionContainer>
 

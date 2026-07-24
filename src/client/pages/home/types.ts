@@ -85,7 +85,10 @@ export interface HighlightItem {
   endTime: string | null;
   location: string;
   fee: string;
-  totalSeats: number;
+  /** Authoritative free/paid flag; a free event may still carry a stale fee. */
+  feeType?: "free" | "paid";
+  /** null = unlimited capacity (optional in admin); no seat count is shown. */
+  totalSeats: number | null;
   /** Approved registrations for this event; remaining = totalSeats − bookedSeats. */
   bookedSeats: number;
   status: string;

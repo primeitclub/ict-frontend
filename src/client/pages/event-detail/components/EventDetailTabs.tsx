@@ -26,7 +26,7 @@ export const EventDetailTabs = ({ event }: EventDetailTabsProps) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`group flex items-center gap-2 px-4 py-3 text-[15px] lg:text-xl font-semibold transition-colors border-b-2 -mb-px ${
+            className={`group flex items-center gap-2 px-4 py-3 text-[15px] lg:text-xl font-semibold transition-colors border-b-2 -mb-px hover:text-accent ${
               activeTab === tab.id
                 ? "text-accent border-accent"
                 : "text-gray-800 border-transparent"
@@ -36,8 +36,8 @@ export const EventDetailTabs = ({ event }: EventDetailTabsProps) => {
               size={24}
               className={`transition-transform duration-700 ${
                 activeTab === tab.id
-                  ? "text-accent"
-                  : "text-black -rotate-45 group-hover:rotate-0 hover:text-accent"
+                  ? "rotate-0 text-accent"
+                  : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-accent"
               }`}
             />
             {tab.label}
