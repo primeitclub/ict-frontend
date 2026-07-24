@@ -81,7 +81,7 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
           <div className="flex items-center gap-2 min-w-0">
             <Banknote className="w-4 h-4 text-[#10B981] shrink-0" />
             <span className="text-[#10B981] text-[12px] font-medium truncate">
-              {formatEventPrice(item.price, item.eventType)}
+              {formatEventPrice(item.price, item.eventType, item.isFree)}
             </span>
           </div>
           <div className="flex items-center gap-2 min-w-0">

@@ -61,7 +61,7 @@ const EventListItem = ({ event }: EventListItemProps) => {
             <div className="flex shrink-0 items-center gap-1.5">
               <Banknote className="h-3.5 w-3.5 text-[#10B981]" />
               <span className="text-[12px] font-semibold text-[#10B981]">
-                {formatEventPrice(item.price, item.eventType)}
+                {formatEventPrice(item.price, item.eventType, item.isFree)}
               </span>
             </div>
           </div>
