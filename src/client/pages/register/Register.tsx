@@ -120,7 +120,11 @@ const Register = () => {
       setErrorMsg("Please select an event.");
       return;
     }
-    if (selectedEvent && remainingSeats(selectedEvent) <= 0) {
+    // null remaining = unlimited capacity, never "fully booked".
+    const selectedRemaining = selectedEvent
+      ? remainingSeats(selectedEvent)
+      : null;
+    if (selectedRemaining != null && selectedRemaining <= 0) {
       setErrorMsg("Sorry, this event is fully booked.");
       return;
     }
@@ -209,15 +213,17 @@ const Register = () => {
   };
 
   // The dropdown only lists events that can actually be registered in-app:
-  // published, seats left, registration deadline not passed, and no external
-  // registerLink (those register off-site).
-  const publishedEvents = events.filter(
-    (e) =>
+  // published, seats left (null = unlimited, always available), registration
+  // deadline not passed, and no external registerLink (those register off-site).
+  const publishedEvents = events.filter((e) => {
+    const remaining = remainingSeats(e);
+    return (
       e.status === "published" &&
-      remainingSeats(e) > 0 &&
+      (remaining == null || remaining > 0) &&
       !isRegistrationClosed(e.registrationDeadline) &&
-      !e.registerLink,
-  );
+      !e.registerLink
+    );
+  });
 
   return (
     <div className="py-0">

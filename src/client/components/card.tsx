@@ -19,9 +19,10 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
   const navigate = useNavigate();
   const { getPath } = useVersion();
   // CTA states, highest precedence first: seats gone → "Booked"; deadline
-  // passed → "Registration Closed"; otherwise "Register Now".
+  // passed → "Registration Closed"; otherwise "Register Now". `seats == null`
+  // means unlimited capacity, so it can never be full.
   const isClosed = isRegistrationClosed(item.registrationDeadline);
-  const isFull = item.seats <= 0;
+  const isFull = item.seats != null && item.seats <= 0;
   const canRegister = !isClosed && !isFull;
   return (
     <div
@@ -37,9 +38,12 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
           alt={item.title}
           className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
-          {isFull ? "Booked" : `${item.seats} / ${item.totalSeats} Seats`}
-        </div>
+        {/* Seat badge hidden entirely for unlimited-capacity events. */}
+        {item.seats != null && (
+          <div className="absolute top-2 left-2 bg-[#970B0B] text-[10px] font-bold px-2.5 py-1 rounded-md text-white shadow-lg">
+            {isFull ? "Booked" : `${item.seats} / ${item.totalSeats} Seats`}
+          </div>
+        )}
       </div>
 
       <div className="mt-3 flex flex-col flex-1">
@@ -81,7 +85,7 @@ const Card = ({ item, eventId, registerLink, className, ...rest }: CardProps) =>
           <div className="flex items-center gap-2 min-w-0">
             <Banknote className="w-4 h-4 text-[#10B981] shrink-0" />
             <span className="text-[#10B981] text-[12px] font-medium truncate">
-              {formatEventPrice(item.price, item.eventType)}
+              {formatEventPrice(item.price, item.eventType, item.isFree)}
             </span>
           </div>
           <div className="flex items-center gap-2 min-w-0">

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import ArrowSVG from "../icons/arrowSVG";
+import { ChevronDown, ChevronUp, CircleArrowRight } from "lucide-react";
 
 interface DropdownProps {
   options: string[];
@@ -34,7 +33,7 @@ export default function Dropdown({ options, value, onChange }: DropdownProps) {
               }}
               className="flex gap-[8px] items-center bg-[#F2F5FA] hover:bg-[#DBF5FF] shadow-[inset_0_0_0_0.15px_#4E81EF] rounded-md px-3 py-1.5"
             >
-              <ArrowSVG useSolidStroke={true} solidStrokeColor="#000" />
+              <CircleArrowRight size={16} className="shrink-0 text-black" />
               <span className="">{option}</span>
             </div>
           ))}

@@ -12,7 +12,8 @@ export interface EventDetailData {
   fee: string;
   feeType: "free" | "paid";
   location: string;
-  totalSeats: number;
+  /** null = unlimited capacity (optional in admin); no seat count is shown. */
+  totalSeats: number | null;
   bookedSeats: number;
   status: string;
   registrationDeadline: string | null;

@@ -1,6 +1,6 @@
 import SectionContainer from "../../components/sectionContainer";
 import FilterButton from "./components/TeamButton";
-import ArrowSVG from "./icons/arrowSVG";
+import CategoryArrow from "./components/CategoryArrow";
 import TeamCard from "./components/teamCard";
 import Dropdown from "./components/Dropdown";
 import { Heading } from "../../../shared/design-components";
@@ -111,11 +111,7 @@ export default function Teams() {
                 key={cat.id}
                 variant={activeCategoryId === cat.id ? "active" : "inactive"}
                 leftIcon={
-                  <ArrowSVG
-                    useSolidStroke={activeCategoryId === cat.id}
-                    solidStrokeColor="#DBF5FF"
-                    className={activeCategoryId === cat.id ? "rotate-[38deg]" : ""}
-                  />
+                  <CategoryArrow active={activeCategoryId === cat.id} />
                 }
                 onClick={() => selectCategory(cat.id)}
                 label={cat.displayName}

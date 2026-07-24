@@ -58,13 +58,19 @@ export function formatEventDate(value: string | null | undefined): string {
 
 /**
  * Price label for an event card. Group events charge per team, so the amount
- * gets a " /per Team" suffix; free/zero-fee events show "Free" (no suffix).
+ * gets a " /per Team" suffix; free events show "Free" (no suffix).
+ *
+ * `isFree` is the authoritative signal (mirrors the event's `feeType`) — a
+ * paid event switched to free can keep a stale non-zero fee, so we must NOT
+ * infer free-ness from the price. When `isFree` is undefined we fall back to
+ * the old zero-fee heuristic.
  */
 export function formatEventPrice(
   price: number,
   eventType?: string | null,
+  isFree?: boolean,
 ): string {
-  if (price <= 0) return "Free";
+  if (isFree ?? price <= 0) return "Free";
   return eventType === "GROUP" ? `NPR ${price} /team` : `NPR ${price}`;
 }
 
@@ -79,16 +85,19 @@ export function formatEventTimeRange(
 }
 
 /**
- * Remaining seats = totalSeats − bookedSeats.
+ * Remaining seats = totalSeats − bookedSeats, or `null` when the event has no
+ * seat cap (`totalSeats == null` = unlimited capacity). Callers use the `null`
+ * to hide the seat count entirely.
  *
  * `bookedSeats` is the only seat-usage field the API sends: it is computed per
  * request from the approved registration count (see the event service's
  * `itemsWithSeats` mapping) and is present on both /events and /content.
  */
 export function remainingSeats(input: {
-  totalSeats: number;
+  totalSeats: number | null;
   bookedSeats: number;
-}): number {
+}): number | null {
+  if (input.totalSeats == null) return null;
   return Math.max(input.totalSeats - input.bookedSeats, 0);
 }
 
@@ -106,7 +115,10 @@ export interface EventCardSource {
   endTime: string | null;
   location: string;
   fee: string;
-  totalSeats: number;
+  /** Authoritative free/paid flag; a free event may still carry a stale fee. */
+  feeType?: "free" | "paid" | null;
+  /** null = unlimited capacity; the card hides its seat count in that case. */
+  totalSeats: number | null;
   bookedSeats: number;
   registrationDeadline?: string | null;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
@@ -137,6 +149,7 @@ export function toEventCardItem(event: EventCardSource): ContentType {
       .filter((url): url is string => Boolean(url)),
     date: formatShortDate(event.date),
     price: Number(event.fee) || 0,
+    isFree: event.feeType ? event.feeType === "free" : (Number(event.fee) || 0) <= 0,
     time: formatEventTimeRange(event.startTime, event.endTime),
     place: event.location,
     seats: remainingSeats(event),
