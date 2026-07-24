@@ -96,7 +96,7 @@ const CategoryTabs = ({
               size={24}
               className={`transition-transform duration-700 ${
                 activeCategoryId === opt.id
-                  ? "text-accent"
+                  ? "rotate-0 text-accent"
                   : "text-black -rotate-45 group-hover:rotate-0 group-hover:text-accent"
               }`}
             />
