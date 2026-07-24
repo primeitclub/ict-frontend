@@ -10,8 +10,9 @@ export type ContentType = {
   isFree?: boolean;
   date: string;
   place: string;
-  seats: number;
-  totalSeats: number;
+  /** null = unlimited capacity; the card hides its seat count in that case. */
+  seats: number | null;
+  totalSeats: number | null;
   registrationDeadline?: string | null;
   eventType?: string | null;
 };

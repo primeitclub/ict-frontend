@@ -25,9 +25,10 @@ const EventListItem = ({ event }: EventListItemProps) => {
   const item = toEventCardItem(event);
 
   // Same CTA precedence as the Card: seats gone → "Booked"; deadline passed →
-  // "Registration Closed"; otherwise "Register Now".
+  // "Registration Closed"; otherwise "Register Now". `seats == null` means
+  // unlimited capacity, so it can never be full.
   const isClosed = isRegistrationClosed(item.registrationDeadline);
-  const isFull = item.seats <= 0;
+  const isFull = item.seats != null && item.seats <= 0;
   const canRegister = !isClosed && !isFull;
 
   return (
@@ -69,12 +70,18 @@ const EventListItem = ({ event }: EventListItemProps) => {
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <div>
-          <p className="text-[16px] font-bold leading-tight text-[#E11D48]">
-            {item.seats} / {item.totalSeats}
-          </p>
-          <p className="text-[11px] font-medium">Seats Available</p>
-        </div>
+        {/* Seat count hidden for unlimited-capacity events; empty spacer keeps
+            the CTA pinned to the right. */}
+        {item.seats != null ? (
+          <div>
+            <p className="text-[16px] font-bold leading-tight text-[#E11D48]">
+              {item.seats} / {item.totalSeats}
+            </p>
+            <p className="text-[11px] font-medium">Seats Available</p>
+          </div>
+        ) : (
+          <div />
+        )}
         <button
           type="button"
           onClick={(e) => {

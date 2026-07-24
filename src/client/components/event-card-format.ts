@@ -85,16 +85,19 @@ export function formatEventTimeRange(
 }
 
 /**
- * Remaining seats = totalSeats − bookedSeats.
+ * Remaining seats = totalSeats − bookedSeats, or `null` when the event has no
+ * seat cap (`totalSeats == null` = unlimited capacity). Callers use the `null`
+ * to hide the seat count entirely.
  *
  * `bookedSeats` is the only seat-usage field the API sends: it is computed per
  * request from the approved registration count (see the event service's
  * `itemsWithSeats` mapping) and is present on both /events and /content.
  */
 export function remainingSeats(input: {
-  totalSeats: number;
+  totalSeats: number | null;
   bookedSeats: number;
-}): number {
+}): number | null {
+  if (input.totalSeats == null) return null;
   return Math.max(input.totalSeats - input.bookedSeats, 0);
 }
 
@@ -114,7 +117,8 @@ export interface EventCardSource {
   fee: string;
   /** Authoritative free/paid flag; a free event may still carry a stale fee. */
   feeType?: "free" | "paid" | null;
-  totalSeats: number;
+  /** null = unlimited capacity; the card hides its seat count in that case. */
+  totalSeats: number | null;
   bookedSeats: number;
   registrationDeadline?: string | null;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
