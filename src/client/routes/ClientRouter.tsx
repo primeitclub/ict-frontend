@@ -12,6 +12,7 @@ import PageLayout from "../layouts/PageLayout";
 import { VersionProvider } from "./VersionContext";
 import { EventsDetail } from "../pages/event-detail/types";
 import ContactUs from "../pages/contact-us/ContactUs";
+import NotFound from "../pages/not-found/NotFound";
 
 interface ClientRouterProps {
   version: string;
@@ -36,6 +37,8 @@ export default function ClientRouter({ version, slug, isLatest, latestVersion }:
           <Route path="success" element={<PaymentSuccess />} />
           <Route path="event-detail/:eventId" element={<EventsDetail />} />
           <Route path="contacts" element={<ContactUs />} />
+          {/* Catch-all: any unmatched path renders the 404 page (keeps navbar/footer). */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </VersionProvider>
