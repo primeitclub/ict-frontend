@@ -9,6 +9,7 @@ import { useVersions } from "../../hooks/use-versions";
 import { useHome } from "../../pages/home/useHome";
 import { useCurrentEditionHasNoEvents } from "../../hooks/use-current-edition-empty";
 import { useActiveVersionHasNoTeams } from "../../hooks/use-active-version-empty";
+import { useIsArchivedVersion } from "../../hooks/use-is-archived-version";
 
 const Navbar = () => {
   const { getPath, navigateToVersion, version } = useVersion();
@@ -34,6 +35,8 @@ const Navbar = () => {
   // Hide the Teams link when the active version has no team members. Same
   // flash-avoidance: shown while loading, hidden once confirmed empty.
   const hasTeams = !useActiveVersionHasNoTeams();
+  // Archived edition → the event is over, so drop the Contacts link.
+  const { isArchived } = useIsArchivedVersion();
 
   // Set by a same-page nav-item click in the mobile menu: the scroll-lock
   // cleanup below normally restores the pre-open scroll position on close,
@@ -85,7 +88,7 @@ const Navbar = () => {
     ...(hasEvents ? [{ path: "/events", label: "Events" }] : []),
     ...(hasTeams ? [{ path: "/teams", label: "Teams" }] : []),
     { path: "/sponsors", label: "Sponsors" },
-    { path: "/contacts", label: "Contacts" },
+    ...(isArchived ? [] : [{ path: "/contacts", label: "Contacts" }]),
   ];
 
   return (

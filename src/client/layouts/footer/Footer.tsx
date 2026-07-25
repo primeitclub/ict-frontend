@@ -10,6 +10,7 @@ import { useSiteSettings } from "../../hooks/use-site-settings";
 import { useHome } from "../../pages/home/useHome";
 import { useCurrentEditionHasNoEvents } from "../../hooks/use-current-edition-empty";
 import { useActiveVersionHasNoTeams } from "../../hooks/use-active-version-empty";
+import { useIsArchivedVersion } from "../../hooks/use-is-archived-version";
 import SocialIcon from "../../components/social-icon/SocialIcon";
 import {
   hasSocialIcon,
@@ -42,13 +43,15 @@ export const Footer = () => {
   const hideEvents = useCurrentEditionHasNoEvents();
   // Drop the Teams link when the active version has no team members.
   const hideTeams = useActiveVersionHasNoTeams();
+  // Drop the Contacts link on archived editions (the event is over).
+  const { isArchived } = useIsArchivedVersion();
 
   const pages = [
     { path: "/", label: "Home" },
     ...(hideEvents ? [] : [{ path: "/events", label: "Events" }]),
     ...(hideTeams ? [] : [{ path: "/teams", label: "Teams" }]),
     { path: "/sponsors", label: "Sponsors" },
-    { path: "/contacts", label: "Contacts" },
+    ...(isArchived ? [] : [{ path: "/contacts", label: "Contacts" }]),
   ];
 
   // Same external link in every version, so it isn't version-prefixed.

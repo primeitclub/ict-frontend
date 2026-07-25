@@ -11,6 +11,7 @@ export interface VersionRecord {
   version_name: string;
   version_number: string;
   is_current: boolean;
+  status: "active" | "archived" | "draft";
 }
 
 interface Envelope<T> {
@@ -38,6 +39,8 @@ export function useVersionData() {
     versionSlug: active.data?.data?.slug ?? null,
     versionName: active.data?.data?.version_name ?? null,
     versionNumber: active.data?.data?.version_number ?? null,
+    status: active.data?.data?.status ?? null,
+    isArchived: active.data?.data?.status === "archived",
     isLoading: active.isLoading,
   };
 }
