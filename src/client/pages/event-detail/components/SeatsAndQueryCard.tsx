@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CalendarClock } from "lucide-react";
 import { useVersion } from "../../../routes/VersionContext";
+import { useIsArchivedVersion } from "../../../hooks/use-is-archived-version";
 import { formatEventDate } from "../../../components/event-card-format";
 
 interface SeatsAndQueryCardProps {
@@ -16,6 +17,8 @@ export const SeatsAndQueryCard = ({
   registrationDeadline,
 }: SeatsAndQueryCardProps) => {
   const { getPath } = useVersion();
+  // Archived edition → the event is over, so hide the contacts link.
+  const { isArchived } = useIsArchivedVersion();
   const remainingSeats =
     totalSeats == null ? null : Math.max(totalSeats - bookedSeats, 0);
 
@@ -60,7 +63,8 @@ export const SeatsAndQueryCard = ({
         </div>
       )}
 
-      {/* Got Any Queries */}
+      {/* Got Any Queries — hidden on archived editions (contacts page is gone). */}
+      {!isArchived && (
       <Link
         to={getPath("/contacts")}
         className="w-full flex justify-start items-center gap-4 px-5 py-4 bg-accent hover:bg-[#2a5fd6] transition-colors"
@@ -83,6 +87,7 @@ export const SeatsAndQueryCard = ({
           Got Any Queries?
         </span>
       </Link>
+      )}
     </div>
   );
 };
