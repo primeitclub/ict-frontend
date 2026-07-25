@@ -111,3 +111,36 @@
 .events-swiper .swiper-pagination-bullet {
   background: #02369b;
 }
+
+/* Custom pagination for the highlights coverflow. The slide set is repeated so
+   the loop always has enough slides to wrap seamlessly, so the built-in
+   per-slide bullets can't be used (they'd multiply). These dots map 1:1 to the
+   real highlighted events and mirror Swiper's default bullet look. */
+.events-swiper-pagination {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 20;
+}
+
+.events-swiper-bullet {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0.2;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.events-swiper-bullet.is-active {
+  opacity: 1;
+  background: var(--swiper-theme-color, #007aff);
+}

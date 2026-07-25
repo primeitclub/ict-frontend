@@ -14,6 +14,9 @@ export const isExternalRegisterLink = (
 /**
  * Sends the user to an event's registration: the external link when present,
  * otherwise the in-app form via the caller's router `navigate`.
+ *
+ * External links open in a new tab; `noopener,noreferrer` severs the opened
+ * page's access back to this window.
  */
 export const goToRegistration = (
   registerLink: string | null | undefined,
@@ -21,7 +24,7 @@ export const goToRegistration = (
   navigate: (path: string) => void,
 ): void => {
   if (isExternalRegisterLink(registerLink)) {
-    window.location.href = registerLink.trim();
+    window.open(registerLink.trim(), "_blank", "noopener,noreferrer");
     return;
   }
   navigate(inAppPath);
