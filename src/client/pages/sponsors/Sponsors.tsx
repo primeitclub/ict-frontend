@@ -2,6 +2,7 @@ import SectionContainer from "../../components/sectionContainer.tsx";
 import SponsorData from "./SponsorData.tsx";
 import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
+import { useIsArchivedVersion } from "../../hooks/use-is-archived-version.ts";
 import { useSiteSettings } from "../../hooks/use-site-settings.ts";
 import { Mail, Phone } from "lucide-react";
 import { Heading } from "../../../shared/design-components";
@@ -46,6 +47,8 @@ interface ContactSettings {
 
 const Sponsors = () => {
   const { versionId, isLoading: versionLoading } = useVersionData();
+  // Archived edition → the event is over, so drop the "Join Our Sponsors" CTA.
+  const { isArchived } = useIsArchivedVersion();
 
   const { data: categoriesRes, isLoading: categoriesLoading } = useApiQuery(
     "sponsorCategories",
@@ -155,7 +158,11 @@ const Sponsors = () => {
     return (
       <SectionContainer className="pt-10 md:pt-16 pb-8 md:pb-8">
         <div className="w-full flex flex-col gap-20 relative items-center">
-          {renderBecomeSponsorCard()}
+          {isArchived ? (
+            <p className="text-center text-white/60 py-40">No sponsors</p>
+          ) : (
+            renderBecomeSponsorCard()
+          )}
         </div>
       </SectionContainer>
     );
@@ -218,7 +225,7 @@ const Sponsors = () => {
           />
         ))}
 
-        {renderBecomeSponsorCard()}
+        {!isArchived && renderBecomeSponsorCard()}
       </div>
     </SectionContainer>
   );

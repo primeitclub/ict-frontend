@@ -1,7 +1,10 @@
 import { Mail, Phone } from "lucide-react";
+import { Navigate } from "react-router-dom";
 import DepartmentCard from "./components/DepartmentCard";
 import { useApiQuery } from "../../../lib";
 import { useVersionData } from "../../hooks/use-version-data";
+import { useIsArchivedVersion } from "../../hooks/use-is-archived-version";
+import { useVersion } from "../../routes/VersionContext";
 import { useSiteSettings } from "../../hooks/use-site-settings";
 
 interface ContactDepartment {
@@ -20,6 +23,11 @@ const NOISE_TEXTURE =
 
 const ContactUs = () => {
   const { versionId } = useVersionData();
+  const { getPath } = useVersion();
+  // Archived edition → the event is over, so the contacts page is gone. Wait for
+  // the version status to resolve before deciding, so we never render the page
+  // and then yank it away, then redirect to that version's home.
+  const { isArchived, isLoading: archivedLoading } = useIsArchivedVersion();
   const { data: contactsRes, isLoading } = useApiQuery("settingsContacts")<{
     message: string;
     data: ContactSettings;
@@ -30,6 +38,14 @@ const ContactUs = () => {
   const { data: siteSettings } = useSiteSettings();
 
   const contactData = contactsRes?.data;
+
+  if (archivedLoading) {
+    return null;
+  }
+
+  if (isArchived) {
+    return <Navigate to={getPath("/")} replace />;
+  }
 
   if (isLoading) {
     return (

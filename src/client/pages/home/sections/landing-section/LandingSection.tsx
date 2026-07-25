@@ -9,6 +9,7 @@ import { useHome } from "../../useHome";
 import { Link } from "react-router-dom";
 import { useVersion } from "../../../../routes/VersionContext";
 import { useCurrentEditionHasNoEvents } from "../../../../hooks/use-current-edition-empty";
+import { useIsArchivedVersion } from "../../../../hooks/use-is-archived-version";
 
 function formatEventDateRange(startDate?: string | null, endDate?: string | null): string {
   if (!startDate || !endDate) return "";
@@ -33,6 +34,8 @@ export function LandingSection() {
   const dateLabel = formatEventDateRange(edition?.startDate, edition?.endDate);
   // No events in the current edition → nothing to register for, so drop the CTA.
   const hideRegister = useCurrentEditionHasNoEvents();
+  // Archived edition → the event is over, so drop both hero CTAs entirely.
+  const { isArchived } = useIsArchivedVersion();
 
   return (
     <div className="landing_section relative w-full sm:min-h-screen pt-32 sm:pt-40 pb-[calc(32vw+56px)] sm:pb-0">
@@ -98,6 +101,7 @@ export function LandingSection() {
             beyond classrooms, and transform ideas into real-world impact.
           </div> */}
         </div>
+        {!isArchived && (
         <div className="flex sm:flex-row flex-col gap-4 sm:gap-10 items-center justify-center  pt-2 sm:pt-10">
           {!hideRegister && (
             <Link to={getPath("/register")}>
@@ -149,6 +153,7 @@ export function LandingSection() {
             </motion.div>
           </Link>
         </div>
+        )}
         </motion.div>
 
         {/*
