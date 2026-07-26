@@ -6,7 +6,7 @@ const DEFAULT_FAVICON = "/favicon.svg";
 
 /** Points the browser tab icon at the current edition's logo, falling back to the static default. */
 export function useFavicon() {
-  const { data: logo } = useHome((d) => d.edition.logoPath ?? d.edition.logo);
+  const { data: logo } = useHome((d) => d.edition.logo ?? d.edition.logoPath);
 
   useEffect(() => {
     const link = document.querySelector<HTMLLinkElement>("#favicon");
