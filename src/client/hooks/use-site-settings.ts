@@ -5,6 +5,7 @@ export interface SiteSettingsData {
   clubPhoneNumber: string | null;
   socialMediaLinks: { platform: string; link: string }[] | null;
   qrCodeUrl: string | null;
+  proposalUrl: string | null;
 }
 
 interface Envelope<T> {
