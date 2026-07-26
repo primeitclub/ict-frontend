@@ -24,7 +24,7 @@ const Navbar = () => {
   };
   const [toggle, setToggle] = useState(false);
   const { data: logo, isLoading: logoLoading } = useHome(
-    (d) => d.edition.logoPath ?? d.edition.logo,
+    (d) => d.edition.logo ?? d.edition.logoPath,
   );
   const versions = useVersions();
 

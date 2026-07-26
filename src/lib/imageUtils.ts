@@ -13,9 +13,9 @@ export const getImageUrl = (url?: string | null): string => {
     return url;
   }
   
-  // Assuming the API is running at http://localhost:4000
-  // In production, you would use import.meta.env.VITE_API_BASE_URL
-  const baseUrl = "http://localhost:4000";
-  
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
+  // Uploaded files are served from the API origin, not under /api itself.
+  const baseUrl = apiBaseUrl.replace(/\/api\/?$/, "");
+
   return `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`;
 };
