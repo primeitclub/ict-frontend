@@ -4,7 +4,7 @@ import { useApiQuery } from "../../../lib/index.ts";
 import { useVersionData } from "../../hooks/use-version-data.ts";
 import { useIsArchivedVersion } from "../../hooks/use-is-archived-version.ts";
 import { useSiteSettings } from "../../hooks/use-site-settings.ts";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Download } from "lucide-react";
 import { Heading } from "../../../shared/design-components";
 
 interface Category {
@@ -95,6 +95,31 @@ const Sponsors = () => {
     const contactData = contactsRes?.data;
     const email = contactData?.email ?? siteSettings?.clubEmail ?? null;
     const phone = contactData?.phoneNumber ?? siteSettings?.clubPhoneNumber ?? null;
+    // Only shown when a proposal has been uploaded in site settings.
+    const proposalUrl = siteSettings?.proposalUrl ?? null;
+
+    // The proposal is served from the API origin, so the anchor `download`
+    // attribute is ignored (cross-origin) and the PDF just opens inline.
+    // Fetch it as a blob and save it so the click downloads immediately;
+    // fall back to opening in a new tab if the fetch is ever blocked.
+    const handleDownloadProposal = async () => {
+      if (!proposalUrl) return;
+      try {
+        const res = await fetch(proposalUrl);
+        if (!res.ok) throw new Error(`Failed to fetch proposal (${res.status})`);
+        const blob = await res.blob();
+        const objectUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = objectUrl;
+        link.download = "ICT-Meetup-Sponsorship-Proposal.pdf";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(objectUrl);
+      } catch {
+        window.open(proposalUrl, "_blank", "noopener,noreferrer");
+      }
+    };
 
     return (
       <section className="w-full mt-10 rounded-3xl bg-[var(--color-accent-dark)] p-8 sm:p-10 lg:p-14 font-sans text-left">
@@ -148,6 +173,16 @@ const Sponsors = () => {
                   </a>
                 </div>
               </div>
+            )}
+            {proposalUrl && (
+              <button
+                type="button"
+                onClick={handleDownloadProposal}
+                className="self-start flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10 cursor-pointer"
+              >
+                <Download size={20} className="shrink-0" />
+                Download Proposal
+              </button>
             )}
             </div>
           </div>
