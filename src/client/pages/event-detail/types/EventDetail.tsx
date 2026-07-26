@@ -36,7 +36,10 @@ export default function EventsDetail() {
   }
 
   return (
-    <div className="overflow-x-hidden min-h-screen bg-[#F2F5FA]">
+    // overflow-x-clip (not -hidden) prevents horizontal scroll WITHOUT turning
+    // this div into a scroll container — the latter silently breaks the seats
+    // card's position: sticky below.
+    <div className="overflow-x-clip min-h-screen bg-[#F2F5FA]">
       <EventDetailBanner event={event} />
       {/* md:pt-8/md:pb-16 override SectionContainer's default md:pt-24/md:pb-40
           — the unscoped py-8 alone doesn't beat the md-scoped defaults, which
@@ -44,8 +47,9 @@ export default function EventsDetail() {
       <SectionContainer className="px-4 md:px-10 pt-8 pb-12 md:pt-8 md:pb-16 flex flex-col lg:flex-row gap-8 lg:items-start">
         <EventDetailTabs event={event} />
         {/* lg:-mt-8 cancels the container's top padding so the seats card sits
-            flush against the banner's bottom edge. */}
-        <div className="w-full lg:w-72 md:flex-shrink lg:-mt-8">
+            flush against the banner's bottom edge; lg:sticky keeps it pinned
+            just below the fixed 63px navbar as the tab content scrolls. */}
+        <div className="w-full lg:w-72 md:flex-shrink lg:-mt-8 lg:sticky lg:top-[79px] lg:self-start">
           <SeatsAndQueryCard
             totalSeats={event.totalSeats}
             bookedSeats={event.bookedSeats}
