@@ -96,59 +96,61 @@ const Sponsors = () => {
     const email = contactData?.email ?? siteSettings?.clubEmail ?? null;
     const phone = contactData?.phoneNumber ?? siteSettings?.clubPhoneNumber ?? null;
 
-    // Simple three-column card: heading | description | contact details.
     return (
       <section className="w-full mt-10 rounded-3xl bg-[var(--color-accent-dark)] p-8 sm:p-10 lg:p-14 font-sans text-left">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12 items-start">
-          <Heading
-            level="h2"
-            className="text-4xl sm:text-5xl font-bold text-white leading-[1.1] tracking-tight !mb-0"
-          >
-            Join Our
-            <br />
-            Sponsors
-          </Heading>
+        {/* Top: pitch on the left, contact details + CTA on the right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="max-w-xl">
+            <Heading
+              level="h2"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight !mb-6"
+            >
+              Join Our
+              <br />
+              Sponsors
+            </Heading>
+            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-md">
+              Showcase your brand to a highly engaged tech audience while
+              supporting innovation, learning, and community growth.
+            </p>
+          </div>
 
-          <p className="text-white/80 text-base sm:text-lg leading-relaxed">
-            Showcase your brand to a highly engaged tech audience while supporting innovation, learning, and community growth.
-          </p>
-
-          {(email || phone) && (
-            <div className="flex flex-col gap-6">
-              {email && (
-                <div className="flex items-center gap-5">
-                  <Mail size={26} className="shrink-0 text-white" />
-                  <div className="flex flex-col gap-1 min-w-0">
-                    <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
-                      Email
-                    </span>
-                    <a
-                      href={`mailto:${email}`}
-                      className="text-base sm:text-lg text-white truncate hover:text-[#020919] hover:underline transition-colors"
-                    >
-                      {email}
-                    </a>
-                  </div>
+          <div className="flex flex-col gap-8 lg:items-end">
+            <div className="flex flex-col gap-8 items-start">
+            {email && (
+              <div className="flex items-center gap-5">
+                <Mail size={26} className="shrink-0 text-white" />
+                <div className="flex flex-col gap-1 min-w-0">
+                  <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
+                    Email
+                  </span>
+                  <a
+                    href={`mailto:${email}`}
+                    className="text-base sm:text-lg text-white truncate hover:underline transition-colors"
+                  >
+                    {email}
+                  </a>
                 </div>
-              )}
-              {phone && (
-                <div className="flex items-center gap-5">
-                  <Phone size={26} className="shrink-0 text-white" />
-                  <div className="flex flex-col gap-1 min-w-0">
-                    <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
-                      Phone
-                    </span>
-                    <a
-                      href={`tel:${phone}`}
-                      className="text-base sm:text-lg text-white hover:text-[#020919] hover:underline transition-colors"
-                    >
-                      {phone}
-                    </a>
-                  </div>
+              </div>
+            )}
+            {phone && (
+              <div className="flex items-center gap-5">
+                <Phone size={26} className="shrink-0 text-white" />
+                <div className="flex flex-col gap-1 min-w-0">
+                  <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/60">
+                    Phone
+                  </span>
+                  <a
+                    href={`tel:${phone}`}
+                    className="text-base sm:text-lg text-white hover:underline transition-colors"
+                  >
+                    {phone}
+                  </a>
                 </div>
-              )}
+              </div>
+            )}
             </div>
-          )}
+          </div>
         </div>
       </section>
     );
