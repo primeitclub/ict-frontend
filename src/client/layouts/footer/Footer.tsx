@@ -26,7 +26,7 @@ export const Footer = () => {
   const { data: siteSettings } = useSiteSettings();
   // Same edition logo the navbar shows, instead of a hard-coded bundled asset.
   const { data: logo, isLoading: logoLoading } = useHome(
-    (d) => d.edition.logoPath ?? d.edition.logo,
+    (d) => d.edition.logo ?? d.edition.logoPath,
   );
 
   const clubEmail = siteSettings?.clubEmail || "itclub.prime@prime.edu.np";
