@@ -99,7 +99,7 @@ const Sponsors = () => {
     return (
       <section className="w-full mt-10 rounded-3xl bg-[var(--color-accent-dark)] p-8 sm:p-10 lg:p-14 font-sans text-left">
         {/* Top: pitch on the left, contact details + CTA on the right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="max-w-xl">
             <Heading
               level="h2"

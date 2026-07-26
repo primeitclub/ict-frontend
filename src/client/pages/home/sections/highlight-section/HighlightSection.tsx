@@ -53,17 +53,17 @@ export default function HighlightSection() {
       </button>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 pt-16 pb-28 md:pt-24 md:pb-40 space-y-6">
-        {/* Section header, with "View more" on its own line directly below it.
-            Desktop only — on mobile the button moves below the swiper
+        {/* Section header with "View more" on the same row (title left, button
+            right) on desktop. On mobile the button moves below the swiper
             pagination dots instead (see bottom of the section). */}
-        <div className="space-y-6">
+        <div className="space-y-6 md:space-y-0 md:flex md:items-center md:justify-between md:gap-4">
           <SectionHeader
             titleNormal="Major"
             titleHighlight="Highlights"
             varient="secondary"
             className="justify-center md:justify-start"
           />
-          <div className="hidden md:flex justify-end">
+          <div className="hidden md:flex justify-end md:shrink-0">
             <Link to={getPath("/events")}>
               <Button
                 className="flex items-center justify-center whitespace-nowrap"
