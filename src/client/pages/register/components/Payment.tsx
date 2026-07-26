@@ -3,6 +3,11 @@ import { Upload } from "lucide-react";
 import { useSiteSettings } from "../../../hooks/use-site-settings";
 import { getImageUrl } from "../../../../lib/imageUtils";
 
+// Mirrors MAX_IMAGE_SIZE in ict-meetup-api/src/shared/constants/upload.constants.ts —
+// keep the two in sync.
+const MAX_FILE_SIZE_MB = 2;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 interface PaymentProps {
   onFileChange?: (file: File | null) => void;
   selectedEvent?: {
@@ -14,6 +19,7 @@ interface PaymentProps {
 export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { data: siteSettings } = useSiteSettings();
 
@@ -25,6 +31,16 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
+
+    if (file && file.size > MAX_FILE_SIZE_BYTES) {
+      setError(`File is too large. Max size is ${MAX_FILE_SIZE_MB}MB.`);
+      setPreview(null);
+      onFileChange?.(null);
+      e.target.value = "";
+      return;
+    }
+
+    setError(null);
     if (file) {
       setPreview(URL.createObjectURL(file));
     } else {
@@ -89,7 +105,7 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
                 Click to upload or drag and drop
               </p>
               <p className="text-[8px] md:text-xs text-gray-400 mt-1">
-                SVG, PNG, JPG or GIF (max. 5MB)
+                SVG, PNG, JPG or GIF (max. {MAX_FILE_SIZE_MB}MB)
               </p>
             </div>
           )}
@@ -102,6 +118,12 @@ export default function Payment({ onFileChange, selectedEvent }: PaymentProps) {
             onChange={handleFileChange}
           />
         </div>
+
+        {error && (
+          <p className="text-red-500 text-[10px] md:text-xs mt-2 md:col-span-2">
+            {error}
+          </p>
+        )}
 
         {/* QR Section */}
         {qrCodeUrl && (
