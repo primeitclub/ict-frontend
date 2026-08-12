@@ -34,6 +34,7 @@ export interface ApiEvent {
   category: EventCategory;
   speakers?: { id: string; name: string; imageUrl: string | null }[] | null;
   eventType: EventType;
+  minParticipants: number | null;
   maxParticipants: number | null;
   /** External registration URL; takes precedence over the in-app form. */
   registerLink: string | null;
