@@ -78,9 +78,12 @@ const Register = () => {
   const selectedEvent = events.find((e) => e.id === form.eventId);
   const isGroup = selectedEvent?.eventType === "GROUP";
 
+  const minParticipants = selectedEvent?.minParticipants ?? 1;
+  const maxParticipants = selectedEvent?.maxParticipants ?? DEFAULT_MAX_PARTICIPANTS;
+
   const participantCountOptions = Array.from(
-    { length: selectedEvent?.maxParticipants ?? DEFAULT_MAX_PARTICIPANTS },
-    (_, i) => String(i + 1),
+    { length: Math.max(0, maxParticipants - minParticipants + 1) },
+    (_, i) => String(i + minParticipants),
   );
 
   const handleNumParticipantsChange = (value: string) => {
@@ -141,6 +144,10 @@ const Register = () => {
       }
       if (!form.participants.length) {
         setErrorMsg("Please select the number of participants.");
+        return;
+      }
+      if (form.participants.length < (selectedEvent?.minParticipants ?? 1)) {
+        setErrorMsg(`Please select at least ${selectedEvent?.minParticipants ?? 1} participants.`);
         return;
       }
       const incomplete = form.participants.some(
