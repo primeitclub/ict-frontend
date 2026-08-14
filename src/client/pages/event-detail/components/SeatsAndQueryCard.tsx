@@ -19,8 +19,6 @@ export const SeatsAndQueryCard = ({
   const { getPath } = useVersion();
   // Archived edition → the event is over, so hide the contacts link.
   const { isArchived } = useIsArchivedVersion();
-  const remainingSeats =
-    totalSeats == null ? null : Math.max(totalSeats - bookedSeats, 0);
 
   return (
     <div className="w-full overflow-hidden">
@@ -40,7 +38,7 @@ export const SeatsAndQueryCard = ({
       )}
 
       {/* Seats Available — hidden entirely for unlimited-capacity events. */}
-      {remainingSeats != null && (
+      {totalSeats != null && (
         <div className="flex items-center gap-4 px-5 py-4 bg-[#EFEFEF]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,10 +52,10 @@ export const SeatsAndQueryCard = ({
           </svg>
           <div className="flex flex-col">
             <span className="text-base font-bold text-gray-900">
-              Seats Available
+              Registered Seats
             </span>
             <span className="text-sm text-gray-600">
-              {remainingSeats > 0 ? `${remainingSeats} of ${totalSeats} seats left` : "Booked"}
+              {bookedSeats >= totalSeats ? "Booked" : `${bookedSeats} / ${totalSeats} registered`}
             </span>
           </div>
         </div>
