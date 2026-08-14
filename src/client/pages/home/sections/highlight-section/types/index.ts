@@ -13,6 +13,7 @@ export type ContentType = {
   /** null = unlimited capacity; the card hides its seat count in that case. */
   seats: number | null;
   totalSeats: number | null;
+  bookedSeats: number;
   registrationDeadline?: string | null;
   eventType?: string | null;
 };
