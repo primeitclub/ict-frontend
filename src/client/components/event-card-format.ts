@@ -154,6 +154,7 @@ export function toEventCardItem(event: EventCardSource): ContentType {
     place: event.location,
     seats: remainingSeats(event),
     totalSeats: event.totalSeats,
+    bookedSeats: event.bookedSeats,
     registrationDeadline: event.registrationDeadline ?? null,
     eventType: event.eventType ?? null,
   };

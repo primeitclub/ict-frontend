@@ -72,12 +72,12 @@ const EventListItem = ({ event }: EventListItemProps) => {
       <div className="mt-3 flex items-center justify-between">
         {/* Seat count hidden for unlimited-capacity events; empty spacer keeps
             the CTA pinned to the right. */}
-        {item.seats != null ? (
+        {item.totalSeats != null ? (
           <div>
             <p className="text-[16px] font-bold leading-tight text-[#E11D48]">
-              {item.seats} / {item.totalSeats}
+              {item.bookedSeats} / {item.totalSeats}
             </p>
-            <p className="text-[11px] font-medium">Seats Available</p>
+            <p className="text-[11px] font-medium">Registered</p>
           </div>
         ) : (
           <div />
