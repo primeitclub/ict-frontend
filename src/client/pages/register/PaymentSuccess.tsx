@@ -28,6 +28,8 @@ interface Participant {
   fullName: string;
   email: string;
   phoneNumber?: string | null;
+  inGameName?: string | null;
+  inGameId?: string | null;
 }
 
 interface EventRegistrationDetail {
@@ -204,6 +206,12 @@ const PaymentSuccess = () => {
                       label="Phone Number"
                       value={participant.phoneNumber || "—"}
                     />
+                    {participant.inGameName && (
+                      <InfoRow label="In-Game Name (IGN)" value={participant.inGameName} />
+                    )}
+                    {participant.inGameId && (
+                      <InfoRow label="In-Game ID" value={participant.inGameId} />
+                    )}
                   </div>
                 ))}
               </div>

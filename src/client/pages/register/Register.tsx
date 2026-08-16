@@ -18,6 +18,8 @@ interface Participant {
   fullName: string;
   email: string;
   phoneNumber: string;
+  inGameName: string;
+  inGameId: string;
 }
 
 interface FormState {
@@ -45,7 +47,13 @@ const inputStyles =
   "w-full border border-[#00000014] px-4 py-2.5 rounded-lg text-[10px] md:text-sm bg-white outline-none transition-all focus:border-[#1E67FF] focus:ring-1 focus:ring-[#1E67FF] placeholder:text-gray-400";
 
 const makeParticipants = (n: number): Participant[] =>
-  Array.from({ length: n }, () => ({ fullName: "", email: "", phoneNumber: "" }));
+  Array.from({ length: n }, () => ({
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    inGameName: "",
+    inGameId: "",
+  }));
 
 const Register = () => {
   const navigate = useNavigate();
@@ -77,6 +85,9 @@ const Register = () => {
 
   const selectedEvent = events.find((e) => e.id === form.eventId);
   const isGroup = selectedEvent?.eventType === "GROUP";
+  const isGamingEvent = selectedEvent
+    ? /pubg|esports|gaming|valorant|free fire|fifa/i.test(selectedEvent.title)
+    : false;
 
   const minParticipants = selectedEvent?.minParticipants ?? 1;
   const maxParticipants = selectedEvent?.maxParticipants ?? DEFAULT_MAX_PARTICIPANTS;
@@ -151,10 +162,14 @@ const Register = () => {
         return;
       }
       const incomplete = form.participants.some(
-        (p) => !p.fullName.trim() || !p.email.trim(),
+        (p) => !p.fullName.trim() || !p.email.trim() || (isGamingEvent && !p.inGameName.trim()),
       );
       if (incomplete) {
-        setErrorMsg("Please give every participant a full name and email.");
+        setErrorMsg(
+          isGamingEvent
+            ? "Please provide full name, email, and In-Game Name (IGN) for all participants."
+            : "Please give every participant a full name and email.",
+        );
         return;
       }
     }
@@ -186,6 +201,8 @@ const Register = () => {
             fullName: p.fullName.trim(),
             email: p.email.trim(),
             phoneNumber: p.phoneNumber.trim() || null,
+            inGameName: p.inGameName.trim() || null,
+            inGameId: p.inGameId.trim() || null,
           })),
         ),
       );
@@ -493,24 +510,67 @@ const Register = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 w-full md:w-1/2">
-                    <label
-                      htmlFor={`participant-phone-${index}`}
-                      className={labelStyles}
-                    >
-                      Phone Number{" "}
-                      <span className="text-gray-400 text-xs">(optional)</span>
-                    </label>
-                    <input
-                      id={`participant-phone-${index}`}
-                      type="tel"
-                      className={inputStyles}
-                      placeholder="+977- "
-                      value={participant.phoneNumber}
-                      onChange={(e) =>
-                        updateParticipant(index, "phoneNumber", e.target.value)
-                      }
-                    />
+                  <div className="space-y-4 md:space-y-0 md:flex gap-4">
+                    <div className="flex flex-col gap-2 w-full">
+                      <label
+                        htmlFor={`participant-phone-${index}`}
+                        className={labelStyles}
+                      >
+                        Phone Number{" "}
+                        <span className="text-gray-400 text-xs">(optional)</span>
+                      </label>
+                      <input
+                        id={`participant-phone-${index}`}
+                        type="tel"
+                        className={inputStyles}
+                        placeholder="+977- "
+                        value={participant.phoneNumber}
+                        onChange={(e) =>
+                          updateParticipant(index, "phoneNumber", e.target.value)
+                        }
+                      />
+                    </div>
+                    {isGamingEvent && (
+                      <>
+                        <div className="flex flex-col gap-2 w-full">
+                          <label
+                            htmlFor={`participant-ign-${index}`}
+                            className={labelStyles}
+                          >
+                            In-Game Name (IGN) <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            id={`participant-ign-${index}`}
+                            type="text"
+                            className={inputStyles}
+                            placeholder="e.g. OP_MORTAL"
+                            value={participant.inGameName}
+                            onChange={(e) =>
+                              updateParticipant(index, "inGameName", e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="flex flex-col gap-2 w-full">
+                          <label
+                            htmlFor={`participant-gameid-${index}`}
+                            className={labelStyles}
+                          >
+                            In-Game ID{" "}
+                            <span className="text-gray-400 text-xs">(optional)</span>
+                          </label>
+                          <input
+                            id={`participant-gameid-${index}`}
+                            type="text"
+                            className={inputStyles}
+                            placeholder="e.g. 5123456789"
+                            value={participant.inGameId}
+                            onChange={(e) =>
+                              updateParticipant(index, "inGameId", e.target.value)
+                            }
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
